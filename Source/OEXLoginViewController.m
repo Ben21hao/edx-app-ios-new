@@ -10,6 +10,7 @@
 
 #import "OEXLoginViewController.h"
 #import "TDRegisterViewController.h"
+#import "TDResetPasswordViewController.h"
 
 #import "edX-Swift.h"
 
@@ -440,7 +441,7 @@
 //        alert.tag = 1001;
 //        [alert show];
         
-        [self pushRegisterViewController:1];
+        [self resetPasswordAction];
     }
     else {
         // error
@@ -451,15 +452,21 @@
     }
 }
 
-#pragma mark - 注册
-- (IBAction)registerButtonClicked:(UIButton *)sender {
-    [self pushRegisterViewController:0];
+- (void)resetPasswordAction {
+    
+    TDResetPasswordViewController *registerViewController = [[TDResetPasswordViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:registerViewController];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
-- (void)pushRegisterViewController:(NSInteger)type {
+#pragma mark - 注册
+- (IBAction)registerButtonClicked:(UIButton *)sender {
+    [self pushRegisterViewController];
+}
+
+- (void)pushRegisterViewController {
     
     TDRegisterViewController *registerViewController = [[TDRegisterViewController alloc] init];
-    registerViewController.whereFrom = &(type);
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:registerViewController];
     [self presentViewController:navController animated:YES completion:nil];
 }

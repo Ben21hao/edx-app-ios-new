@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TDPasswordViewController : UIViewController
+typedef NS_ENUM(NSInteger,TDSetPasswordFrom) {
+    TDSetPasswordFromPhone,
+    TDSetPasswordFromEmai
+};
 
+
+@interface TDPasswordViewController : TDBaseViewController
+
+@property (nonatomic,assign) NSInteger whereFrom;
 @property (nonatomic,strong) NSString *acountStr;
 
 @end

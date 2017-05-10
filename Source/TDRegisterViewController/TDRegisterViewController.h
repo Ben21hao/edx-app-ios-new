@@ -8,13 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger,TDRegisterViewFrom) {
-    TDRegisterViewFromRegister,
-    TDRegisterViewFromForgetPassword
-};
-
 @interface TDRegisterViewController : TDBaseViewController
-
-@property (nonatomic,assign) NSInteger *whereFrom;
 
 @end

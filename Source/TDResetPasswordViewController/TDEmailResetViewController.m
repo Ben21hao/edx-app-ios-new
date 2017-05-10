@@ -1,16 +1,16 @@
 //
-//  TDEmailRegisterViewController.m
+//  TDEmailResetViewController.m
 //  edX
 //
-//  Created by Elite Edu on 17/1/3.
+//  Created by Ben on 2017/5/10.
 //  Copyright © 2017年 edX. All rights reserved.
 //
 
-#import "TDEmailRegisterViewController.h"
+#import "TDEmailResetViewController.h"
 #import "TDBaseToolModel.h"
 #import "edX-Swift.h"
 
-@interface TDEmailRegisterViewController () <UIGestureRecognizerDelegate>
+@interface TDEmailResetViewController () <UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong) UILabel *messageLabel;
 @property (nonatomic,strong) UIButton *loginButton;
@@ -20,40 +20,32 @@
 
 @end
 
-@implementation TDEmailRegisterViewController
+@implementation TDEmailResetViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"EMAIL_REGISTER", nil);
     [self configView];
     [self setViewConstraint];
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
     [backButton setImage:[UIImage imageNamed:@"backImagee"] forState:UIControlStateNormal];
     backButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23);
-    backButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:18.0];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    }
+    
     [backButton addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    self.navigationItem.title = NSLocalizedString(@"RESET_BY_EMAIL", nil);
     self.view.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = self;
-    }
-}
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer*)gestureRecognizer {
-    return NO;
 }
 
 #pragma mark - 去登录
@@ -103,9 +95,9 @@
 - (void)configView {
     
     self.messageLabel = [[UILabel alloc] init];
-    self.messageLabel.font = [UIFont fontWithName:@"OpenSans" size:15];
+    self.messageLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
     self.messageLabel.text = [Strings hadSendEmailWithCount:self.acountStr];
-    self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr9];
+    self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr10];
     self.messageLabel.textAlignment = NSTextAlignmentCenter;
     self.messageLabel.numberOfLines = 0;
     [self.view addSubview:self.messageLabel];
@@ -166,15 +158,10 @@
     return str1;
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
 @end
-
-
-
-
-

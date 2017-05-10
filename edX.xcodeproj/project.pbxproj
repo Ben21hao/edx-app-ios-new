@@ -682,6 +682,10 @@
 		B5FAF7761EB059DB000C2169 /* TDInformationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FAF7751EB059DB000C2169 /* TDInformationDetailViewController.m */; };
 		B5FAF7791EB06EA9000C2169 /* TDInformationDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FAF7781EB06EA9000C2169 /* TDInformationDetailView.m */; };
 		B5FAF77C1EB06FDB000C2169 /* TDAuthenSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FAF77B1EB06FDB000C2169 /* TDAuthenSuccessViewController.m */; };
+		B5FB6D151EC30C1D003D7F25 /* TDResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FB6D141EC30C1D003D7F25 /* TDResetPasswordViewController.m */; };
+		B5FB6D181EC30E4C003D7F25 /* TDEmailResetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FB6D171EC30E4C003D7F25 /* TDEmailResetViewController.m */; };
+		B5FB6D1B1EC312A4003D7F25 /* TDPhoneSendNumResetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FB6D1A1EC312A4003D7F25 /* TDPhoneSendNumResetViewController.m */; };
+		B5FB6D1E1EC31361003D7F25 /* TDPasswordResetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FB6D1D1EC31361003D7F25 /* TDPasswordResetViewController.m */; };
 		BD7C6C3E1DCA32370004D135 /* OEXFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7C6C3D1DCA32360004D135 /* OEXFonts.swift */; };
 		BD7C6C401DCA329A0004D135 /* fonts.json in Resources */ = {isa = PBXBuildFile; fileRef = BD7C6C3F1DCA329A0004D135 /* fonts.json */; };
 		BD7C6C421DCA33540004D135 /* OEXFontsDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7C6C411DCA33540004D135 /* OEXFontsDataFactory.swift */; };
@@ -1805,6 +1809,14 @@
 		B5FAF7781EB06EA9000C2169 /* TDInformationDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDInformationDetailView.m; sourceTree = "<group>"; };
 		B5FAF77A1EB06FDB000C2169 /* TDAuthenSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDAuthenSuccessViewController.h; sourceTree = "<group>"; };
 		B5FAF77B1EB06FDB000C2169 /* TDAuthenSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDAuthenSuccessViewController.m; sourceTree = "<group>"; };
+		B5FB6D131EC30C1D003D7F25 /* TDResetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDResetPasswordViewController.h; sourceTree = "<group>"; };
+		B5FB6D141EC30C1D003D7F25 /* TDResetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDResetPasswordViewController.m; sourceTree = "<group>"; };
+		B5FB6D161EC30E4C003D7F25 /* TDEmailResetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDEmailResetViewController.h; sourceTree = "<group>"; };
+		B5FB6D171EC30E4C003D7F25 /* TDEmailResetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDEmailResetViewController.m; sourceTree = "<group>"; };
+		B5FB6D191EC312A4003D7F25 /* TDPhoneSendNumResetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDPhoneSendNumResetViewController.h; sourceTree = "<group>"; };
+		B5FB6D1A1EC312A4003D7F25 /* TDPhoneSendNumResetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDPhoneSendNumResetViewController.m; sourceTree = "<group>"; };
+		B5FB6D1C1EC31361003D7F25 /* TDPasswordResetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDPasswordResetViewController.h; sourceTree = "<group>"; };
+		B5FB6D1D1EC31361003D7F25 /* TDPasswordResetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDPasswordResetViewController.m; sourceTree = "<group>"; };
 		BD7C6C3D1DCA32360004D135 /* OEXFonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXFonts.swift; sourceTree = "<group>"; };
 		BD7C6C3F1DCA329A0004D135 /* fonts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fonts.json; sourceTree = "<group>"; };
 		BD7C6C411DCA33540004D135 /* OEXFontsDataFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OEXFontsDataFactory.swift; sourceTree = "<group>"; };
@@ -2547,6 +2559,7 @@
 		7769071F1AD5EED600F5E7EB /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B5FB6D121EC30BBD003D7F25 /* TDResetPasswordViewController */,
 				B5CF30601EB1A79E00F1BF6A /* TDWebViewController */,
 				B5CF30531EB1A75700F1BF6A /* TDRegisterViewController */,
 				B4B6D5E31A9490E9000F44E8 /* OEXLoginSplashViewController.h */,
@@ -3847,14 +3860,14 @@
 		B5CF30531EB1A75700F1BF6A /* TDRegisterViewController */ = {
 			isa = PBXGroup;
 			children = (
-				B5CF30541EB1A75700F1BF6A /* TDEmailRegisterViewController.h */,
-				B5CF30551EB1A75700F1BF6A /* TDEmailRegisterViewController.m */,
-				B5CF30561EB1A75700F1BF6A /* TDPasswordViewController.h */,
-				B5CF30571EB1A75700F1BF6A /* TDPasswordViewController.m */,
-				B5CF30581EB1A75700F1BF6A /* TDPhoneRegisterViewController.h */,
-				B5CF30591EB1A75700F1BF6A /* TDPhoneRegisterViewController.m */,
 				B5CF305A1EB1A75700F1BF6A /* TDRegisterViewController.h */,
 				B5CF305B1EB1A75700F1BF6A /* TDRegisterViewController.m */,
+				B5CF30541EB1A75700F1BF6A /* TDEmailRegisterViewController.h */,
+				B5CF30551EB1A75700F1BF6A /* TDEmailRegisterViewController.m */,
+				B5CF30581EB1A75700F1BF6A /* TDPhoneRegisterViewController.h */,
+				B5CF30591EB1A75700F1BF6A /* TDPhoneRegisterViewController.m */,
+				B5CF30561EB1A75700F1BF6A /* TDPasswordViewController.h */,
+				B5CF30571EB1A75700F1BF6A /* TDPasswordViewController.m */,
 			);
 			path = TDRegisterViewController;
 			sourceTree = "<group>";
@@ -4067,6 +4080,21 @@
 				B5FAF76F1EB05700000C2169 /* TDUserInformationCell.m */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		B5FB6D121EC30BBD003D7F25 /* TDResetPasswordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B5FB6D131EC30C1D003D7F25 /* TDResetPasswordViewController.h */,
+				B5FB6D141EC30C1D003D7F25 /* TDResetPasswordViewController.m */,
+				B5FB6D161EC30E4C003D7F25 /* TDEmailResetViewController.h */,
+				B5FB6D171EC30E4C003D7F25 /* TDEmailResetViewController.m */,
+				B5FB6D191EC312A4003D7F25 /* TDPhoneSendNumResetViewController.h */,
+				B5FB6D1A1EC312A4003D7F25 /* TDPhoneSendNumResetViewController.m */,
+				B5FB6D1C1EC31361003D7F25 /* TDPasswordResetViewController.h */,
+				B5FB6D1D1EC31361003D7F25 /* TDPasswordResetViewController.m */,
+			);
+			path = TDResetPasswordViewController;
 			sourceTree = "<group>";
 		};
 		BE0D454E192DE63900D720D6 /* Data */ = {
@@ -5047,6 +5075,7 @@
 				7772BEA51AFA68330081CA7A /* ConstraintItem.swift in Sources */,
 				1A8172531C3C21DE007262AA /* TwitterConfig.swift in Sources */,
 				B59238F01EADD0BE00C686D8 /* TDChooseCourseView.m in Sources */,
+				B5FB6D181EC30E4C003D7F25 /* TDEmailResetViewController.m in Sources */,
 				B4D5C7ED1A6FBAA300427D1D /* OEXSession.m in Sources */,
 				B4B6D6181A949F0F000F44E8 /* OEXRegistrationFieldPasswordView.m in Sources */,
 				B4B6D6481A95CF33000F44E8 /* OEXUserLicenseAgreementViewController.m in Sources */,
@@ -5193,6 +5222,7 @@
 				B5520A031EB9D4C800EC51C9 /* TDCourseMessageCell.swift in Sources */,
 				77DCD2391C2B13AA00CAEBB5 /* EnrolledCoursesFooterView.swift in Sources */,
 				77ADF4A91AC1B57800AC8955 /* UIImage+OEXColors.m in Sources */,
+				B5FB6D1B1EC312A4003D7F25 /* TDPhoneSendNumResetViewController.m in Sources */,
 				69F998571E6FEB2400CDFA9C /* OEXAnalytics+AppReview.swift in Sources */,
 				B5FAF6D51EB02CC2000C2169 /* TDRechargeView.m in Sources */,
 				77D7FD261B04ED45002ACA8C /* Icon.swift in Sources */,
@@ -5237,6 +5267,7 @@
 				9EDB10BC1B0C74F800C760C6 /* CourseVideoTableViewCell.swift in Sources */,
 				779D1CE11B8E6FE000FCC847 /* PullRefreshController.swift in Sources */,
 				B4D31D351AB1904200C8D45C /* NSJSONSerialization+OEXSafeAccess.m in Sources */,
+				B5FB6D151EC30C1D003D7F25 /* TDResetPasswordViewController.m in Sources */,
 				777DE7141C1630110068E280 /* CourseMediaInfo.swift in Sources */,
 				E01591F21D533F3B00201B15 /* UIViewController+CommonAdditions.swift in Sources */,
 				F22A0ABD1CE660B300D50DFF /* LoginApi.swift in Sources */,
@@ -5327,6 +5358,7 @@
 				B55209F81EB9AD8500EC51C9 /* TDRechargeSuccessViewController.m in Sources */,
 				7772BE7A1AF41E660081CA7A /* CourseBlockViewController.swift in Sources */,
 				7748F5781AEAB5C200767700 /* OEXSwitchStyle.m in Sources */,
+				B5FB6D1E1EC31361003D7F25 /* TDPasswordResetViewController.m in Sources */,
 				B42DA1891A1539F000E3AD4E /* OEXFileUtility.m in Sources */,
 				777EFEFD1A7AFF0E00F8BF06 /* OEXRouter.m in Sources */,
 				B59238EC1EADD0BE00C686D8 /* ChooseCourseModel.m in Sources */,

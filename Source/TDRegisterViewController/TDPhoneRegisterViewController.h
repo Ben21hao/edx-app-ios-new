@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TDPhoneRegisterViewController : UIViewController
+@interface TDPhoneRegisterViewController : TDBaseViewController
 
 @property (nonatomic,strong) NSString *phoneStr;
 @property (nonatomic,strong) NSString *randomNumber;//本地随机生成的验证码

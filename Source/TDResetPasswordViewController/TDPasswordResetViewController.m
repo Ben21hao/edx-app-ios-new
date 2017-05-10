@@ -1,17 +1,16 @@
 //
-//  TDPasswordViewController.m
+//  TDPasswordResetViewController.m
 //  edX
 //
-//  Created by Elite Edu on 17/1/3.
+//  Created by Ben on 2017/5/10.
 //  Copyright © 2017年 edX. All rights reserved.
 //
 
-#import "TDPasswordViewController.h"
-#import "TDEmailRegisterViewController.h"
+#import "TDPasswordResetViewController.h"
 #import "TDBaseToolModel.h"
 #import "edX-Swift.h"
 
-@interface TDPasswordViewController ()<UIAlertViewDelegate>
+@interface TDPasswordResetViewController ()<UIAlertViewDelegate,UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong) UILabel *topLabel;
 @property (nonatomic,strong) UITextField *passwordTextField;
@@ -22,12 +21,16 @@
 
 @property (nonatomic,strong) UIActivityIndicatorView *activityView;
 
+@property (nonatomic,strong) UIButton *leftButton;
+
 @end
 
-@implementation TDPasswordViewController
+@implementation TDPasswordResetViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setLeftNavigationBar];
     
     [self configView];
     [self setViewConstraint];
@@ -36,7 +39,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.titleViewLabel.text = self.whereFrom == TDSetPasswordFromPhone ?  NSLocalizedString(@"PHONE_REGISTER", nil) : NSLocalizedString(@"EMAIL_REGISTER", nil);
+    self.navigationItem.title =NSLocalizedString(@"RESET_BY_PHONE", nil);
     self.view.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
 }
 
@@ -47,9 +50,28 @@
     [self.activityView stopAnimating];
 }
 
+#pragma mark - 导航栏左边按钮
+- (void)setLeftNavigationBar {
+    
+    self.leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
+    [self.leftButton setImage:[UIImage imageNamed:@"backImagee"] forState:UIControlStateNormal];
+    self.leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23);
+    [self.leftButton addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    }
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftButton];
+}
+
+- (void)backButtonAction:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - 提交
 - (void)handinButtonAction:(UIButton *)sender {
     [self.passwordTextField resignFirstResponder];
+    [self.activityView stopAnimating];
     
     TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
     if (![baseTool networkingState]) {
@@ -68,89 +90,49 @@
     } else if (self.passwordTextField.text.length > 30) {
         [self.view makeToast:NSLocalizedString(@"LESS_PASSWORD", nil) duration:1.08 position:CSToastPositionCenter];
     } else {
-        if (self.whereFrom == TDSetPasswordFromPhone) {
-            [self.activityView startAnimating];
-            [self registerPhoneAcount];
-            
-        } else {
-            [self.activityView startAnimating];
-            [self registerEmailAccount];
-        }
+        [self resetPhonePassWord];
     }
 }
 
-#pragma mark - 创建手机新账号
-- (void)registerPhoneAcount {
+- (void)resetPhonePassWord {
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"mobile"] = self.acountStr;
+    params[@"password"] = self.passwordTextField.text;
     
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:self.acountStr forKey:@"mobile"];
-    [params setValue:self.passwordTextField.text forKey:@"password"];
-    
-    NSString *url = [NSString stringWithFormat:@"%@/api/mobile/v0.5/account/register_by_mobile/",ELITEU_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/api/mobile/v0.5/account/reset_password_by_mobile/",ELITEU_URL];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [self.activityView stopAnimating];
+        [responseObject writeToFile:@"/Users/Eliteu/Desktop/pli/aa.plist" atomically:YES];
         NSDictionary *dict = responseObject;
-        id code = dict[@"code"];
+        NSString *code = dict[@"code"];
+        long CODE = code.integerValue;
         
-        if ([code intValue] == 200) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:NSLocalizedString(@"REGISTRATION_SUCCESS", nil)
-                                                           delegate:self
-                                                  cancelButtonTitle:nil
-                                                  otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
-            alert.tag = 100;
-            [alert show];
+        if (CODE == 200) {//请求成功
             
-        }else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:NSLocalizedString(@"PHONE_NUMBER_HAS_BEEN_REGISTERED", nil)
-                                                           delegate:self
-                                                  cancelButtonTitle:nil
-                                                  otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
-            alert.tag = 101;
-            [alert show];
+            UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"RESET_PASSWORD_SUCCESS", nil)
+                                                                   message:NSLocalizedString(@"MOBILE_PHONE_ACCOUNT_RESET_SUCCESS", nil)
+                                                                  delegate:self
+                                                         cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                         otherButtonTitles:nil, nil];
+            successAlert.tag = 100;
+            [successAlert show];
+            
+        } else { //请求失败
+            UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"RESET_THE_PASSWORD_FAILED", nil)
+                                                                message:NSLocalizedString(@"MOBILE_PHONE_ACCOUNT_RESET_FAILED", nil)
+                                                               delegate:self
+                                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                      otherButtonTitles:nil, nil];
+            [failAlert show];
         };
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.activityView stopAnimating];
-        NSLog(@"%ld",(long)error.code);
+        NSLog(@"密码重置 ---  %ld",(long)error.code);
     }];
 }
 
-#pragma mark - 注册邮箱账号
-- (void)registerEmailAccount {
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:self.acountStr forKey:@"email"];
-    [params setValue:self.passwordTextField.text forKey:@"password"];
-    
-    NSString *url = [NSString stringWithFormat:@"%@/api/mobile/v0.5/account/signup_by_email/",ELITEU_URL];
-    [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        [self.activityView stopAnimating];
-        NSDictionary *dict = (NSDictionary *)responseObject;
-        
-        id code = dict[@"code"];
-        int codeInt = [code intValue];
-        if (codeInt == 200) {
-            TDEmailRegisterViewController *emailRegisterVc = [[TDEmailRegisterViewController alloc] init];
-            emailRegisterVc.acountStr = self.acountStr;
-            [self.navigationController pushViewController:emailRegisterVc animated:YES];
-            
-        } else if (codeInt == 310 || codeInt == 311 || codeInt == 500) {
-            [self.view makeToast:dict[@"msg"] duration:1.08 position:CSToastPositionCenter];
-        } else{
-            NSLog(@"邮箱注册 -- %@",dict[@"msg"]);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.activityView stopAnimating];
-        NSLog(@"邮箱注册接口 -- %ld",(long)error.code);
-    }];
-}
 
 #pragma mark - alertView Dlegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -181,8 +163,8 @@
 - (void)configView {
     self.topLabel = [[UILabel alloc] init];
     self.topLabel.text = NSLocalizedString(@"SET_PASSWORD", nil);
-    self.topLabel.font = [UIFont fontWithName:@"OpenSans" size:15];
-    self.topLabel.textColor = [UIColor colorWithHexString:colorHexStr9];
+    self.topLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
+    self.topLabel.textColor = [UIColor colorWithHexString:colorHexStr10];
     [self.view addSubview:self.topLabel];
     
     self.bgView = [[UIView alloc] init];
@@ -196,8 +178,8 @@
     self.passwordTextField = [[UITextField alloc] init];
     self.passwordTextField.secureTextEntry = YES;
     self.passwordTextField.placeholder = NSLocalizedString(@"PASSWORD_NUM", nil);
-    self.passwordTextField.font = [UIFont fontWithName:@"OpenSans" size:15];
-    self.passwordTextField.textColor = [UIColor colorWithHexString:colorHexStr9];
+    self.passwordTextField.font = [UIFont fontWithName:@"OpenSans" size:14];
+    self.passwordTextField.textColor = [UIColor colorWithHexString:colorHexStr10];
     [self.bgView addSubview:self.passwordTextField];
     
     self.eyeButton = [[UIButton alloc] init];
@@ -211,7 +193,7 @@
     self.handinButton = [[UIButton alloc] init];
     self.handinButton.backgroundColor = [UIColor colorWithHexString:colorHexStr1];
     self.handinButton.layer.cornerRadius = 4.0;
-    [self.handinButton setTitle:self.whereFrom == TDSetPasswordFromPhone ? NSLocalizedString(@"SUBMIT", nil) : NSLocalizedString(@"NEXT_TEST", nil) forState:UIControlStateNormal];
+    [self.handinButton setTitle:NSLocalizedString(@"SUBMIT", nil) forState:UIControlStateNormal];
     [self.handinButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.handinButton addTarget:self action:@selector(handinButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.handinButton];
@@ -266,11 +248,3 @@
 
 
 @end
-
-
-
-
-
-
-
-

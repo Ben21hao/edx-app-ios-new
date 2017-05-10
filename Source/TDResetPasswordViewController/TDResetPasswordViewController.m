@@ -1,23 +1,23 @@
 //
-//  TDRegisterViewController.m
+//  TDResetPasswordViewController.m
 //  edX
 //
-//  Created by Elite Edu on 16/12/30.
-//  Copyright © 2016年 edX. All rights reserved.
+//  Created by Ben on 2017/5/10.
+//  Copyright © 2017年 edX. All rights reserved.
 //
 
-#import "TDRegisterViewController.h"
-#import "TDPhoneRegisterViewController.h"
-#import "TDPasswordViewController.h"
+#import "TDResetPasswordViewController.h"
+#import "TDPhoneSendNumResetViewController.h"
+#import "TDEmailResetViewController.h"
 #import "OEXFlowErrorViewController.h"
 #import "TDWebViewController.h"
 
 #import "TDBaseToolModel.h"
-#import "edx-Swift.h"
 #import "OEXAuthentication.h"
+#import "edx-Swift.h"
 #import "NSJSONSerialization+OEXSafeAccess.h"
 
-@interface TDRegisterViewController ()<UIAlertViewDelegate>
+@interface TDResetPasswordViewController ()
 
 @property (nonatomic,strong) UILabel *messageLabel;
 @property (nonatomic,strong) UITextField *accountTextField;
@@ -30,19 +30,20 @@
 
 @end
 
-@implementation TDRegisterViewController
+@implementation TDResetPasswordViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self configView];
     [self setViewConstraint];
-    
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.titleViewLabel.text = NSLocalizedString(@"REGISTER", nil);
+    NSString *titleStr = @"RESET_PASSWORD_TITLE";
+    self.titleViewLabel.text = NSLocalizedString(titleStr, nil);
     [self.leftButton addTarget:self action:@selector(leftButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     self.view.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
 }
@@ -76,15 +77,13 @@
                                                              shouldHide:YES];
         
     } else if (self.accountTextField.text.length > 0) {
-        
         [self.activityView startAnimating];
         
         if ([baseTool isValidateMobile:self.accountTextField.text]) {//手机有效
-            [self getPhoneVerificationCode];
+            [self sendResetPasswordCheckNum];
             
         } else if ([baseTool isValidateEmail:self.accountTextField.text]) {//邮箱有效
-            
-            [self judEmailBeRegister];
+            [self resetPasswordByEmail];
             
         } else {
             [self.activityView stopAnimating];
@@ -96,139 +95,113 @@
     }
 }
 
-#pragma mark -- 获取手机验证码
-- (void)getPhoneVerificationCode {
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+#pragma mark  - 手机重置密码--发送验证码请求
+- (void)sendResetPasswordCheckNum {
     
     int num = (arc4random() % 1000000);
-    NSString *randomNumber = [NSString stringWithFormat:@"%.6d", num];//六位数验证码
-    NSString *message = [NSString stringWithFormat:@"您正在注册英荔账号，验证码为%@，5分钟内有效。",randomNumber];
+    NSString *randomNumber = [NSString stringWithFormat:@"%.6d", num];
+    self.randomNumber = randomNumber;
     
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:self.accountTextField.text forKey:@"mobile"];
-    [params setValue:message forKey:@"msg"];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString *message = [NSString stringWithFormat:@"您正在重置密码，验证码为%@，5分钟内有效，请勿泄露。",self.randomNumber];
+    params[@"msg"] = message;
+    params[@"mobile"] = self.accountTextField.text;
     
-    NSString *url = [NSString stringWithFormat:@"%@/api/mobile/v0.5/account/send_captcha_message_for_register/",ELITEU_URL];
+    NSString *url = [NSString stringWithFormat:@"%@/api/mobile/v0.5/account/send_captcha_message_for_reset_password/",ELITEU_URL];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [self.activityView stopAnimating];
-        NSDictionary *dict = (NSDictionary *)responseObject;
+        [responseObject writeToFile:@"/Users/Eliteu/Desktop/pli/ta.plist" atomically:YES];
+        NSDictionary *dict = responseObject;
         id code = dict[@"code"];
         
-        if ([code intValue] == 403) {
-            
-            [self showPhoneNumberUsed];
-            
-        } else if([code intValue] == 200){
-            
-            TDPhoneRegisterViewController *phoneVC = [[TDPhoneRegisterViewController alloc] init];
+        if ([code integerValue] == 200) {
+            TDPhoneSendNumResetViewController *phoneVC = [[TDPhoneSendNumResetViewController alloc] init];
             phoneVC.phoneStr = self.accountTextField.text;
             phoneVC.randomNumber = randomNumber;
             [self.navigationController pushViewController:phoneVC animated:YES];
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.activityView stopAnimating];
-        NSLog(@"%ld",(long)error.code);
-    }];
-}
-
-#pragma mark - 手机已注册过
-- (void)showPhoneNumberUsed {
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:NSLocalizedString(@"PHONE_NUMBER_HAS_BEEN_REGISTERED", nil)
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                              otherButtonTitles:nil, nil];
-    [alertView show];
-}
-
-
-#pragma mark - 判断邮箱是否被注册
-- (void)judEmailBeRegister {
-    
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setValue:self.accountTextField.text forKey:@"email"];
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *url = [NSString stringWithFormat:@"%@/api/mobile/v0.5/account/email_can_be_signup/",ELITEU_URL];
-    [manager GET:url parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        [self.activityView stopAnimating];
-        
-        NSDictionary *responDic = (NSDictionary *)responseObject;
-        id code = responDic[@"code"];
-        int codeInt = [code intValue];
-        
-        if (codeInt == 200) {
             
-            TDPasswordViewController *passwordVc = [[TDPasswordViewController alloc] init];
-            passwordVc.whereFrom = TDSetPasswordFromEmai;
-            passwordVc.acountStr = self.accountTextField.text;
-            [self.navigationController pushViewController:passwordVc animated:YES];
+        }else if ([code intValue] == 403){//手机没注册
+            [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:@""
+                                                                    message:NSLocalizedString(@"PHONE_NUMBER_NOT_REGISTER", nil)
+                                                           onViewController:self.navigationController.view
+                                                                 shouldHide:YES];
             
-        } else if (codeInt == 303) {
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NEED_ACTIVITY", nil)
-                                                                message:NSLocalizedString(@"SEND_EMAIL_ACTIVITY", nil)
-                                                               delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                                      otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
-            [alertView show];
-            
-        } else if (codeInt == 301) {
-            [self.view makeToast:responDic[@"msg"] duration:1.08 position:CSToastPositionCenter];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-            });
-            
-        } else if (codeInt == 302) {
-            [self.view makeToast:responDic[@"msg"] duration:1.08 position:CSToastPositionCenter];
             
         } else {
-            NSLog(@"邮箱注册 -- %@",responDic[@"msg"]);
+            [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"RESET_FAILED", nil)
+                                                                    message:NSLocalizedString(@"RESET_FAILED", nil)
+                                                           onViewController:self.navigationController.view
+                                                                 shouldHide:YES];
         }
+        [self.activityView stopAnimating];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%ld",(long)error.code);
         [self.activityView stopAnimating];
-        NSLog(@"邮箱是否已注册 -- %ld",(long)error.code);
     }];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        [self sendEmail];
-    }
-}
-
-#pragma mark - 发邮件
-- (void)sendEmail {
-    [self.activityView startAnimating];
+#pragma mark - 重置邮箱账号密码
+- (void)resetPasswordByEmail {
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:self.accountTextField.text forKey:@"email"];
-    
-    NSString *url = [NSString stringWithFormat:@"%@/api/mobile/v0.5/account/resend_active_email/",ELITEU_URL];
-    [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [OEXAuthentication resetPasswordWithEmailId:self.accountTextField.text completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         
-        [self.activityView stopAnimating];
-        NSDictionary *dict = (NSDictionary *)responseObject;
-        
-        [self.view makeToast:dict[@"msg"] duration:1.08 position:CSToastPositionCenter];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.view setUserInteractionEnabled:YES];
+            
+            [[OEXFlowErrorViewController sharedInstance] animationUp];
+            
+            if(!error) {
+                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+                if(httpResp.statusCode == 200) {
+                    
+                    NSDictionary *dataDic = [NSJSONSerialization oex_JSONObjectWithData:data error:nil];
+                    NSLog(@"重置密码 ++++++++ %@",dataDic);
+                    
+                    if ([dataDic[@"success"] intValue] == 0) {
+                        [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:[Strings floatingErrorTitle]
+                                                                                message:dataDic[@"value"]
+                                                                       onViewController:self.navigationController.view
+                                                                             shouldHide:YES];
+                    } else {
+                        
+                        TDEmailResetViewController *emailRegisterVc = [[TDEmailResetViewController alloc] init];
+                        emailRegisterVc.acountStr = self.accountTextField.text;
+                        [self.navigationController pushViewController:emailRegisterVc animated:YES];
+                    }
+                    
+                    
+                } else if(httpResp.statusCode <= 400 && httpResp.statusCode < 500) {
+                    
+                    NSDictionary *dictionary = [NSJSONSerialization oex_JSONObjectWithData:data error:nil];
+                    NSString *responseStr = [[dictionary objectForKey:@"email"] firstObject];
+                    [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:[Strings floatingErrorTitle]
+                                                                            message:responseStr
+                                                                   onViewController:self.navigationController.view
+                                                                         shouldHide:YES];
+                    
+                } else if(httpResp.statusCode > 500) {
+                    
+                    NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:[Strings floatingErrorTitle]
+                                                                            message:responseStr
+                                                                   onViewController:self.navigationController.view
+                                                                         shouldHide:YES];
+                }
+                
+            } else {
+                
+                [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:[Strings floatingErrorTitle]
+                                                                        message:[error localizedDescription]
+                                                               onViewController:self.navigationController.view
+                                                                     shouldHide:YES];
+            }
+            
         });
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.activityView stopAnimating];
-        NSLog(@"发邮件 -- %ld",(long)error.code);
     }];
 }
+
 
 #pragma mark - dismiss
 - (void)leftButtonAction:(UIButton *)sender {
@@ -264,14 +237,15 @@
 #pragma mark - UI
 - (void)configView {
     self.messageLabel = [[UILabel alloc] init];
-    self.messageLabel.font = [UIFont fontWithName:@"OpenSans" size:15];
-    self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr9];
-    self.messageLabel.text = NSLocalizedString(@"PHONE_OR_EMAIL_REGISTER", nil);
+    self.messageLabel.numberOfLines = 0;
+    self.messageLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
+    self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr10];
+    self.messageLabel.text = NSLocalizedString(@"PHONE_OR_EMAIL_RESET_PASSWORD", nil);
     [self.view addSubview:self.messageLabel];
     
     self.accountTextField = [[UITextField alloc] init];
     self.accountTextField.placeholder = NSLocalizedString(@"PHONE_OR_EMAIL", nil);
-    self.accountTextField.textColor = [UIColor colorWithHexString:colorHexStr9];
+    self.accountTextField.textColor = [UIColor colorWithHexString:colorHexStr10];
     self.accountTextField.font = [UIFont fontWithName:@"OpenSans" size:15];
     self.accountTextField.borderStyle = UITextBorderStyleRoundedRect;
     [self.view addSubview:self.accountTextField];
@@ -285,13 +259,13 @@
     [self.view addSubview:self.nextButton];
     
     self.bottomButton = [[UIButton alloc] init];
-    [self.bottomButton setTitleColor:[UIColor colorWithHexString:colorHexStr1] forState:UIControlStateNormal];
     self.bottomButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.bottomButton.titleLabel.numberOfLines = 0;
     self.bottomButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:12];
     [self.bottomButton addTarget:self action:@selector(bottomButtonAtion:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomButton setAttributedTitle:[self setAttribute] forState:UIControlStateNormal];
     [self.view addSubview:self.bottomButton];
+    self.bottomButton.hidden = YES;
     
     self.activityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [self.activityView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
@@ -301,6 +275,7 @@
 - (void)setViewConstraint {
     [self.messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left).offset(18);
+        make.right.mas_equalTo(self.view.mas_right).offset(-18);
         make.top.mas_equalTo(self.view.mas_top).offset(18);
     }];
     
@@ -340,6 +315,7 @@
     [str1 appendAttributedString:str2];
     return str1;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

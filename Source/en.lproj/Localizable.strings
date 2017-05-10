@@ -1118,6 +1118,8 @@
 "LESS_PASSWORD" = "Password should be no more than 30 characters";
 /*使用邮箱或手机号码注册*/
 "PHONE_OR_EMAIL_REGISTER" = "Sign up with email or mobile";
+/*请输入邮箱或手机号码。并按操作提示完成密码重置。*/
+"PHONE_OR_EMAIL_RESET_PASSWORD" = "Please enter your email address or mobile number, and follow the instruction to reset password.";
 /*服务条款*/
 "SERVICE_ITEM" = "Stipulation";
 /*邮箱或手机号码*/
