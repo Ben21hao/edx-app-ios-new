@@ -26,9 +26,3 @@ pod 'MJRefresh', '~> 3.1.12'
 pod 'SDWebImage', '~> 3.8.1'
 end
 
-target 'edXTests' do
-    pod 'FBSnapshotTestCase/Core', '= 2.0.1'
-    pod 'OCMock', '~> 3.1'
-    pod 'OHHTTPStubs', '~> 4.0'
-end 
-

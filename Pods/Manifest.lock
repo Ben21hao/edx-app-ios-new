@@ -29,7 +29,6 @@ PODS:
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.17.0):
     - FBSDKCoreKit
-  - FBSnapshotTestCase/Core (2.0.1)
   - Firebase/Core (3.11.0):
     - FirebaseAnalytics (= 3.6.0)
     - FirebaseCore (= 3.4.6)
@@ -69,20 +68,6 @@ PODS:
   - MJExtension (3.0.13)
   - MJRefresh (3.1.12)
   - NewRelicAgent (4.186.1)
-  - OCMock (3.3.1)
-  - OHHTTPStubs (4.8.0):
-    - OHHTTPStubs/Default (= 4.8.0)
-  - OHHTTPStubs/Core (4.8.0)
-  - OHHTTPStubs/Default (4.8.0):
-    - OHHTTPStubs/Core
-    - OHHTTPStubs/JSON
-    - OHHTTPStubs/NSURLSession
-    - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (4.8.0):
-    - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (4.8.0):
-    - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (4.8.0)
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
   - SDWebImage (3.8.2):
@@ -103,15 +88,12 @@ DEPENDENCIES:
   - Fabric (~> 1.5)
   - FBSDKCoreKit (~> 4.6)
   - FBSDKLoginKit (~> 4.6)
-  - FBSnapshotTestCase/Core (= 2.0.1)
   - Firebase/Core (= 3.11.0)
   - GoogleSignIn (~> 2.4)
   - Masonry (~> 0.6)
   - MJExtension (~> 3.0.13)
   - MJRefresh (~> 3.1.12)
   - NewRelicAgent (~> 4.1)
-  - OCMock (~> 3.1)
-  - OHHTTPStubs (~> 4.0)
   - Parse (~> 1.7)
   - SDWebImage (~> 3.8.1)
   - Segment-GoogleAnalytics (~> 1.0.0)
@@ -127,7 +109,6 @@ SPEC CHECKSUMS:
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FBSDKCoreKit: 30a21d2d7b92984b3d80497113433c00824c35e9
   FBSDKLoginKit: 42b7129ac0373ca99eaf4cbebf4d07bd42371f59
-  FBSnapshotTestCase: bdb997ab2397495205f11156d4d444606daebd27
   Firebase: b8134e285eb33201115bc688bc5d7f112923bc1f
   FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
   FirebaseCore: 03da1cb32615569bbc2830a22f9ad753d9a02ef5
@@ -146,14 +127,12 @@ SPEC CHECKSUMS:
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   NewRelicAgent: 5cd52dafe03e74c5066073a00fd500df9d966e7e
-  OCMock: f3f61e6eaa16038c30caa5798c5e49d3307b6f22
-  OHHTTPStubs: b393565822317305b87a1440d4c7aff131679f66
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Segment-GoogleAnalytics: ffea73c99196720b28b58ea93bcc0e6d11f172e1
   Smartling.i18n: 03ef7a5643965212c6ca9ed7d65385950ca4a989
   SVProgressHUD: bfde85ed6c573ea802b9cb37894ed9b629034f1b
 
-PODFILE CHECKSUM: 7eae1cd618a48832233dd303b5f1f340a4cb1892
+PODFILE CHECKSUM: 92249f3c0535dabaad72610bf65d6dfcb799400a
 
 COCOAPODS: 1.2.1
