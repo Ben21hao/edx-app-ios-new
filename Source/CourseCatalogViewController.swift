@@ -31,21 +31,15 @@ class CourseCatalogViewController: UIViewController, CoursesTableViewControllerD
     }
     
     private lazy var paginationController : PaginationController<OEXCourse> = {
-//        let username = self.environment.session.currentUser?.username ?? ""
-//        precondition(username != "", "Shouldn't be showing course catalog without a logged in user")
-//        let organizationCode =  self.environment.config.organizationCode()
-//        
-//        let paginator = WrappedPaginator(networkManager: self.environment.networkManager) { page in
-//            return CourseCatalogAPI.getCourseCatalog(username, page: page, organizationCode: organizationCode)
-//        }
-//        return PaginationController(paginator: paginator, tableView: self.tableController.tableView)
         
         var username = self.environment.session.currentUser?.username ?? ""
         var company_id = self.environment.session.currentUser?.company_id ?? ""
+        let organizationCode =  self.environment.config.organizationCode()
+        
         if username == ""{
             username = ""
             let paginator = WrappedPaginator(networkManager: self.environment.networkManager) { page in
-                return CourseCatalogAPI.getCourseCatalog(username, company_id:company_id, page: page)//获取所有课程
+                return CourseCatalogAPI.getCourseCatalog(username, page: page, organizationCode: organizationCode)
             }
             return PaginationController(paginator: paginator, tableView: self.tableController.tableView)
             
@@ -53,7 +47,7 @@ class CourseCatalogViewController: UIViewController, CoursesTableViewControllerD
             precondition(username != "", "Shouldn't be showing course catalog without a logged in user")
             
             let paginator = WrappedPaginator(networkManager: self.environment.networkManager) { page in
-                return CourseCatalogAPI.getCourseCatalog(username, company_id:company_id, page: page)
+                return CourseCatalogAPI.getCourseCatalog(username, page: page, organizationCode: organizationCode)
             }
             return PaginationController(paginator: paginator, tableView: self.tableController.tableView)
         }

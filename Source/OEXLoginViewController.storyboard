@@ -194,7 +194,7 @@
                                             <constraint firstAttribute="width" constant="107" id="Htp-oO-a4C"/>
                                             <constraint firstAttribute="height" constant="20" id="jyy-je-BmG"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
                                         <color key="textColor" red="0.17926862835884094" green="0.19164085388183594" blue="0.20848166942596436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -263,6 +263,7 @@
                                             <constraint firstAttribute="width" constant="88" id="4XT-Tm-Ksd"/>
                                             <constraint firstAttribute="height" constant="48" id="xXN-D4-MUy"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="16"/>
                                         <state key="normal" title="注册"/>
                                         <connections>
                                             <action selector="registerButtonClicked:" destination="riJ-LC-sPF" eventType="touchUpInside" id="7gz-oG-sGj"/>

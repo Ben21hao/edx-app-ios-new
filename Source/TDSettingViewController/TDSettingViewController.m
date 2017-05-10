@@ -70,6 +70,7 @@
 
 -  (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     tableView.separatorColor = [UIColor colorWithHexString:colorHexStr6];
+    tableView.separatorInset = UIEdgeInsetsZero;
     
     if (indexPath.row == 0) {
         TDSettingCell *cell = [[TDSettingCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TDWifiCell"];

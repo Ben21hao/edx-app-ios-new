@@ -163,7 +163,8 @@ class TDUserCenterViewController: OfflineSupportViewController,UITableViewDelega
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 0 : 8;
+//        return section == 0 ? 0 : 8;
+        return section == 1 ? 8 : 0;
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

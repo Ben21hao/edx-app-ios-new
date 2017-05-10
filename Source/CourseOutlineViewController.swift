@@ -77,9 +77,6 @@ public class CourseOutlineViewController :
         addChildViewController(tableController)
         tableController.didMoveToParentViewController(self)
         tableController.delegate = self
-        
-        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
-        fixedSpace.width = barButtonFixedSpaceWidth
 
     }
 
@@ -103,13 +100,15 @@ public class CourseOutlineViewController :
         let leftBarItem = UIBarButtonItem.init(customView: leftButton)
         self.navigationItem.leftBarButtonItem = leftBarItem
         
-        //        navigationItem.rightBarButtonItems = [webController.barButtonItem,fixedSpace,modeController.barItem]//视频
-        let rightButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48));
-        rightButton.setTitle("助教", forState: .Normal)
-        rightButton.addTarget(self, action: #selector(rightButtonAction), forControlEvents: .TouchUpInside)
-        rightButton.titleLabel?.font = UIFont.init(name: "OpenSans", size: 16)
-        let ringhtBarItem = UIBarButtonItem.init(customView: rightButton);
-        self.navigationItem.rightBarButtonItem = ringhtBarItem;
+        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+        fixedSpace.width = barButtonFixedSpaceWidth
+        navigationItem.rightBarButtonItems = [webController.barButtonItem,fixedSpace,modeController.barItem]//视频
+//        let rightButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48));
+//        rightButton.setTitle("助教", forState: .Normal)
+//        rightButton.addTarget(self, action: #selector(rightButtonAction), forControlEvents: .TouchUpInside)
+//        rightButton.titleLabel?.font = UIFont.init(name: "OpenSans", size: 16)
+//        let ringhtBarItem = UIBarButtonItem.init(customView: rightButton);
+//        self.navigationItem.rightBarButtonItem = ringhtBarItem;
         
         view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
         view.addSubview(tableController.view)

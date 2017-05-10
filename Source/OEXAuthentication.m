@@ -157,7 +157,7 @@ OEXNSDataTaskRequestHandler OEXWrapURLCompletion(OEXURLRequestHandler completion
     [arguments safeSetObject:@"password" forKey:@"grant_type"];
     [arguments safeSetObject:userName forKey:@"username"];
     [arguments safeSetObject:password forKey:@"password"];
-    [arguments safeSetObject:@"1" forKey:@"is_enterprise"];
+//    [arguments safeSetObject:@"1" forKey:@"is_enterprise"];//0 个人版，1 企业版
     
     return [arguments oex_stringByUsingFormEncoding];
 }

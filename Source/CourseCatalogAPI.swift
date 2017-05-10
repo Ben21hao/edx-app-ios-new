@@ -31,44 +31,32 @@ public struct CourseCatalogAPI {
         case EmailOptIn = "email_opt_in"
         case Mobile = "mobile"
         case Org = "org"
-        case CompanyId = "company_id"
     }
     
-        public static func getCourseCatalog(userID: String, company_id: String, page : Int) -> NetworkRequest<Paginated<[OEXCourse]>> {
-//    public static func getCourseCatalog(userID: String, page : Int, organizationCode: String?) -> NetworkRequest<Paginated<[OEXCourse]>> {
+    public static func getCourseCatalog(userID: String, page : Int, organizationCode: String?) -> NetworkRequest<Paginated<[OEXCourse]>> {
     
-//        var query = [Params.Mobile.rawValue: JSON(true), Params.User.rawValue: JSON(userID)]
-//        if let orgCode = organizationCode {
-//            query[Params.Org.rawValue] = JSON(orgCode)
-//        }
+        var query = [Params.Mobile.rawValue: JSON(true),
+                     Params.User.rawValue: JSON(userID)]
         
-       let query = [Params.Mobile.rawValue: JSON(true),
-                    Params.CompanyId.rawValue: JSON(company_id),
-                    Params.User.rawValue: JSON(userID)]
+        if let orgCode = organizationCode {
+            query[Params.Org.rawValue] = JSON(orgCode)
+        }
         
         return NetworkRequest(
             method: .GET,
-            path : "/api/mobile/enterprise/v0.5/companyfindcourses/", //api/courses/v1/
+            path : "/api/courses/v1/courses/",
             query : query,
             requiresAuth : true,
             deserializer: .JSONResponse(coursesDeserializer)
         ).paginated(page: page)
     }
     
-    public static func getCourse(courseID: String, companyID : String) -> NetworkRequest<OEXCourse> {
+    public static func getCourse(courseID: String) -> NetworkRequest<OEXCourse> {
+        
         return NetworkRequest(
-        
-        // method: .GET,
-        // path: "/api/mobile/enterprise/v0.5/companycoursesdetail/{courseID}".oex_formatWithParameters(["courseID" : courseID]),
-        // deserializer: .JSONResponse(courseDeserializer))
-        
-        //api/courses/v1/courses/{courseID} 
-        // /api/mobile/enterprise/v0.5/companycoursesdetail/course-v1:EliteU+11067001+A1?company_id=600000001
-        
-        method: .GET,
-        path: "/api/mobile/enterprise/v0.5/companycoursesdetail/{courseID}".oex_formatWithParameters(["courseID" : courseID]),
-        query : [Params.CompanyId.rawValue: JSON(companyID)],
-        deserializer: .JSONResponse(courseDeserializer))
+         method: .GET,
+         path: "/api/courses/v1/courses/{courseID}".oex_formatWithParameters(["courseID" : courseID]),
+         deserializer: .JSONResponse(courseDeserializer))
     }
     
     public static func enroll(courseID: String, emailOptIn: Bool = true) -> NetworkRequest<UserCourseEnrollment> {

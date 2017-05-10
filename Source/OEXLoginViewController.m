@@ -205,22 +205,22 @@
                                                                     };
     self.navigationItem.title = [Strings signInText];
     
-//    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 68, 48)];
-//    rightButton.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, -16);
-//    rightButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:16.0];
-//    rightButton.titleLabel.textAlignment = NSTextAlignmentRight;
-//    rightButton.showsTouchWhenHighlighted = YES;
-//    [rightButton setTitle:NSLocalizedString(@"JUMP_OVER", nil) forState:UIControlStateNormal];
-//    [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [rightButton addTarget:self action:@selector(rightButtonAciton:) forControlEvents:UIControlEventTouchUpInside];
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 68, 48)];
+    rightButton.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, -16);
+    rightButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:16.0];
+    rightButton.titleLabel.textAlignment = NSTextAlignmentRight;
+    rightButton.showsTouchWhenHighlighted = YES;
+    [rightButton setTitle:NSLocalizedString(@"JUMP_OVER", nil) forState:UIControlStateNormal];
+    [rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightButtonAciton:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     
     
-    //    if (self.environment.config.isRegistrationEnabled) {
-    //        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_cancel"] style:UIBarButtonItemStylePlain target:self action:@selector(navigateBack)];
-    //        closeButton.accessibilityLabel = [Strings close];
-    //        self.navigationItem.leftBarButtonItem = closeButton;
-    //    }
+//        if (self.environment.config.isRegistrationEnabled) {
+//            UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_cancel"] style:UIBarButtonItemStylePlain target:self action:@selector(navigateBack)];
+//            closeButton.accessibilityLabel = [Strings close];
+//            self.navigationItem.leftBarButtonItem = closeButton;
+//        }
 }
 
 - (void)rightButtonAciton:(UIButton *)sender {
@@ -332,15 +332,11 @@
     self.btn_Login.layer.cornerRadius = 4;
     self.btn_Login.backgroundColor = [UIColor colorWithHexString:colorHexStr1];
     self.registerButton.showsTouchWhenHighlighted = YES;
+    [self.registerButton setTitleColor:[UIColor colorWithHexString:colorHexStr1] forState:UIControlStateNormal];
     
     [self textField:self.tf_Password backgroundWithView:self.passwordBgView];
     [self textField:self.tf_EmailID backgroundWithView:self.acountBgView];
-    
-    /* 隐藏注册 */
-    self.registerButton.hidden = YES;
-    self.seperatorLeft.hidden = YES;
-    self.seperatorRight.hidden = YES;
-    self.lbl_OrSignIn.hidden = YES;
+
 }
 
 - (void)textField:(UITextField *)textField backgroundWithView:(UIImageView *)image  {

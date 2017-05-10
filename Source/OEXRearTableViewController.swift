@@ -12,7 +12,7 @@ import MessageUI
 import edXCore
 
 private enum OEXRearViewOptions: Int {
-    case UserProfile, MyCourse, MyVideos, FindCourses, UserCenter , MySettings, SubmitFeedback, Debug, Logout
+    case UserProfile, MyCourse, MyVideos, FindCourses , MySettings, SubmitFeedback, Debug, Logout
 }
 
 private let LogoutCellDefaultHeight: CGFloat = 130.0
@@ -34,7 +34,6 @@ class OEXRearTableViewController : UITableViewController {
     @IBOutlet var coursesLabel: UILabel!
     @IBOutlet var videosLabel: UILabel!
     @IBOutlet var findCoursesLabel: UILabel!
-    @IBOutlet var assistantLabel: UILabel!
     @IBOutlet var settingsLabel: UILabel!
     @IBOutlet var submitFeedbackLabel: UILabel!
     @IBOutlet var logoutButton: UIButton!
@@ -43,7 +42,6 @@ class OEXRearTableViewController : UITableViewController {
     @IBOutlet var userEmailLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
 
-    @IBOutlet weak var companyImage: UIImageView!
     @IBOutlet var userProfilePicture: UIImageView!
     @IBOutlet weak var appVersionButton: UIButton!
     
@@ -70,7 +68,6 @@ class OEXRearTableViewController : UITableViewController {
         coursesLabel.text = Strings.myCourses
         videosLabel.text = Strings.myVideos
         findCoursesLabel.text = Strings.findCourses
-        assistantLabel.text = Strings.userCenter
         settingsLabel.text = Strings.mySettings
         submitFeedbackLabel.text = Strings.SubmitFeedback.optionTitle
         logoutButton.setTitle(Strings.logout, forState: .Normal)
@@ -107,14 +104,6 @@ class OEXRearTableViewController : UITableViewController {
         
         profileFeed?.output.listen(self,  success: { profile in
             self.userProfilePicture.remoteImage = profile.image(self.environment.networkManager)
-            
-            self.companyImage.contentMode = .ScaleAspectFit
-            if profile.logoUrl != nil {
-                let companyImageStr = ELITEU_URL +  profile.logoUrl!
-                self.companyImage.sd_setImageWithURL(NSURL.init(string:companyImageStr), placeholderImage: UIImage.init(named: "logobg"))
-            } else {
-                self.companyImage.image = UIImage.init(named: "logobg")
-            }
             
             if (profile.nickname != nil) == true {//如果昵称不为空,显示昵称
                 self.userNameLabel.text = profile.nickname
@@ -240,10 +229,10 @@ class OEXRearTableViewController : UITableViewController {
             
             switch option {
                 
-//            case .UserProfile:
-//                guard environment.config.profilesEnabled else { break }
-//                guard let currentUserName = environment.session.currentUser?.username else { return }
-//                environment.router?.showProfileForUsername(username: currentUserName)
+            case .UserProfile:
+                guard environment.config.profilesEnabled else { break }
+                guard let currentUserName = environment.session.currentUser?.username else { return }
+                environment.router?.showProfileForUsername(username: currentUserName)
             case .MyCourse:
                 environment.router?.showMyCourses()
             case .MyVideos:
@@ -251,10 +240,6 @@ class OEXRearTableViewController : UITableViewController {
             case .FindCourses:
                 environment.router?.showCourseCatalog(nil)
                 environment.analytics.trackUserFindsCourses()
-            case .UserCenter:
-                guard environment.config.profilesEnabled else { break }
-                guard let currentUserName = environment.session.currentUser?.username else { return }
-                environment.router?.showProfileForUsername(username: currentUserName)
             case .MySettings:
                 environment.router?.showMySettings()
             case .SubmitFeedback:
@@ -262,8 +247,6 @@ class OEXRearTableViewController : UITableViewController {
             case .Debug:
                 environment.router?.showDebugPane()
             case .Logout:
-                break
-            default:
                 break
             }
         }

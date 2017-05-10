@@ -311,7 +311,7 @@ class CourseCatalogDetailViewController: UIViewController,UIScrollViewDelegate,U
     
     private func loadCourseMessage() { //获取课程信息
         
-        let request = CourseCatalogAPI.getCourse(courseID, companyID: (self.session.currentUser?.company_id)!)
+        let request = CourseCatalogAPI.getCourse(courseID)
         let courseStream = environment.networkManager.streamForRequest(request)
         let enrolledStream = environment.dataManager.enrollmentManager.streamForCourseWithID(courseID).resultMap {
             return .Success($0.isSuccess)

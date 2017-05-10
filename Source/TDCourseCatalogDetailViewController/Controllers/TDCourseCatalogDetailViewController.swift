@@ -67,7 +67,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         self.courseStream.listen(self, success: {[weak self] (course, enrolled) in
             
             self!.courseModel = course
-            print(" 时间 ----> \(self?.courseModel.start_display_info.displayDate) --> \(self?.courseModel.start_display_info.date) -====>>>\((self?.courseModel.is_eliteu_course)!)")
+            print(" 时间 ----> \(self?.courseModel.start_display_info.displayDate) --> \(self?.courseModel.start_display_info.date)")
             
             if enrolled { //已报名
                 self?.courseModel.submitType = 0//查看课程
@@ -76,7 +76,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
                 let now = NSDate()
                 if now.isEarlierThanOrEqualTo(self?.courseModel.start_display_info.date) {
                     self?.courseModel.submitType = 3//即将开课
-                
+                    
                 } else {
                     if self?.prepareOrder == true {
                         self?.courseModel.submitType = 2//查看待支付
@@ -141,7 +141,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
 
     private func loadCourseMessage() { //获取课程信息
         
-        let request = CourseCatalogAPI.getCourse(courseID, companyID: self.companyID)
+        let request = CourseCatalogAPI.getCourse(courseID)
         let courseStream = environment.networkManager.streamForRequest(request)
         let enrolledStream = environment.dataManager.enrollmentManager.streamForCourseWithID(courseID).resultMap {
             return .Success($0.isSuccess)
@@ -276,15 +276,25 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
     
     func gotoChooseCourseVc() { //选择课表
         
-        if self.courseModel.is_eliteu_course == true {//英荔课程
+        //        if self.courseModel.is_eliteu_course == true {//英荔课程
+        let currentUser = session.currentUser //登陆状态
+        if currentUser != nil {
             let vc = TDChooseCourseViewController();
             vc.username = self.username
             vc.courseID = self.courseID
             self.navigationController?.pushViewController(vc, animated: true)
-
         } else {
-            addOwnCompanyCourseHandle()
+            self.logoutCurrentUser()//到登陆界面
         }
+        //        } else {
+        //            addOwnCompanyCourseHandle()
+        //        }
+        
+    }
+    
+    func logoutCurrentUser() {
+        OEXFileUtility.nukeUserPIIData()
+        self.environment.router?.logout()
     }
     
     private func showCourseScreen(message message: String? = nil) { //跳到我的课程

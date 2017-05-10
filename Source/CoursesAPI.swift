@@ -16,16 +16,14 @@ struct CoursesAPI {
     }
     
     //我的课程
-    static func getUserEnrollments(username: String, organizationCode: String? ,companyId: String) -> NetworkRequest<[UserCourseEnrollment]> {
+    static func getUserEnrollments(username: String, organizationCode: String?) -> NetworkRequest<[UserCourseEnrollment]> {
         
-        print("username --->> \(username), == companyId -->> \(companyId)")
+        print("username --->> \(username)")
         
-        //api/mobile/v0.5/users/{username}/course_enrollments/
-        var path = "api/mobile/enterprise/v0.5/{company_id}/{username}/course_enrollments/".oex_formatWithParameters(["company_id": companyId, "username": username])
+        var path = "api/mobile/v0.5/users/{username}/course_enrollments/".oex_formatWithParameters(["username": username])
         
         if let orgCode = organizationCode {
-            //"api/mobile/v0.5/users/{username}/course_enrollments/?org={org}"
-            path = "api/mobile/enterprise/v0.5/{company_id}/{username}/course_enrollments/?org={org}".oex_formatWithParameters(["company_id": companyId, "username": username, "org": orgCode])
+            path = "api/mobile/v0.5/users/{username}/course_enrollments/?org={org}".oex_formatWithParameters(["username": username, "org": orgCode])
         }
         
         return NetworkRequest(
