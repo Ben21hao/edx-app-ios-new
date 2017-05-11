@@ -507,7 +507,7 @@ static NSString *payIdentify = @"PayTableViewCell";
     
     //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
     //    NSString *appScheme = @"alisdkdemo";
-    NSString *appScheme = @"org.eliteu.mobile";
+    NSString *appScheme = @"org.eliteu.mobile-person";
     //将商品信息拼接成字符串
     NSString *orderSpec = [order description];
     NSLog(@"orderSpec = %@",orderSpec);
