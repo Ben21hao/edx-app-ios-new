@@ -29,7 +29,7 @@
               {
               "name" : "country",
               "label" : "Location",
-              "type" : "Select",
+              "type" : "select",
               "data_type" : "country",
               "options" : {
               "reference" : "countries",

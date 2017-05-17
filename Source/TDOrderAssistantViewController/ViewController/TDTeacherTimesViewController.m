@@ -402,17 +402,19 @@
     NSDate *beginningOfWeek = [gregorian dateFromComponents:components];
     NSDateFormatter *dateday = [[NSDateFormatter alloc] init];
      [dateday setDateFormat:@"yyyy-MM-dd"];
+    
+    NSString *dateStr = [NSString stringWithFormat:@"%@",[dateday stringFromDate:beginningOfWeek]];
+    
     if (type == 1) {
         if (self.addDay == 0) {
-            [dateday setDateFormat:NSLocalizedString(@"TODAY", nil)];
+            dateStr = NSLocalizedString(@"TODAY", nil);
         } else if (self.addDay == 1) {
-            [dateday setDateFormat:NSLocalizedString(@"TOMORROW", nil)];
+            dateStr = NSLocalizedString(@"TOMORROW", nil);
         } else if (self.addDay == 2) {
-            [dateday setDateFormat:NSLocalizedString(@"AFTER_TOMOROW", nil)];
+            dateStr = NSLocalizedString(@"AFTER_TOMOROW", nil);
         }
     }
     
-    NSString * dateStr = [NSString stringWithFormat:@"%@",[dateday stringFromDate:beginningOfWeek]];;
     NSLog(@"dateStr ==  %@",dateStr);
     return dateStr;
 }
