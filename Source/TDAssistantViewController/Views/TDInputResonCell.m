@@ -67,7 +67,7 @@
     self.bgView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.bgView];
     
-    self.titleLabel = [self setLabelConstraint:@"评价"];
+    self.titleLabel = [self setLabelConstraint:NSLocalizedString(@"RETE_TA", nil)];
     [self.bgView addSubview:self.titleLabel];
     
     self.numLabel = [self setLabelConstraint:@"0/500"];
@@ -84,7 +84,7 @@
     self.inputTextView.layer.borderColor = [UIColor colorWithHexString:colorHexStr6].CGColor;
     [self.bgView addSubview:self.inputTextView];
     
-    self.holderLabel = [self setLabelConstraint:@"请输入您对助教的评价"];
+    self.holderLabel = [self setLabelConstraint:NSLocalizedString(@"ENTER_COMMENTS_TA", nil)];
     self.holderLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
     [self.bgView addSubview:self.holderLabel];
 }

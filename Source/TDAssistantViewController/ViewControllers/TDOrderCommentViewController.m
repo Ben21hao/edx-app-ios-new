@@ -34,8 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.titleViewLabel.text = @"评价";
-    [self.rightButton setTitle:@"提交" forState:UIControlStateNormal];
+    self.titleViewLabel.text = NSLocalizedString(@"STUDENT_COMMENT", nil);
+    [self.rightButton setTitle:NSLocalizedString(@"SUBMIT", nil) forState:UIControlStateNormal];
     WS(weakSelf);
     self.rightButtonHandle = ^{
         [weakSelf handinComment];
@@ -88,22 +88,22 @@
             if (self.commentSuccessHandle) {
                 self.commentSuccessHandle();
             }
-            [self.view makeToast:@"提交成功" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"COMMENT_SUBMITTED", nil) duration:1.08 position:CSToastPositionCenter];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
             
         } else if ([code intValue] == 312) {
-            [self.view makeToast:@"您已经评论过了" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"HAVE_COMMNET", nil) duration:1.08 position:CSToastPositionCenter];
         } else if ([code intValue] == 500) {
-            [self.view makeToast:@"评论失败，请稍后重试" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"UNABEL_SUBMIT_COMMNET", nil) duration:1.08 position:CSToastPositionCenter];
         } else {
             NSLog(@"提交评论有问题 --- %@",code);
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
-        [self.view makeToast:@"评论失败，请稍后重试" duration:1.08 position:CSToastPositionCenter];
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"提交评论出错 --- %ld",(long)error.code);
     }];
 }

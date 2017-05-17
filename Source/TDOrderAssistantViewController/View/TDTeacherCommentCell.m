@@ -141,7 +141,7 @@
 #pragma mark - 点赞praise或取消点赞cancel_praise
 - (void)praiseButtonAction:(UIButton *)sender {
     if (self.username.length == 0) {
-        [[UIApplication sharedApplication].keyWindow.rootViewController.view makeToast:@"请先登录再点赞" duration:1.08 position:CSToastPositionCenter];
+        [[UIApplication sharedApplication].keyWindow.rootViewController.view makeToast:NSLocalizedString(@"LOGIN_AND_COMMENT", nil) duration:1.08 position:CSToastPositionCenter];
         return;
     }
     
@@ -174,7 +174,7 @@
             }
             
         }else if ([code intValue] == 312){
-            [[UIApplication sharedApplication].keyWindow.rootViewController.view makeToast:@"您已经点过赞了！" duration:1.08 position:CSToastPositionCenter];
+            [[UIApplication sharedApplication].keyWindow.rootViewController.view makeToast:NSLocalizedString(@"AREADY_COMMENT", nil) duration:1.08 position:CSToastPositionCenter];
         } else {
             NSLog(@" 点赞出错 ==  %@",code);
         }
@@ -215,8 +215,8 @@
     
     self.moreButton = [[UIButton alloc] init];
     self.moreButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
-    [self.moreButton setTitle:@"显示更多" forState:UIControlStateNormal];
-    [self.moreButton setTitle:@"收起" forState:UIControlStateSelected];
+    [self.moreButton setTitle:NSLocalizedString(@"SHOW_MORE", nil) forState:UIControlStateNormal];
+    [self.moreButton setTitle:NSLocalizedString(@"PACK_UP", nil) forState:UIControlStateSelected];
     [self.moreButton setTitleColor:[UIColor colorWithHexString:colorHexStr1] forState:UIControlStateNormal];
     [self.moreButton addTarget:self action:@selector(moreButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.moreButton];

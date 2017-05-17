@@ -7,6 +7,7 @@
 //
 
 #import "TDAssistantFootCell.h"
+#import "edX-Swift.h"
 
 @interface TDAssistantFootCell ()
 
@@ -92,7 +93,7 @@
             
         } else {//当前时间已过开始时间
             self.enterButton.hidden = NO;
-            [self.enterButton setTitle:@"进入教室" forState:UIControlStateNormal];
+            [self.enterButton setTitle:NSLocalizedString(@"ENTER_CLASSROOM", nil) forState:UIControlStateNormal];
         }
         
         NSLog(@"---==== >>>> %@ == %@ --> %f",startDate,now,interval);
@@ -107,7 +108,7 @@
     if (self.timeNum <= 0) {
         [self.timer invalidate];
         self.isCanClick = YES;
-        [self.enterButton setTitle:@"进入教室" forState:UIControlStateNormal];
+        [self.enterButton setTitle:NSLocalizedString(@"ENTER_CLASSROOM", nil) forState:UIControlStateNormal];
     }
 }
 
@@ -124,7 +125,8 @@
     int munite = muniteNum / 60;
     int second = self.timeNum % 60;
     
-    NSString *str = [NSString stringWithFormat:@"%d天%d时%d分%d秒",day,hour,munite,second];
+    NSString *str = [Strings timeCountNumWithDay:[NSString stringWithFormat:@"%d",day] hour:[NSString stringWithFormat:@"%d",hour] min:[NSString stringWithFormat:@"%d",munite] second:[NSString stringWithFormat:@"%d",second]];
+//    NSString *str = [NSString stringWithFormat:@"%d天%d时%d分%d秒",day,hour,munite,second];
     [self.enterButton setTitle:str forState:UIControlStateNormal];
 }
 
@@ -190,15 +192,15 @@
     self.bgView = [[UIView alloc] init];
     [self addSubview:self.bgView];
     
-    self.enterButton = [self setButtonConstraint:@"进入教室" backGroundColor:colorHexStr1 titleColor:colorHexStr13];
+    self.enterButton = [self setButtonConstraint:NSLocalizedString(@"ENTER_CLASSROOM", nil) backGroundColor:colorHexStr1 titleColor:colorHexStr13];
     [self.enterButton addTarget:self action:@selector(enterButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.enterButton];
     
-    self.cancelButton = [self setButtonConstraint:@"取消" backGroundColor:colorHexStr6 titleColor:colorHexStr9];
+    self.cancelButton = [self setButtonConstraint:NSLocalizedString(@"CANCEL", nil) backGroundColor:colorHexStr6 titleColor:colorHexStr9];
     [self.cancelButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.cancelButton];
     
-    self.commentButton = [self setButtonConstraint:@"评价" backGroundColor:colorHexStr4 titleColor:colorHexStr13];
+    self.commentButton = [self setButtonConstraint:NSLocalizedString(@"RETE_TA", nil) backGroundColor:colorHexStr4 titleColor:colorHexStr13];
     [self.commentButton addTarget:self action:@selector(commentButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.commentButton];
     

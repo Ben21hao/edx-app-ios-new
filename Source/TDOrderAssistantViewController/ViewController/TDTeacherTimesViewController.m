@@ -57,8 +57,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.titleViewLabel.text = @"选择预约时间";
-    [self.rightButton setTitle:@"确定" forState:UIControlStateNormal];
+    self.titleViewLabel.text = NSLocalizedString(@"SELECT_PERIOD", nil);
+    [self.rightButton setTitle:NSLocalizedString(@"OK", nil) forState:UIControlStateNormal];
     
     WS(weakSelf);
     self.rightButtonHandle = ^(){ //确定
@@ -78,7 +78,7 @@
             [weakSelf.navigationController pushViewController:createOrderVc animated:YES];
             
         } else {
-            [weakSelf.view makeToast:@"请选择预约时间" duration:1.08 position:CSToastPositionCenter];
+            [weakSelf.view makeToast:NSLocalizedString(@"PLEASE_SELECT_PERIOD", nil) duration:1.08 position:CSToastPositionCenter];
         }
     };
     
@@ -181,7 +181,7 @@
             
             self.messageLabel.hidden = YES;
             [self.tableView reloadData];
-            [self.view makeToast:@"暂无预约时间安排" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"NO_TA_COURSE_SCHEDULE", nil) duration:1.08 position:CSToastPositionCenter];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -404,11 +404,11 @@
      [dateday setDateFormat:@"yyyy-MM-dd"];
     if (type == 1) {
         if (self.addDay == 0) {
-            [dateday setDateFormat:@"今天"];
+            [dateday setDateFormat:NSLocalizedString(@"TODAY", nil)];
         } else if (self.addDay == 1) {
-            [dateday setDateFormat:@"明天"];
+            [dateday setDateFormat:NSLocalizedString(@"TOMORROW", nil)];
         } else if (self.addDay == 2) {
-            [dateday setDateFormat:@"后天"];
+            [dateday setDateFormat:NSLocalizedString(@"AFTER_TOMOROW", nil)];
         }
     }
     
@@ -446,6 +446,7 @@
     self.tableView = [[UITableView alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorInset = UIEdgeInsetsZero;
     self.tableView.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
     [self.view addSubview:self.tableView];
     
@@ -459,7 +460,7 @@
     self.nullLabel = [[UILabel alloc] init];
     self.nullLabel.font = [UIFont fontWithName:@"" size:16];
     self.nullLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
-    self.nullLabel.text = @"暂无预约时间安排";
+    self.nullLabel.text = NSLocalizedString(@"NO_TA_COURSE_SCHEDULE", nil);
     [self.tableView addSubview:self.nullLabel];
     
     [self.nullLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -523,7 +524,8 @@
     self.messageLabel.font = [UIFont fontWithName:@"OpenSans" size:12];
     self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
     self.messageLabel.textAlignment = NSTextAlignmentCenter;
-    self.messageLabel.text = @"温馨提醒：预约时间必须为连续时间段";
+    self.messageLabel.text = NSLocalizedString(@"NOTE_COINS", nil);
+    self.messageLabel.numberOfLines = 0;
     [self.footerView addSubview:self.messageLabel];
     
     [self.messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -28,8 +28,8 @@
     [super viewDidLoad];
     
     self.toolModel = [[TDBaseToolModel alloc] init];
-    self.titleViewLabel.text = @"输入咨询问题";
-    [self.rightButton setTitle:@"提交" forState:UIControlStateNormal];
+    self.titleViewLabel.text = NSLocalizedString(@"INIT_INSTANT", nil);
+    [self.rightButton setTitle:NSLocalizedString(@"SUBMIT", nil) forState:UIControlStateNormal];
     WS(weakSelf);
     self.rightButtonHandle = ^{
         [weakSelf.inputView resignFirstResponder];
@@ -94,14 +94,18 @@
                     [self gotoDownloadClassrooms];
                 }
             }
+        } else if ([code intValue] == 401) {//不能预约自己
+            [self.view makeToast:NSLocalizedString(@"APPOINTMENT_SELF", nil) duration:1.08 position:CSToastPositionCenter];
+        } else if ([code intValue] == 402) {//先加入课程
+            [self.view makeToast:NSLocalizedString(@"ENROLL_COURSE_FIRST", nil) duration:1.08 position:CSToastPositionCenter];
         } else if ([code intValue] == 500) {
-            [self.view makeToast:@"预约实时服务失败" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"UNABEL_INIT_INSTANT", nil) duration:1.08 position:CSToastPositionCenter];
         } else {
-            [self.view makeToast:@"预约失败" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"UNABEL_INIT_INSTANT", nil) duration:1.08 position:CSToastPositionCenter];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
-        [self.view makeToast:@"网络链接出错" duration:1.08 position:CSToastPositionCenter];
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"即时服务出错 -- %ld",(long)error.code);
     }];
 }
@@ -109,11 +113,11 @@
 - (void)gotoDownloadClassrooms {
     NSLog(@" --- 还没下载 ----");
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提醒"
-                                                        message:@"您还没下载Classrooms，如需进入教室，请点击确定"
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                                                        message:NSLocalizedString(@"NOT_INSTALLED_CLASSROOM", nil)
                                                        delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"确定", nil];
+                                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                              otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
     [alertView show];
 }
 
@@ -147,7 +151,7 @@
 #pragma mark - UI
 - (void)setViewConstraint {
     
-    UILabel *titleLabel = [self setLabelConstraint:@"咨询问题"];
+    UILabel *titleLabel = [self setLabelConstraint:NSLocalizedString(@"QUETIONS_DESCRIPTION", nil)];
     [self.view addSubview:titleLabel];
     
     self.numLabel = [self setLabelConstraint:@"0/100"];
@@ -164,14 +168,14 @@
     self.inputView.delegate = self;
     [self.view addSubview:self.inputView];
     
-    self.holderLabel = [self setLabelConstraint:@"输入您要咨询助教的问题"];
+    self.holderLabel = [self setLabelConstraint:NSLocalizedString(@"TYPE_QUETIONS", nil)];
     self.holderLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
     [self.view addSubview:self.holderLabel];
     
     self.messageLabel = [[UILabel alloc] init];
     self.messageLabel.textAlignment = NSTextAlignmentCenter;
-    NSMutableAttributedString *str1 = [self.toolModel setDetailString:@"统一收费标准：10分钟以内125.00宝典," withFont:14 withColorStr:colorHexStr9];
-    NSMutableAttributedString *str2 = [self.toolModel setDetailString:@"  超出部分12.50宝典/分钟" withFont:14 withColorStr:colorHexStr9];
+    NSMutableAttributedString *str1 = [self.toolModel setDetailString:NSLocalizedString(@"PAYMENT_NOTE", nil) withFont:14 withColorStr:colorHexStr9];
+    NSMutableAttributedString *str2 = [self.toolModel setDetailString:NSLocalizedString(@"PAYMENT_NOTE_LAST", nil) withFont:14 withColorStr:colorHexStr9];
     [str1 appendAttributedString:str2];
     self.messageLabel.attributedText = str1;
     self.messageLabel.numberOfLines = 0;

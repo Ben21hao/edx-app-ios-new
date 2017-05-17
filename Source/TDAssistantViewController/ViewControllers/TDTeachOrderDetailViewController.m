@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
  
-    self.titleViewLabel.text = @"订单详情";
+    self.titleViewLabel.text = NSLocalizedString(@"ORDER_DETAILS", nil);
     [self setViewConstraint];
 }
 
@@ -48,7 +48,7 @@
 
         TDSuTitleCell *cell = [[TDSuTitleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TDSubtitleCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.titleLabel.text = @"咨询问题";
+        cell.titleLabel.text = NSLocalizedString(@"QUETIONS_DESCRIPTION", nil);
         cell.subTitileLabel.text = self.model.question;
         return cell;
         
@@ -62,43 +62,43 @@
         cell.textLabel.textColor = [UIColor colorWithHexString:colorHexStr10];
         cell.detailTextLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
         cell.detailTextLabel.textColor = [UIColor colorWithHexString:colorHexStr9];
-        
+
         TDBaseToolModel *toolModel = [[TDBaseToolModel alloc] init];
         switch (indexPath.section) {
             case 0:
-                cell.textLabel.text = @"课程";
+                cell.textLabel.text = NSLocalizedString(@"COURSE", nil);
                 cell.detailTextLabel.text = self.model.course_display_name;
                 break;
             case 1:
-                cell.textLabel.text = @"服务订单";
+                cell.textLabel.text = NSLocalizedString(@"ORDER_NUMBER", nil);
                 cell.detailTextLabel.text = self.model.id;
                 break;
             case 2:
-                cell.textLabel.text = @"助教";
+                cell.textLabel.text = NSLocalizedString(@"TEACH_ASSISTANT", nil);
                 cell.detailTextLabel.text = self.model.assistant_name;
                 break;
             case 3:
-                cell.textLabel.text = @"服务类型";
-                cell.detailTextLabel.text = [self.model.order_type intValue] == 1 ? @"预约服务" : @"即时服务";
+                cell.textLabel.text = NSLocalizedString(@"SERVICE_TYPE", nil);
+                cell.detailTextLabel.text = [self.model.order_type intValue] == 1 ? NSLocalizedString(@"APPOINTMEN_SERVICE", nil) : NSLocalizedString(@"INSTANT_SERVICE", nil);
                 break;
             case 4:
-                cell.textLabel.text = @"预约时间";
+                cell.textLabel.text = NSLocalizedString(@"RESERCED_PERIOD", nil);
                 cell.detailTextLabel.text = self.model.order_time_grap;
                 break;
             case 5:
-                cell.textLabel.text = @"服务时间";
+                cell.textLabel.text = NSLocalizedString(@"SERVICE_PERIOD", nil);
                 cell.detailTextLabel.text = self.model.service_time;
                 break;
             case 6:
-                cell.textLabel.text = @"预付宝典";
-                cell.detailTextLabel.attributedText = [toolModel setDetailString:[NSString stringWithFormat:@"%.2f宝典",[self.model.cost_coin floatValue]] withFont:14 withColorStr:colorHexStr9];
+                cell.textLabel.text = NSLocalizedString(@"PREPAID_COIS", nil);
+                cell.detailTextLabel.attributedText = [toolModel setDetailString:[NSString stringWithFormat:@"%.2f%@",[self.model.cost_coin floatValue],NSLocalizedString(@"COINS_VALUE", nil)] withFont:14 withColorStr:colorHexStr9];
                 break;
             case 7:
-                cell.textLabel.text = @"实付宝典";
-                cell.detailTextLabel.attributedText = [toolModel setDetailString:[NSString stringWithFormat:@"%.2f宝典",[self.model.real_cost_coin floatValue]]withFont:14 withColorStr:colorHexStr9];
+                cell.textLabel.text = NSLocalizedString(@"COINS_PAID", nil);
+                cell.detailTextLabel.attributedText = [toolModel setDetailString:[NSString stringWithFormat:@"%.2f%@",[self.model.real_cost_coin floatValue],NSLocalizedString(@"COINS_VALUE", nil)]withFont:14 withColorStr:colorHexStr9];
                 break;
             case 8:
-                cell.textLabel.text = @"状态";
+                cell.textLabel.text = NSLocalizedString(@"ALL_STATUS", nil);
                 cell.detailTextLabel.text = self.statusStr;
                 break;
             default:
@@ -125,6 +125,7 @@
     self.tableView = [[UITableView alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorInset = UIEdgeInsetsZero;
     self.tableView.tableFooterView = [UIView new];
     self.tableView.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
     [self.view addSubview:self.tableView];

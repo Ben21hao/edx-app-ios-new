@@ -1295,3 +1295,198 @@
 "ACADEMIC_ESSAYS" = "学术邗物文章";
 /*管理咨询项目Management Consulting*/
 "MANAGEREMENT_CONSULTING" = "管理咨询项目";
+
+
+/*助教 Teaching Assistant*/
+"TEACH_ASSISTANT" = "助教";
+/*助教详情 Details*/
+"TA_DETAILS" = "助教详情";
+/*认证助教Verified TA*/
+"VERIFIED_TA" = "认证助教";
+/*个人主页 Homepage*/
+"HOMEPAGE" = "个人主页";
+/*个人简介 Personal Profile*/
+"PERSONAL_PROFILE" = "个人简介";
+/*工作经历 Work Experiences*/
+"WORK_EXPERIENCES" = "工作经历";
+/*培训经历 Training Experiences*/
+"TRAINING_EXPERIENCES" = "培训经历";
+/*获奖情况 Awards*/
+"AWARDS" = "获奖情况";
+/*专业技能 Professional Skills*/
+"PROFESSIONAL_SKILLS" = "专业技能";
+/*兴趣爱好 Interests*/
+"INTERESTS" = "兴趣爱好";
+/*整体印象 General Impression*/
+"GENERAL_IMPRESSION" = "整体印象";
+/*暂无此助教的评论 No comments yet.*/
+"NO_COMMENTS_YET" = "暂无此助教的评论";
+/*此课程暂无助教 Currently no available TA for this course.*/
+"CURRENTLY_NO_TA" = "此课程暂无助教";
+/*该日期暂无服务安排 No TA service schedule for this date yet.*/
+"NO_TA_COURSE_SCHEDULE" = "该日期暂无服务安排";
+/*选择预约时间 Select a Period*/
+"SELECT_PERIOD" = "选择预约时间";
+/*请选择预约时间 Please select a period*/
+"PLEASE_SELECT_PERIOD" = "请选择预约时间";
+/*今天 Today*/
+"TODAY" = "今天";
+/*明天 Tomorrow*/
+"TOMORROW" = "明天";
+/*后天 The day after tomorrow*/
+"AFTER_TOMOROW" = "后天";
+
+/*预约 Appointment*/
+"APPOINTMENT" = "预约";
+/*输入咨询问题 Describe Your Questions*/
+"DESCRIBE_QUESTIONS" = "输入咨询问题";
+/*输入问题描述 Initiate Instant Service*/
+"INIT_INSTANT" = "输入问题描述";
+/*问题描述 Questions description*/
+"QUETIONS_DESCRIPTION" = "问题描述";
+/*请输入您的问题 Please type your questions.*/
+"TYPE_QUETIONS" = "请输入您的问题";
+/*收费标准 Payment standard*/
+"PAYMENT_STANDARD" = "收费标准";
+/*宝典/分钟 Coin(s)/min */
+"COINTS_MIN" = "宝典/分钟";
+/*预约时间 Reserved Period*/
+"RESERCED_PERIOD" = "预约时间";
+/*预付宝典 Prepaid coins */
+"PREPAID_COIS" = "预付宝典";
+/*可用宝典 Available coins */
+"AVAILABLE_COINS" = "可用宝典";
+/*温馨提醒：宝典扣取以实际服务时间为准 Note: Coins will be deducted according to actual service time. */
+"NOTE_COINS" = "温馨提醒：宝典扣取以实际服务时间为准";
+/*发起即时服务 Initiate Instant Service */
+"INIT_SERVICE" = "发起即时服务";
+/*收费标准:10分钟以内125.00宝典， Payment standard：125.00 coins for the first 10 minutes,*/
+"PAYMENT_NOTE" = "收费标准:10分钟以内125.00宝典，";
+/* 超出10分钟按12.50宝典/分钟计费  12.50 coins per minute afterwards.*/
+"PAYMENT_NOTE_LAST" = " 超出10分钟按12.50宝典/分钟计费";
+/*预约失败 Appointment Status */
+"APPOINTMENT_STATUS" = "预约失败";
+/*预约失败！Unable to make this appointment. */
+"UNABLE_APPOINTMENT" = "预约失败！";
+/*重新预约 Reschedule */
+"RESCHEDULE_APPOINTMENT" = "重新预约";
+/*加入课程 Enroll */
+"ENROLL_COURSE" = "加入课程";
+/*充值 Top up */
+"TOP_UP_MONEY" = "充值";
+/*助教不能预约自己 TA could not make appointment with themselves. */
+"APPOINTMENT_SELF" = "助教不能预约自己";
+/*请先加入课程 Please enroll in the course first. */
+"ENROLL_COURSE_FIRST" = "请先加入课程";
+/*预约时间不能比当前时间早 The reserved period should not be earlier than current time. */
+"CURRENT_TIME_EARILER" = "预约时间不能比当前时间早";
+/*您的学习宝典余额不足，请先充值 No sufficient coins balance, please recharge. */
+"NO_ENOUGH_COINS" = "您的学习宝典余额不足，请先充值";
+/*助教未安排此时间段服务 This period is not arranged in schedule. */
+"NO_SCHEDULE" = "助教未安排此时间段服务";
+/*此时间段已被预约，请选择其他时间段 This period has been reserved, please select other available period. */
+"SELECT_OTHER_PERIOD" = "此时间段已被预约，请选择其他时间段";
+/*预约成功 Appointment Status */
+"APPOINTMENT_STATUS" = "预约成功";
+/*预约成功！You’ve made the appointment! */
+"APPOINTMENT_HAVE" = "预约成功！";
+/*请留意服务进行前的邮件或短信提醒 Please pay attention to the reminder email or text message before service. */
+"ATTENTION_MESSAGE" = "请留意服务进行前的邮件或短信提醒";
+/*预约信息 Details */
+"APPOINTMENT_DETAILS" = "预约信息 ";
+/*助教服务 TA Service */
+"TA_SERVICE" = "助教服务";
+/*评价 Rate TA */
+"RETE_TA" = "评价";
+/*进入教室 Enter classroom */
+"ENTER_CLASSROOM" = "进入教室";
+/*待服务 Pending*/
+"TA_PENDING" = "待服务";
+/*已完成 Finished */
+"TA_FINISH" = "已完成";
+/*已取消 Cancelled */
+"TA_CANCELLED" = "已取消";
+/*即时服务 : Instant service */
+"INSTANT_SERVICE" = "即时服务";
+/*问题描述 Question description */
+"QUETION_DESCRIPTION" = "问题描述";
+/*暂无待服务记录 No pending service yet */
+"NO_PENDING" = "暂无待服务记录";
+/*暂无已完成记录 No finished service yet */
+"NO_FINISHED" = "暂无已完成记录";
+/*暂无已取消记录 No cancelled service yet */
+"NO_CENACLLED" = "暂无已取消记录";
+/*订单详情 Order Details */
+"ORDER_DETAILS" = "订单详情";
+/*服务单号 Order No. */
+"ORDER_NUMBER" = "服务单号";
+/*服务类型 Type */
+"SERVICE_TYPE" = "服务类型";
+/*预约服务 Appointment service */
+"APPOINTMEN_SERVICE" = "预约服务";
+/*服务时间 Service period */
+"SERVICE_PERIOD" = "服务时间";
+/*实付宝典 Coins paid */
+"COINS_PAID" = "实付宝典";
+/*状态 Status */
+"ALL_STATUS" = "状态";
+/*满意度 Satisfaction Level */
+"STATISFACTION_LEVEL" = "满意度";
+/*非常满意 Very satisfied */
+"VERY_SATISFIED" = "非常满意";
+/*一般 Satisfied */
+"COMMOND_SATISFIED" = "一般";
+/*不满意 Not satisfied */
+"NOT_SATISFIED" = "不满意";
+/*请输入您对助教的评价 Please type your comments about the TA. */
+"ENTER_COMMENTS_TA" = "请输入您对助教的评价";
+/*少于24小时无法取消预约单 Unable to cancel service beginning in less than 24 hours. */
+"UNABEL_CANCEL_SERVICE" = "少于24小时无法取消预约单";
+/*取消预约单失败 Unable to cancel this order. */
+"UNABEL_CANCEL_ORDER" = "取消预约单失败";
+/*取消预约单成功 Order cancelled. */
+"ORDER_CANCELED" = "取消预约单成功";
+/*进入教室失败 Unable to enter classroom. */
+"UNABEL_ENTER_CLASSROOM" = "进入教室失败";
+/*课程房间没有被创建 This classroom does not exist. */
+"CLASSROMM_NOT_EXIST" = "课程房间没有被创建";
+/*评论失败 Unable to submit your comment. */
+"UNABEL_SUBMIT_COMMNET" = "评论失败 ";
+/*您已经评论过了！You’ve already made a comment. */
+"HAVE_COMMNET" = "您已经评论过了";
+/*评论成功 Comment submitted. */
+"COMMENT_SUBMITTED" = "评论成功";
+/*查询失败 System error. */
+"SYSTEM_ERROR" = "查询失败";
+/*该助教状态为忙碌 The status of TA is busy. */
+"TA_BUSY" = "该助教状态为忙碌";
+/*该助教状态为离线 The status of TA is offline. */
+"TA_OFFLINE" = "该助教状态为离线";
+/*发起即时服务失败 Unable to initiate an instant service. */
+"UNABEL_INIT_INSTANT" = "发起即时服务失败";
+/*输入内容超出字数限制 The length of content has exceeded the limit. */
+"EXCEEDE_LIMIT" = "输入内容超出字数限制";
+/*请选择预约服务的时间段 Please select a period for appointment service. */
+"SELECT_APPOINTMENT_PERIOD" = "请选择预约服务的时间段";
+/*所选时间段与其他人已预约的服务时间重叠，请重新选择时间。Selected period is overlapped with other’s reserved period, please reselect it. */
+"SELECT_RESERVED_PERIOD" = "所选时间段与其他人已预约的服务时间重叠，请重新选择时间。";
+/*您尚未安装Classrooms，点击“确定”前往下载。  : You have not installed Classrooms. Click OK to dowanload.  */
+"NOT_INSTALLED_CLASSROOM" = "您尚未安装Classrooms，点击“确定”前往下载。";
+/* Back bar button title of course*/
+"COURSE"="课程";
+/* 没有更多数据了 */
+"NO_MORE_DATA" = "没有更多数据了";
+/*视频回放 Video replay*/
+"VIDEO_REPLAY" = "视频回放";
+/*查看服务记录 View TA service record(s)*/
+"VIEW_TA_SERVICE" = "查看服务记录";
+/*%d天%d时%d分%d秒 */
+"TIME_COUNT_NUM" = "{day}天{hour}时{min}分{second}秒";
+
+/*服务x单 X Order(s) */
+"SERVICE_ORDER_NUM" = "服务{count}单";
+/*继续预约 =>Make a new appointment */
+"NEW_APPOINTMENT" = "继续预约";
+/*预约单不存在 The order does not exist. */
+"NOT_EXIST_ORDER" = "预约单不存在";
+

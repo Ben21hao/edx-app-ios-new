@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"个人主页";
+    self.title = NSLocalizedString(@"HOMEPAGE", nil);
     
     [self setViewConstraint];
     
@@ -135,25 +135,25 @@
     
     switch (indexPath.section) {
         case 0:
-            cell.textLabel.attributedText = [self setDetailTextAttribute:@"个人简介\n" withDetail:[NSString stringWithFormat:@"%@", self.model.introduction]];
+            cell.textLabel.attributedText = [self setDetailTextAttribute:[NSString stringWithFormat:@"%@\n",NSLocalizedString(@"PERSONAL_PROFILE", nil)] withDetail:[NSString stringWithFormat:@"%@", self.model.introduction]];
             break;
         case 1:
-            cell.textLabel.attributedText = [self setDetailTextAttribute:@"工作经历\n" withDetail:[NSString stringWithFormat:@"%@", self.model.work_experience]];
+            cell.textLabel.attributedText = [self setDetailTextAttribute:[NSString stringWithFormat:@"%@\n",NSLocalizedString(@"WORK_EXPERIENCES", nil)] withDetail:[NSString stringWithFormat:@"%@", self.model.work_experience]];
             break;
         case 2:
-            cell.textLabel.attributedText = [self setDetailTextAttribute:@"教育背景\n" withDetail:[NSString stringWithFormat:@"%@", self.model.education_experience]];
+            cell.textLabel.attributedText = [self setDetailTextAttribute:[NSString stringWithFormat:@"%@\n",NSLocalizedString(@"EDUCATIONNAL_BACKGROUND", nil)] withDetail:[NSString stringWithFormat:@"%@", self.model.education_experience]];
             break;
         case 3:
-            cell.textLabel.attributedText = [self setDetailTextAttribute:@"培训经历\n" withDetail:[NSString stringWithFormat:@"%@", self.model.train_experience]];
+            cell.textLabel.attributedText = [self setDetailTextAttribute:[NSString stringWithFormat:@"%@\n",NSLocalizedString(@"TRAINING_EXPERIENCES", nil)] withDetail:[NSString stringWithFormat:@"%@", self.model.train_experience]];
             break;
         case 4:
-            cell.textLabel.attributedText = [self setDetailTextAttribute:@"获奖情况\n" withDetail:[NSString stringWithFormat:@"%@", self.model.awards]];
+            cell.textLabel.attributedText = [self setDetailTextAttribute:[NSString stringWithFormat:@"%@\n",NSLocalizedString(@"AWARDS", nil)] withDetail:[NSString stringWithFormat:@"%@", self.model.awards]];
             break;
         case 5:
-            cell.textLabel.attributedText = [self setDetailTextAttribute:@"专业技能\n" withDetail:[NSString stringWithFormat:@"%@", self.model.skills]];
+            cell.textLabel.attributedText = [self setDetailTextAttribute:[NSString stringWithFormat:@"%@\n",NSLocalizedString(@"PROFESSIONAL_SKILLS", nil)] withDetail:[NSString stringWithFormat:@"%@", self.model.skills]];
             break;
         case 6:
-            cell.textLabel.attributedText = [self setDetailTextAttribute:@"兴趣爱好\n" withDetail:[NSString stringWithFormat:@"%@", self.model.hobbies]];
+            cell.textLabel.attributedText = [self setDetailTextAttribute:[NSString stringWithFormat:@"%@\n",NSLocalizedString(@"INTERESTS", nil)] withDetail:[NSString stringWithFormat:@"%@", self.model.hobbies]];
             break;
             
         default:

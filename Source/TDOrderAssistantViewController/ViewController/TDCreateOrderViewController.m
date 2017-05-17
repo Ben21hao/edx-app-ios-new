@@ -39,8 +39,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.titleViewLabel.text = @"预约信息";
-    [self.rightButton setTitle:@"预约" forState:UIControlStateNormal];
+    self.titleViewLabel.text = NSLocalizedString(@"APPOINTMENT_DETAILS", nil);
+    [self.rightButton setTitle:NSLocalizedString(@"SUBMIT", nil) forState:UIControlStateNormal];
     WS(weakSelf);
     self.rightButtonHandle = ^(){
         [weakSelf.inputView resignFirstResponder];
@@ -189,20 +189,20 @@
     
     switch (indexPath.row) {
         case 0:
-            cell.textLabel.text = @"收费标准";
-            cell.detailTextLabel.attributedText = [self.baseTool setDetailString:[NSString stringWithFormat:@"%.2f宝典/分钟",unitPrice] withFont:14 withColorStr:colorHexStr9];
+            cell.textLabel.text = NSLocalizedString(@"PAYMENT_STANDARD", nil);
+            cell.detailTextLabel.attributedText = [self.baseTool setDetailString:[NSString stringWithFormat:@"%.2f%@",unitPrice,NSLocalizedString(@"COINTS_MIN", nil)] withFont:14 withColorStr:colorHexStr9];
             break;
         case 1:
-             cell.textLabel.text = @"预定时间";
+            cell.textLabel.text = NSLocalizedString(@"RESERCED_PERIOD", nil);
             cell.detailTextLabel.text = self.timeStr;
             break;
         case 2:
-             cell.textLabel.text = @"预付宝典";
-            cell.detailTextLabel.attributedText = [self.baseTool setDetailString:[NSString stringWithFormat:@"%@宝典",self.iconStr] withFont:14 withColorStr:colorHexStr9];
+            cell.textLabel.text = NSLocalizedString(@"PREPAID_COIS", nil);
+            cell.detailTextLabel.attributedText = [self.baseTool setDetailString:[NSString stringWithFormat:@"%@%@",self.iconStr,NSLocalizedString(@"COINS_VALUE", nil)] withFont:14 withColorStr:colorHexStr9];
             break;
         case 3:
-             cell.textLabel.text = @"可用宝典";
-            cell.detailTextLabel.attributedText = [self.baseTool setDetailString:[NSString stringWithFormat:@"%.2f宝典",self.effectiveIcon] withFont:14 withColorStr:colorHexStr9];
+            cell.textLabel.text = NSLocalizedString(@"AVAILABLE_COINS", nil);
+            cell.detailTextLabel.attributedText = [self.baseTool setDetailString:[NSString stringWithFormat:@"%.2f%@",self.effectiveIcon,NSLocalizedString(@"COINS_VALUE", nil)] withFont:14 withColorStr:colorHexStr9];
             break;
         default:
             break;
@@ -228,6 +228,7 @@
     self.tableView = [[UITableView alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorInset = UIEdgeInsetsZero;
     self.tableView.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
     [self.view addSubview:self.tableView];
     
@@ -249,7 +250,7 @@
     self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, TDWidth, 158)];
     self.headerView.backgroundColor = [UIColor whiteColor];
     
-    UILabel *titleLabel = [self setLabelConstraint:@"咨询问题"];
+    UILabel *titleLabel = [self setLabelConstraint:NSLocalizedString(@"QUETIONS_DESCRIPTION", nil)];
     [self.headerView addSubview:titleLabel];
     
     self.inputView = [[UITextView alloc] init];
@@ -263,7 +264,7 @@
     self.inputView.delegate = self;
     [self.headerView addSubview:self.inputView];
     
-    self.holderLabel = [self setLabelConstraint:@"输入您要咨询助教的问题"];
+    self.holderLabel = [self setLabelConstraint:NSLocalizedString(@"TYPE_QUETIONS", nil)];
     self.holderLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
     [self.headerView addSubview:self.holderLabel];
     
@@ -314,7 +315,7 @@
     self.messageLabel.font = [UIFont fontWithName:@"OpenSans" size:12];
     self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
     self.messageLabel.textAlignment = NSTextAlignmentCenter;
-    self.messageLabel.text = @"温馨提醒：预约时间必须为连续时间段";
+    self.messageLabel.text = NSLocalizedString(@"NOTE_COINS", nil);
     [self.footerView addSubview:self.messageLabel];
     
     [self.messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -59,16 +59,16 @@
     self.toolModel = [[TDBaseToolModel alloc] init];
     self.tableView.scrollsToTop = NO;
     
-    NSString *title = @"待服务";
+    NSString *title = NSLocalizedString(@"TA_PENDING", nil);
     switch (self.whereFrom) {
         case TDAssistantFromOne:
-            title = @"待服务";
+            title = NSLocalizedString(@"TA_PENDING", nil);
             break;
         case TDAssistantFromTwo:
-            title = @"已完成";
+            title = NSLocalizedString(@"TA_FINISH", nil);
             break;
         case TDAssistantFromThree:
-            title = @"已取消";
+            title = NSLocalizedString(@"TA_CANCELLED", nil);
             break;
             
         default:
@@ -212,7 +212,7 @@
                 self.page == 1 ? self.page = 1 : self.page --;
             }
         } else if ([code intValue] == 204) {
-            [self.view makeToast:@"没有更多数据了" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"NO_MORE_DATA", nil) duration:1.08 position:CSToastPositionCenter];
             [self noMoreDataHandle];
             
         } else {
@@ -223,7 +223,7 @@
         self.loadingView.hidden = YES;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.view makeToast:@"网络连接出错" duration:1.08 position:CSToastPositionCenter];
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         
         [self showNullData];
         self.loadingView.hidden = YES;
@@ -303,7 +303,7 @@
             [self.tableView reloadData];
             
         } else if ([code intValue] == 204) {
-            [self.view makeToast:@"没有更多数据了" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"NO_MORE_DATA", nil) duration:1.08 position:CSToastPositionCenter];
             [self noMoreDataHandle];
             
         } else {
@@ -315,7 +315,7 @@
         self.loadingView.hidden = YES;
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.view makeToast:@"网络连接出错" duration:1.08 position:CSToastPositionCenter];
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
 
         [self showNullData];
         self.loadingView.hidden = YES;
@@ -371,16 +371,16 @@
     self.nullLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.nullLabel];
     self.nullLabel.hidden = YES;
-    
+
     switch (self.whereFrom) {
         case TDAssistantFromOne:
-            self.nullLabel.text = @"暂无待完成助教服务";
+            self.nullLabel.text = NSLocalizedString(@"NO_PENDING", nil);
             break;
         case TDAssistantFromTwo:
-            self.nullLabel.text = @"暂无已完成助教服务";
+            self.nullLabel.text = NSLocalizedString(@"NO_FINISHED", nil);
             break;
         case TDAssistantFromThree:
-            self.nullLabel.text = @"暂无已取消助教服务";
+            self.nullLabel.text = NSLocalizedString(@"NO_CENACLLED", nil);
             break;
         default:
             break;
@@ -445,7 +445,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
             cell.textLabel.textColor = [UIColor colorWithHexString:colorHexStr9];
-            cell.textLabel.text = [NSString stringWithFormat:@"预约时间：%@",model.service_time];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"RESERCED_PERIOD",nil),model.service_time];
             
             return cell;
         }
@@ -541,20 +541,21 @@
             if ([self.dataArray containsObject:model]) {
                 [self.dataArray removeObject:model];
             }
+            [self.view makeToast:NSLocalizedString(@"ORDER_CANCELED", nil) duration:1.08 position:CSToastPositionCenter];
             [self.tableView reloadData];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"Cancel_Order_Deal" object:nil];
             
         } else if ([code intValue] == 404) {
-            [self.view makeToast:@"预订单不存在" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"NOT_EXIST_ORDER", nil) duration:1.08 position:CSToastPositionCenter];
             
         } else {
-            [self.view makeToast:@"取消订单失败" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"UNABEL_CANCEL_ORDER", nil) duration:1.08 position:CSToastPositionCenter];
         }
         NSLog(@"取消订单 %@ -- %@",responseDic[@"msg"],code);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.view makeToast:@"网络连接出错" duration:1.08 position:CSToastPositionCenter];
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"取消订单出错 -- %ld",(long)error.code);
     }];
 }
@@ -596,14 +597,14 @@
             }
             
         } else if ([code intValue] == 404) {
-            [self.view makeToast:@"课程教室没有被创建" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"CLASSROMM_NOT_EXIST", nil) duration:1.08 position:CSToastPositionCenter];
         } else {
-            [self.view makeToast:@"进入教室失败，请稍后重试" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"UNABEL_ENTER_CLASSROOM", nil) duration:1.08 position:CSToastPositionCenter];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.view makeToast:@"网络连接出错" duration:1.08 position:CSToastPositionCenter];
-        NSLog(@"获取classroom密码 -- %ld",(long)error.code);
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
+        NSLog(@"获取classroom密码出错 -- %ld",(long)error.code);
     }];
 
 }
@@ -611,8 +612,8 @@
 - (void)gotoDownloadClassrooms {
      NSLog(@" --- 还没下载 ----");
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提醒"
-                                                        message:@"您还没下载Classrooms，如需进入教室，请点击确定"
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                                                        message:NSLocalizedString(@"NOT_INSTALLED_CLASSROOM", nil)
                                                        delegate:self
                                               cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
                                               otherButtonTitles:NSLocalizedString(@"OK", nil), nil];

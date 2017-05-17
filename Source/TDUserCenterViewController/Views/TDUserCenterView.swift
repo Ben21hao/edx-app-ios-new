@@ -176,8 +176,8 @@ class TDUserCenterView: UIView,UITableViewDataSource {
                     cell.messageLabel.text = "讲座预约报名"
                     imageStr = "lecture_image"
                 default:
-                    titleStr = "助教服务"
-                    cell.messageLabel.text = "助教服务订单列表"
+                    titleStr = Strings.taService
+                    cell.messageLabel.text = Strings.viewTaService
                     imageStr = "assistant_image"
                 }
             }

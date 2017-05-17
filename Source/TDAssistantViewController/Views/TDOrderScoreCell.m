@@ -87,21 +87,22 @@
             button.selected = NO;
         }
     }
+    
     switch (sender.tag) {
         case 0:
-            self.scoreLabel.text = @"不满意";
+            self.scoreLabel.text = NSLocalizedString(@"NOT_SATISFIED", nil);
             break;
         case 1:
-            self.scoreLabel.text = @"一般";
+            self.scoreLabel.text = NSLocalizedString(@"NOT_SATISFIED", nil);
             break;
         case 2:
-            self.scoreLabel.text = @"满意";
+            self.scoreLabel.text = NSLocalizedString(@"COMMOND_SATISFIED", nil);
             break;
         case 3:
-            self.scoreLabel.text = @"满意";
+            self.scoreLabel.text = NSLocalizedString(@"COMMOND_SATISFIED", nil);
             break;
         case 4:
-            self.scoreLabel.text = @"非常满意";
+            self.scoreLabel.text = NSLocalizedString(@"VERY_SATISFIED", nil);
             break;
             
         default:
@@ -167,7 +168,7 @@
     self.bgView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.bgView];
     
-    self.topView = [[TDBaseView alloc] initWithTitle:@"满意度"];
+    self.topView = [[TDBaseView alloc] initWithTitle:NSLocalizedString(@"STATISFACTION_LEVEL", nil)];
     [self.bgView addSubview:self.topView];
     
     self.starView = [[UIView alloc] init];
@@ -176,7 +177,6 @@
     self.scoreLabel = [[UILabel alloc] init];
     self.scoreLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
     self.scoreLabel.textColor = [UIColor colorWithHexString:colorHexStr10];
-    self.scoreLabel.text = @"非常满意";
     [self.bgView addSubview:self.scoreLabel];
     
     self.lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 98, TDWidth, 2)];

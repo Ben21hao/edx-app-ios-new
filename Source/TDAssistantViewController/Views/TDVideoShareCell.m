@@ -59,13 +59,13 @@
     self.titleLabel.text = @"视频分享";
     [self.bgView addSubview:self.titleLabel];
     
-    self.allowButton = [self setButton:@"允许"];
+    self.allowButton = [self setButton:NSLocalizedString(@"ALLOW", nil)];
     self.allowButton.tag = 0;
     self.allowButton.selected = YES;
     [self.allowButton addTarget:self action:@selector(allowButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.allowButton];
     
-    self.notAllowButton = [self setButton:@"不允许"];
+    self.notAllowButton = [self setButton:NSLocalizedString(@"DO_NOT_ALLOW", nil)];
     self.notAllowButton.tag = 1;
     [self.notAllowButton addTarget:self action:@selector(notAllowButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.notAllowButton];

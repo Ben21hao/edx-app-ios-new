@@ -103,11 +103,11 @@
     self.quetionLabel.numberOfLines = 0;
     [self.bgView addSubview:self.quetionLabel];
 
-    self.orderButton = [self setButtonWithTitle:@"预约" withColor:colorHexStr3];
+    self.orderButton = [self setButtonWithTitle:NSLocalizedString(@"APPOINTMENT", nil) withColor:colorHexStr3];
     [self.orderButton addTarget:self action:@selector(orderButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.orderButton];
     
-    self.talkButton = [self setButtonWithTitle:@"即时服务" withColor:colorHexStr1];
+    self.talkButton = [self setButtonWithTitle:NSLocalizedString(@"INSTANT_SERVICE", nil) withColor:colorHexStr1];
     [self.talkButton addTarget:self action:@selector(talkButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.talkButton];
     
@@ -161,13 +161,13 @@
     [self.orderButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.bgView.mas_right).offset(-8);
         make.centerY.mas_equalTo(self.nameLabel.mas_centerY);
-        make.size.mas_equalTo(CGSizeMake(59, 24));
+        make.size.mas_equalTo(CGSizeMake(83, 24));
     }];
     
     [self.talkButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.orderButton.mas_left).offset(-8);
         make.centerY.mas_equalTo(self.nameLabel.mas_centerY);
-        make.size.mas_equalTo(CGSizeMake(79, 24));
+        make.size.mas_equalTo(CGSizeMake(89, 24));
     }];
 }
 

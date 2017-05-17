@@ -1314,3 +1314,198 @@
 "ACADEMIC_ESSAYS" = "Academic Essays";
 /*管理咨询项目Management Consulting*/
 "MANAGEREMENT_CONSULTING" = "Management Consulting";
+
+
+/*助教 Teaching Assistant*/
+"TEACH_ASSISTANT" = "Tutor";
+/*助教详情 Details*/
+"TA_DETAILS" = "Details";
+/*认证助教Verified TA*/
+"VERIFIED_TA" = "Verified Tutor";
+/*个人主页 Homepage*/
+"HOMEPAGE" = "Homepage";
+/*个人简介 Personal Profile*/
+"PERSONAL_PROFILE" = "Personal Profile";
+/*工作经历 Work Experiences*/
+"WORK_EXPERIENCES" = "Work Experiences";
+/*培训经历 Training Experiences*/
+"TRAINING_EXPERIENCES" = "Training Experiences";
+/*获奖情况 Awards*/
+"AWARDS" = "Awards";
+/*专业技能 Professional Skills*/
+"PROFESSIONAL_SKILLS" = "Professional Skills";
+/*兴趣爱好 Interests*/
+"INTERESTS" = "Interests";
+/*整体印象 General Impression*/
+"GENERAL_IMPRESSION" = "General Impression";
+/*暂无此助教的评论 No comments yet.*/
+"NO_COMMENTS_YET" = "No comments yet.";
+/*此课程暂无助教 Currently no available TA for this course.*/
+"CURRENTLY_NO_TA" = "Currently no available TA for this course.";
+/*该日期暂无服务安排 No TA service schedule for this date yet.*/
+"NO_TA_COURSE_SCHEDULE" = "No tutor service schedule for this date yet.";
+/*选择预约时间 Select a Period*/
+"SELECT_PERIOD" = "Select a Period";
+/*请选择预约时间 Please select a period*/
+"PLEASE_SELECT_PERIOD" = "Please select a period.";
+/*今天 Today*/
+"TODAY" = "Today";
+/*明天 Tomorrow*/
+"TOMORROW" = "TOMORROW";
+/*后天 The day after tomorrow*/
+"AFTER_TOMOROW" = "The day after tomorrow";
+
+
+/*预约 Appointment*/
+"APPOINTMENT" = "Appointment";
+/*输入咨询问题 Describe Your Questions*/
+"DESCRIBE_QUESTIONS" = "Describe Your Questions";
+/*输入问题描述 Initiate Instant Service*/
+"INIT_INSTANT" = "Initiate Instant Service";
+/*问题描述 Questions description*/
+"QUETIONS_DESCRIPTION" = "Questions description";
+/*请输入您的问题 Please type your questions.*/
+"TYPE_QUETIONS" = "Please type your questions.";
+/*收费标准 Payment standard*/
+"PAYMENT_STANDARD" = "Payment standard";
+/*宝典/分钟 Coin(s)/min */
+"COINTS_MIN" = " Coin(s)/min";
+/*预约时间 Reserved Period*/
+"RESERCED_PERIOD" = "Reserved Period";
+/*预付宝典 Prepaid coins */
+"PREPAID_COIS" = "Prepaid coins";
+/*可用宝典 Available coins */
+"AVAILABLE_COINS" = "Available coins";
+/*温馨提醒：宝典扣取以实际服务时间为准 Note: Coins will be deducted according to actual service time. */
+"NOTE_COINS" = "Note: Coins will be deducted according to actual service time.";
+/*发起即时服务 Initiate Instant Service */
+"INIT_SERVICE" = "Initiate Instant Service";
+/*收费标准:10分钟以内125.0宝典， Payment standard：125.0 coins for the first 10 minutes,*/
+"PAYMENT_NOTE" = "Payment standard：125.0 coins for the first 10 minutes,";
+/* 超出10分钟按12.50宝典/分钟计费  12.50 coins per minute afterwards.*/
+"PAYMENT_NOTE_LAST" = " 12.50 coins per minute afterwards.";
+/*预约失败 Appointment Status */
+"APPOINTMENT_STATUS" = "Appointment Status";
+/*预约失败！Unable to make this appointment. */
+"UNABLE_APPOINTMENT" = "Unable to make this appointment.";
+/*重新预约 Reschedule */
+"RESCHEDULE_APPOINTMENT" = "Reschedule";
+/*加入课程 Enroll */
+"ENROLL_COURSE" = "Enroll";
+/*充值 Top up */
+"TOP_UP_MONEY" = "Top up";
+/*助教不能预约自己 TA could not make appointment with themselves. */
+"APPOINTMENT_SELF" = "Tutor could not make appointment with themselves.";
+/*请先加入课程 Please enroll in the course first. */
+"ENROLL_COURSE_FIRST" = "Please enroll in the course first.";
+/*预约时间不能比当前时间早 The reserved period should not be earlier than current time. */
+"CURRENT_TIME_EARILER" = "The reserved period should not be earlier than current time.";
+/*您的学习宝典余额不足，请先充值 No sufficient coins balance, please recharge. */
+"NO_ENOUGH_COINS" = "No sufficient coins balance, please recharge.";
+/*助教未安排此时间段服务 This period is not arranged in schedule. */
+"NO_SCHEDULE" = "This period is not arranged in schedule.";
+/*此时间段已被预约，请选择其他时间段 This period has been reserved, please select other available period. */
+"SELECT_OTHER_PERIOD" = "This period has been reserved, please select other available period.";
+/*预约成功 Appointment Status */
+"APPOINTMENT_STATUS" = "Appointment Status";
+/*预约成功！You’ve made the appointment! */
+"APPOINTMENT_HAVE" = "You’ve made the appointment!";
+/*请留意服务进行前的邮件或短信提醒 Please pay attention to the reminder email or text message before service. */
+"ATTENTION_MESSAGE" = "Please pay attention to the reminder email or text message before service.";
+/*预约信息 Details */
+"APPOINTMENT_DETAILS" = "Details ";
+/*助教服务 TA Service */
+"TA_SERVICE" = "Tutor Service";
+/*评价 Rate TA */
+"RETE_TA" = "Rate Tutor";
+/*进入教室 Enter classroom */
+"ENTER_CLASSROOM" = "Enter classroom";
+/*待服务 Pending*/
+"TA_PENDING" = "Pending";
+/*已完成 Finished */
+"TA_FINISH" = "Finished";
+/*已取消 Cancelled */
+"TA_CANCELLED" = "Cancelled";
+/*即时服务 : Instant service */
+"INSTANT_SERVICE" = "Instant service";
+/*问题描述 Question description */
+"QUETION_DESCRIPTION" = "Question description";
+/*暂无待服务记录 No pending service yet */
+"NO_PENDING" = "No pending service yet";
+/*暂无已完成记录 No finished service yet */
+"NO_FINISHED" = "No finished service yet";
+/*暂无已取消记录 No cancelled service yet */
+"NO_CENACLLED" = "No cancelled service yet";
+/*订单详情 Order Details */
+"ORDER_DETAILS" = "Order Details";
+/*服务单号 Order No. */
+"ORDER_NUMBER" = "Order No.";
+/*服务类型 Type */
+"SERVICE_TYPE" = "Type";
+/*预约服务 Appointment service */
+"APPOINTMEN_SERVICE" = "Appointment service";
+/*服务时间 Service period */
+"SERVICE_PERIOD" = "Service period";
+/*实付宝典 Coins paid */
+"COINS_PAID" = "Coins paid";
+/*状态 Status */
+"ALL_STATUS" = "Status";
+/*满意度 Satisfaction Level */
+"STATISFACTION_LEVEL" = "Satisfaction Level";
+/*非常满意 Very satisfied */
+"VERY_SATISFIED" = "Very satisfied";
+/*一般 Satisfied */
+"COMMOND_SATISFIED" = "Satisfied";
+/*不满意 Not satisfied */
+"NOT_SATISFIED" = "Not satisfied";
+/*请输入您对助教的评价 Please type your comments about the TA. */
+"ENTER_COMMENTS_TA" = "Please type your comments about the tutor.";
+/*少于24小时无法取消预约单 Unable to cancel service beginning in less than 24 hours. */
+"UNABEL_CANCEL_SERVICE" = "Unable to cancel service beginning in less than 24 hours.";
+/*取消预约单失败 Unable to cancel this order. */
+"UNABEL_CANCEL_ORDER" = "Unable to cancel this order.";
+/*取消预约单成功 Order cancelled. */
+"ORDER_CANCELED" = "Order cancelled.";
+/*进入教室失败 Unable to enter classroom. */
+"UNABEL_ENTER_CLASSROOM" = "Unable to enter classroom.";
+/*课程房间没有被创建 This classroom does not exist. */
+"CLASSROMM_NOT_EXIST" = "This classroom does not exist.";
+/*评论失败 Unable to submit your comment. */
+"UNABEL_SUBMIT_COMMNET" = "Unable to submit your comment. ";
+/*您已经评论过了！You’ve already made a comment. */
+"HAVE_COMMNET" = "You’ve already made a comment.";
+/*评论成功 Comment submitted. */
+"COMMENT_SUBMITTED" = "Comment submitted.";
+/*查询失败 System error. */
+"SYSTEM_ERROR" = "System error.";
+/*该助教状态为忙碌 The status of TA is busy. */
+"TA_BUSY" = "The status of tutor is busy.";
+/*该助教状态为离线 The status of TA is offline. */
+"TA_OFFLINE" = "The status of tutor is offline.";
+/*发起即时服务失败 Unable to initiate an instant service. */
+"UNABEL_INIT_INSTANT" = "Unable to initiate an instant service.";
+/*输入内容超出字数限制 The length of content has exceeded the limit. */
+"EXCEEDE_LIMIT" = "The length of content has exceeded the limit.";
+/*请选择预约服务的时间段 Please select a period for appointment service. */
+"SELECT_APPOINTMENT_PERIOD" = "Please select a period for appointment service.";
+/*所选时间段与其他人已预约的服务时间重叠，请重新选择时间。Selected period is overlapped with other’s reserved period, please reselect it. */
+"SELECT_RESERVED_PERIOD" = "Selected period is overlapped with other’s reserved period, please reselect it.";
+/*您尚未安装Classrooms，点击“确定”前往下载。  : You have not installed Classrooms. Click OK to dowanload. */
+"NOT_INSTALLED_CLASSROOM" = "You have not installed Classrooms. Click OK to dowanload. ";
+/* Back bar button title of course */
+"COURSE" = "Course";
+/* 没有更多数据了 */
+"NO_MORE_DATA" = "No more date.";
+/*视频回放 Video replay*/
+"VIDEO_REPLAY" = "Video replay";
+/*查看服务记录 View TA service record(s)*/
+"VIEW_TA_SERVICE" = "View tutor service record(s)";
+/*%d天%d时%d分%d秒 */
+"TIME_COUNT_NUM" = "{day} d {hour} h {min} m {second} s";
+
+/*服务x单 X Order(s) */
+"SERVICE_ORDER_NUM" = "{count} Order(s)";
+/*继续预约 Make a new appointment */
+"NEW_APPOINTMENT" = "Make a new appointment";
+/*预约单不存在 The order does not exist. */
+"NOT_EXIST_ORDER" = "The order does not exist.";
