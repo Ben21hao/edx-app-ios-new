@@ -21,9 +21,9 @@
 #import "WXApi.h"
 
 #import <AlipaySDK/AlipaySDK.h>
+#import "Order.h"
 #import "TDAliPayModel.h"
 #import "TDAlipay.h"
-#import "Order.h"
 
 #import "edX-Swift.h"
 #import <MJExtension/MJExtension.h>

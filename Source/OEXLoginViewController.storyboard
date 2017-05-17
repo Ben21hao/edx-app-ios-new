@@ -199,15 +199,15 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="separator.png" translatesAutoresizingMaskIntoConstraints="NO" id="2of-Hn-kff">
-                                        <rect key="frame" x="40" y="369" width="101" height="2"/>
+                                        <rect key="frame" x="40" y="369.5" width="101" height="1"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="2" id="KON-qe-xti"/>
+                                            <constraint firstAttribute="height" constant="1" id="KON-qe-xti"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="separator.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pqx-qN-yU2">
-                                        <rect key="frame" x="241" y="369" width="102" height="2"/>
+                                        <rect key="frame" x="241" y="369.5" width="102" height="1"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="2" id="OmA-hw-yhx"/>
+                                            <constraint firstAttribute="height" constant="1" id="OmA-hw-yhx"/>
                                         </constraints>
                                     </imageView>
                                     <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="106" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing into the app, you agree to the" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="191" translatesAutoresizingMaskIntoConstraints="NO" id="ZfV-aD-lBt" customClass="OEXCustomLabel">

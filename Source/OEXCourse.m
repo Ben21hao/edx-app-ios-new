@@ -92,10 +92,16 @@ NSString* NSStringForOEXStartType(OEXStartType type) {
 @property (nonatomic, copy) NSNumber* listen_count;//报名人数
 @property (nonatomic, copy) NSString* professor_username;//教授名字
 @property (nonatomic, copy) NSNumber *course_price;//价格
+
 @property (nonatomic,copy) NSNumber *give_coin; //购买课程赠送宝典
 @property (nonatomic,copy) NSString *begin_at; //购买课程赠送宝典开始时间
 @property (nonatomic,copy) NSString *end_at; //购买课程赠送宝典结束时间
+
 @property (nonatomic,copy) NSNumber *is_eliteu_course;//是否付费的课程
+
+@property (nonatomic,copy) NSNumber *course_status; //课程状态 1.未购买未试听 2.试听 3.试听已结束 4.已购买
+@property (nonatomic,copy) NSString *trial_expire_at; //试听课程失效时间
+@property (nonatomic,copy) NSNumber *trial_seconds;//剩余试听时间
 
 @end
 
@@ -139,6 +145,10 @@ NSString* NSStringForOEXStartType(OEXStartType type) {
         self.begin_at = [info objectForKey:@"begin_at"];
         self.end_at = [info objectForKey:@"end_at"];
         self.is_eliteu_course = [info objectForKey:@"is_eliteu_course"];
+        
+        self.course_status = [info objectForKey:@"course_status"];
+        self.trial_expire_at = [info objectForKey:@"trial_expire_at"];
+        self.trial_seconds = [info objectForKey:@"trial_seconds"];
         
         NSDictionary* mediaInfo = OEXSafeCastAsClass(info[@"media"], NSDictionary);
         

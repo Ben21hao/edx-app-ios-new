@@ -32,8 +32,7 @@
 }
 
 
-- ( NSMutableDictionary *)getPayParam:(weChatParamsItem *)weChatItem
-{
+- ( NSMutableDictionary *)getPayParam:(weChatParamsItem *)weChatItem {
     
     srand( (unsigned)time(0) );
     
@@ -64,8 +63,7 @@
 }
 
 //创建package签名
--(NSString*) createMd5Sign:(NSMutableDictionary*)dict
-{
+-(NSString*) createMd5Sign:(NSMutableDictionary*)dict {
     
     NSMutableString *contentString  =[NSMutableString string];
     NSArray *keys = [dict allKeys];

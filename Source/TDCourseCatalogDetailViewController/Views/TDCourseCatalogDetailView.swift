@@ -17,9 +17,11 @@ class TDCourseCatalogDetailView: UIView,UITableViewDataSource {
     internal let tableView = UITableView()
     internal let courseCardView = CourseCardView()
     internal let playButton = UIButton()
+    internal let activityView = UIActivityIndicatorView.init(frame: CGRectMake(0, 0, 30, 30))
     
     internal var playButtonHandle : (() -> ())?
     internal var submitButtonHandle : (() -> ())?
+    internal var auditionButtonHandle : (() -> ())?
     internal var showAllTextHandle : ((Bool) -> ())?
     var showAllText = false
     var submitTitle : String?
@@ -65,8 +67,16 @@ class TDCourseCatalogDetailView: UIView,UITableViewDataSource {
     }
     
     func submitButtonAction() { //提交
+        
         if (self.submitButtonHandle != nil) {
             self.submitButtonHandle!()
+        }
+    }
+    
+    func auditionButtonAction() {
+        self.activityView.startAnimating()
+        if self.auditionButtonHandle != nil {
+            self.auditionButtonHandle!()
         }
     }
     
@@ -141,15 +151,30 @@ class TDCourseCatalogDetailView: UIView,UITableViewDataSource {
                 switch self.courseModel.submitType {
                 case 0:
                     cell.submitButton.setTitle(Strings.CourseDetail.viewCourse, forState: .Normal)
+                    cell.submitType = self.courseModel.submitType
                 case 1:
                     cell.submitButton.setAttributedTitle(setSubmitTitle(), forState: .Normal)
+                    setButtonCellDiscountLabel(cell)
                 case 2:
                     cell.submitButton.setTitle(Strings.viewPrepareOrder, forState: .Normal)
+                    setButtonCellDiscountLabel(cell)
                 default:
                     cell.submitButton.setTitle(Strings.willBeginCourse, forState: .Normal)
+                    cell.submitType = self.courseModel.submitType
                 }
                 
                 cell.submitButton.addTarget(self, action: #selector(submitButtonAction), forControlEvents: .TouchUpInside)
+                
+                cell.auditionButton.addTarget(self, action: #selector(auditionButtonAction), forControlEvents: .TouchUpInside)
+
+                self.activityView.activityIndicatorViewStyle = .White
+                cell.auditionButton.addSubview(self.activityView)
+                
+                self.activityView.snp_remakeConstraints(closure: { (make) in
+                    make.centerY.equalTo(cell.auditionButton.snp_centerY)
+                    make.right.equalTo(cell.auditionButton.snp_right).offset(-8)
+                })
+                
                 return cell
             }
             
@@ -176,6 +201,18 @@ class TDCourseCatalogDetailView: UIView,UITableViewDataSource {
                 cell.titleLabel.text = "助教"
             }
             return cell
+        }
+    }
+    
+    func setButtonCellDiscountLabel(cell: TDCourseButtonsCell) {
+        if (self.courseModel.give_coin?.floatValue)! > 0 {
+            let coinStr = NSString(format: "%.2f", (self.courseModel.give_coin?.floatValue)!)
+            
+            let baseTool = TDBaseToolModel.init()
+            let startStr = baseTool.interceptStr(self.courseModel.begin_at!)
+            let endStr = baseTool.interceptStr(self.courseModel.end_at!)
+            let giveStr = baseTool.setDetailString(Strings.receiveMind(startdate: startStr, enddate: endStr, number: coinStr as String), withFont: 12, withColorStr: "#f6bb42")
+            cell.discountLabel.attributedText = giveStr;
         }
     }
     

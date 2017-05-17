@@ -67,8 +67,8 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
     
     private let loadController = LoadStateViewController()
     private let courseStream = BackedStream<UserCourseEnrollment>()
-    //自定义标题
-    private var titleL : UILabel?
+    
+    private var titleLabel : UILabel? //自定义标题
     private lazy var progressController : ProgressController = {
         ProgressController(owner: self, router: self.environment.router, dataInterface: self.environment.interface)
     }()
@@ -78,8 +78,7 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
         self.courseID = courseID
         
         super.init(nibName: nil, bundle: nil)
-        
-}
+    }
     
     public required init?(coder aDecoder: NSCoder) {
         // required by the compiler because UIViewController implements NSCoding,
@@ -91,29 +90,34 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
         super.viewDidLoad()
         
         self.view.backgroundColor = OEXStyles.sharedStyles().neutralWhite()
+        self.setLeftButtonStyle()
+        self.setViewConstraint()
         
-        let leftButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48))
-        leftButton.setImage(UIImage.init(named: "backImagee"), forState: .Normal)
-        leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23)
+        courseStream.backWithStream(environment.dataManager.enrollmentManager.streamForCourseWithID(courseID))
+        courseStream.listen(self) {[weak self] in
+            self?.resultLoaded($0)
+        }
         
-        self.navigationController?.interactivePopGestureRecognizer?.enabled = true
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
-        leftButton.addTarget(self, action: #selector(leftBarItemAction), forControlEvents: .TouchUpInside)
-        let leftBarItem = UIBarButtonItem.init(customView: leftButton)
-        self.navigationItem.leftBarButtonItem = leftBarItem
-        
-        self.navigationItem.rightBarButtonItem = self.progressController.navigationItem()
+        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: EnrollmentShared.successNotification) { (notification, observer, _) -> Void in
+            if let message = notification.object as? String {
+                observer.showOverlayMessage(message)
+            }
+        }
+    }
+    
+    func setViewConstraint() {
         
         self.view.addSubview(containerView)
         self.containerView.addSubview(stackView)
-        tableView.scrollEnabled = false
         
-        // Set up tableView
+        tableView.scrollEnabled = false
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor.clearColor()
         self.view.addSubview(tableView)
+        
+        tableView.registerClass(CourseDashboardCell.self, forCellReuseIdentifier: CourseDashboardCell.identifier)
+        tableView.registerClass(CourseCertificateCell.self, forCellReuseIdentifier: CourseCertificateCell.identifier)
         
         stackView.snp_makeConstraints { make -> Void in
             make.top.equalTo(containerView)
@@ -127,10 +131,6 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
         }
         
         addShareButton(courseCard)
-
-        // Register tableViewCell
-        tableView.registerClass(CourseDashboardCell.self, forCellReuseIdentifier: CourseDashboardCell.identifier)
-        tableView.registerClass(CourseCertificateCell.self, forCellReuseIdentifier: CourseCertificateCell.identifier)
         
         stackView.axis = .Vertical
         
@@ -147,17 +147,27 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
         loadController.setupInController(self, contentView: containerView)
         
         self.progressController.hideProgessView()
+    }
+    
+    func setLeftButtonStyle() {
         
-        courseStream.backWithStream(environment.dataManager.enrollmentManager.streamForCourseWithID(courseID))
-        courseStream.listen(self) {[weak self] in
-            self?.resultLoaded($0)
-        }
+        self.titleLabel = UILabel(frame:CGRect(x:0, y:0, width:40, height:40))
+        self.titleLabel?.font = UIFont(name:"OpenSans",size:18.0)
+        self.titleLabel?.textColor = UIColor.whiteColor()
+        self.navigationItem.titleView = self.titleLabel
         
-        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: EnrollmentShared.successNotification) { (notification, observer, _) -> Void in
-            if let message = notification.object as? String {
-                observer.showOverlayMessage(message)
-            }
-        }
+        let leftButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48))
+        leftButton.setImage(UIImage.init(named: "backImagee"), forState: .Normal)
+        leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23)
+        
+        self.navigationController?.interactivePopGestureRecognizer?.enabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        leftButton.addTarget(self, action: #selector(leftBarItemAction), forControlEvents: .TouchUpInside)
+        let leftBarItem = UIBarButtonItem.init(customView: leftButton)
+        self.navigationItem.leftBarButtonItem = leftBarItem
+        
+        self.navigationItem.rightBarButtonItem = self.progressController.navigationItem()
     }
     
     func leftBarItemAction() {
@@ -166,7 +176,6 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
     
     private func resultLoaded(result : Result<UserCourseEnrollment>) {
         switch result {
-            
         case let .Success(enrollment):
             self.loadedCourseWithEnrollment(enrollment)
             
@@ -177,16 +186,11 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
                 self.loadController.state = LoadState.failed(error)
             }
         }
-
     }
     
     private func loadedCourseWithEnrollment(enrollment: UserCourseEnrollment) {
-        //添加标题文本
-        self.titleL = UILabel(frame:CGRect(x:0, y:0, width:40, height:40))
-        self.titleL?.text = enrollment.course.name
-        self.navigationItem.titleView = self.titleL
-        self.titleL?.font = UIFont(name:"OpenSans",size:18.0)
-        self.titleL?.textColor = UIColor.whiteColor()
+        
+        self.titleLabel?.text = enrollment.course.name
         
         CourseCardViewModel.onDashboard(enrollment.course).apply(courseCard, networkManager: self.environment.networkManager,type:4)
         verifyAccessForCourse(enrollment.course)
@@ -235,11 +239,9 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
     private func verifyAccessForCourse(course: OEXCourse) {
         if let access = course.courseware_access where !access.has_access {
             loadController.state = LoadState.failed(OEXCoursewareAccessError(coursewareAccess: access, displayInfo: course.start_display_info), icon: Icon.UnknownError)
-        }
-        else {
+        } else {
             loadController.state = .Loaded
         }
-
     }
     
     public override func viewWillAppear(animated: Bool) {

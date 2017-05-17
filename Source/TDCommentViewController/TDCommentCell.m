@@ -257,10 +257,13 @@ const CGFloat contentLabelFontSize = 14;
 
 #pragma mark - 点赞praise或取消点赞cancel_praise
 - (void)praiseButtonAction:(UIButton *)sender {
+    
     if (self.username.length == 0) {
         [[UIApplication sharedApplication].keyWindow.rootViewController.view makeToast:@"请先登录再点赞" duration:1.08 position:CSToastPositionCenter];
         return;
     }
+    
+    self.praiseButton.userInteractionEnabled = NO;
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -295,7 +298,10 @@ const CGFloat contentLabelFontSize = 14;
         } else {
             NSLog(@" 点赞出错 ==  %@",code);
         }
+        
+        self.praiseButton.userInteractionEnabled = YES;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        self.praiseButton.userInteractionEnabled = YES;
         NSLog(@"errorCode---%ld---",(long)error.code);
     }];
 }

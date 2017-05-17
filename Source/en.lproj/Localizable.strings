@@ -657,7 +657,7 @@
 /*Error message when operation failed with unknow error*/
 "UNKNOWN_ERROR" = "Your action could not be completed.";
 /* Text shown to display the current version number. Environment is a server name like "prod", "dev", stage" and may be empty. For example "Version 1.2.3 Prod" */
-"VERSION_DISPLAY" = "Version {number} {environment}";
+"VERSION_DISPLAY" = "Version {number}";//Version {number} {environment}
 /* Error shown when video download fails */
 "VIDEO_CONTENT_NOT_AVAILABLE"="This video is currently unavailable. Check back again later.";
 /* Floating overlay text shown after deleting a video. {count} is a number of videos */
@@ -905,7 +905,7 @@
 /*选择支付方式*/
 "SELECT_PAYWAY" = "Select payment";
 /*选择充值金额(当前宝典 :*/
-"CURRENT_COINS" = "Select amount(available coins : ";
+"CURRENT_COINS" = "Select amount (available coins : ";
 /*输入其他金额*/
 "ENTER_OTHERPRICE" = "Enter amount";
 /*宝典*/

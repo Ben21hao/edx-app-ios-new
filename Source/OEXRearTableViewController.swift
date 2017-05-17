@@ -54,9 +54,10 @@ class OEXRearTableViewController : UITableViewController {
         setupProfileLoader()
         updateUIWithUserInfo()
         
-        let environmentName = self.environment.config.environmentName()
         let appVersion = NSBundle.mainBundle().oex_buildVersionString()
-        appVersionButton.setAttributedTitle(versionButtonStyle.attributedStringWithText(Strings.versionDisplay(number: appVersion, environment: environmentName)), forState:.Normal)
+//        let environmentName = self.environment.config.environmentName()
+//        appVersionButton.setAttributedTitle(versionButtonStyle.attributedStringWithText(Strings.versionDisplay(number: appVersion, environment: environmentName)), forState:.Normal)
+        appVersionButton.setAttributedTitle(versionButtonStyle.attributedStringWithText(Strings.versionDisplay(number: appVersion)), forState:.Normal)
         appVersionButton.accessibilityTraits = UIAccessibilityTraitStaticText
         
         //UI

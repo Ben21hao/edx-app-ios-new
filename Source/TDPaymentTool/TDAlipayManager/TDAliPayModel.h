@@ -10,6 +10,11 @@
 
 @interface TDAliPayModel : NSObject
 
+////购买课程订单号
+//@property(nonatomic,strong)NSString *order_id;
+////同步支付成功后跳转地址
+//@property(nonatomic,strong)NSString *return_url;
+
 //商品详情
 @property (nonatomic,strong) NSString *body;
 //卖家支付宝账号

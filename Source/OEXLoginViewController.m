@@ -317,13 +317,16 @@
     self.img_Logo.isAccessibilityElement = YES;
     self.img_Logo.accessibilityLabel = [[OEXConfig sharedConfig] platformName];
     
-    NSString* environmentName = self.environment.config.environmentName;
-    if(environmentName.length > 0) {
-        NSString* appVersion = [NSBundle mainBundle].oex_buildVersionString;
-        self.versionLabel.text = [Strings versionDisplayWithNumber:appVersion environment:environmentName];
-    } else {
-        self.versionLabel.text = @"";
-    }
+//    NSString* environmentName = self.environment.config.environmentName;
+//    if(environmentName.length > 0) {
+//        NSString* appVersion = [NSBundle mainBundle].oex_buildVersionString;
+//        self.versionLabel.text = [Strings versionDisplayWithNumber:appVersion environment:environmentName];
+//    } else {
+//        self.versionLabel.text = @"";
+//    }
+    
+    NSString* appVersion = [NSBundle mainBundle].oex_buildVersionString;
+    self.versionLabel.text = [Strings versionDisplayWithNumber:appVersion];
     
     self.eyesButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:20.0];
     [self.eyesButton setTitle:@"\U0000f070" forState:UIControlStateNormal];

@@ -79,7 +79,6 @@ public class EnrollmentManager : NSObject {
             stream.send(Success(nil))
         }
         self.enrollmentFeed.backWithFeed(feed)
-        
         self.enrollmentFeed.refresh()
     }
     

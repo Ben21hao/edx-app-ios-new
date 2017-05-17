@@ -640,7 +640,7 @@
 /*Error message when operation failed with unknow error*/
 "UNKNOWN_ERROR" = "您的操作不能完成。";
 /* Text shown to display the current version number. Environment is a server name like "prod", "dev", stage" and may be empty. For example "Version 1.2.3 Prod" */
-"VERSION_DISPLAY" = "版本 {number} {environment}";
+"VERSION_DISPLAY" = "版本 {number}";//版本 {number} {environment}
 /* Error shown when video download fails */
 "VIDEO_CONTENT_NOT_AVAILABLE"="此视频当前不可用，稍后再检查。";
 /* Floating overlay text shown after deleting a video. {count} is a number of videos */

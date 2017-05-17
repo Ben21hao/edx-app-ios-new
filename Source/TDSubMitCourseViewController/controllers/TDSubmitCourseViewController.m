@@ -18,11 +18,15 @@
 #import "JHCouponsAlertView.h"
 
 #import <AlipaySDK/AlipaySDK.h>
+#import "Order.h"
+
 #import "aliPayParamsItem.h"
 #import "DataSigner.h"
 #import "dataUrlItem.h"
 #import "aliData.h"
-#import "Order.h"
+
+#import "TDAliPayModel.h"
+#import "TDAlipay.h"
 
 #import "weChatParamsItem.h"
 #import "WeChatPay.h"
@@ -69,6 +73,7 @@
 
 @property (nonatomic,strong) weChatParamsItem *weChatItem;
 @property (nonatomic,strong) aliPayParamsItem *aliPayItem;
+@property (nonatomic,strong) TDAliPayModel *aliPayModel;
 
 @end
 
@@ -309,23 +314,27 @@
     [manager POST:url parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"创建订单成功--payParams%@",responseObject);
         
-        NSDictionary *responDic = (NSDictionary *)responseObject;
-        id code = responDic[@"code"];
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        id code = responseDic[@"code"];
         if ([code intValue] == 200) {
-            weakSelf.orderId = responseObject[@"data"][@"order_id"];
+            weakSelf.orderId = responseDic[@"data"][@"order_id"];
             weakSelf.hadCreateOrder = YES;
             
             if (type == 1) {
-                self.weChatItem = [weChatParamsItem mj_objectWithKeyValues:responseObject[@"data"]];
+                self.weChatItem = [weChatParamsItem mj_objectWithKeyValues:responseDic[@"data"]];
                 [self payByWeChat];
+                
             } else if (type == 2) {
-                _aliPayItem = [aliPayParamsItem mj_objectWithKeyValues:responseObject];
+                _aliPayItem = [aliPayParamsItem mj_objectWithKeyValues:responseDic];
                 [self payByAliPay];
+                
+//                self.aliPayModel = [TDAliPayModel mj_objectWithKeyValues:responseDic[@"data"][@"data_url"]];
+//                [self submitByAlipay];
             }
             
         } else {
             [self.view makeToast:NSLocalizedString(@"PAY_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
-            NSLog(@"--%@",responDic[@"msg"]);
+            NSLog(@"--%@",responseDic[@"msg"]);
         }
         [SVProgressHUD dismiss];
         
@@ -342,13 +351,16 @@
 }
 
 #pragma mark - 支付宝支付
+- (void)submitByAlipay {
+    [[[TDAlipay alloc] init] submitPostAliPay:self.aliPayModel];
+}
+
 - (void)payByAliPay {
     
     Order *order = [[Order alloc] init];
     order.partner = _aliPayItem.data.data_url.partner;
     order.sellerID = _aliPayItem.data.data_url.seller_id;
     order.outTradeNO = _aliPayItem.data.data_url.out_trade_no; //订单ID（由商家自行制定）
-    NSLog(@"order.outTradeNO--%@",order.outTradeNO);
     order.subject = _aliPayItem.data.data_url.subject; //商品标题
     order.body = _aliPayItem.data.data_url.body; //商品描述
     order.totalFee = _aliPayItem.data.data_url.total_fee;//商品价格

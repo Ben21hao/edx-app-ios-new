@@ -50,6 +50,11 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let currentUser = self.session.currentUser //登陆状态
+        if currentUser == nil {
+            NSNotificationCenter.defaultCenter().postNotificationName("OEXSessionEndedNotification", object: nil)
+        }
+        
         self.titleViewLabel.text = self.courseName
         self.setViewConstraint()
         
@@ -188,7 +193,17 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
                 return size.height + 128
                 
             } else {
-                return 88
+                
+                switch self.courseModel.submitType { //0 已购买，1 立即加入, 2 查看待支付，3 即将开课
+                case 0:
+                    return 60
+                case 1:
+                    return self.courseModel.give_coin?.floatValue > 0 ? 148 : 118
+                case 2:
+                    return self.courseModel.give_coin?.floatValue > 0 ? 148 : 118
+                default:
+                    return 60
+                }
             }
         }
         return 60
@@ -277,15 +292,12 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
     func gotoChooseCourseVc() { //选择课表
         
         //        if self.courseModel.is_eliteu_course == true {//英荔课程
-        let currentUser = session.currentUser //登陆状态
-        if currentUser != nil {
+        
             let vc = TDChooseCourseViewController();
             vc.username = self.username
             vc.courseID = self.courseID
             self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            self.logoutCurrentUser()//到登陆界面
-        }
+        
         //        } else {
         //            addOwnCompanyCourseHandle()
         //        }
@@ -326,16 +338,27 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
             self.courseDetailView.tableView.reloadData()
         }
         courseDetailView.submitButtonHandle = { () in
-            switch self.courseModel.submitType { //0 已购买，1 立即加入, 2 查看待支付，3 即将开课
-            case 0:
-                self.showCourseScreen()
-            case 1:
-                self.gotoChooseCourseVc()
-            case 2:
-                self.gotoWaitForPayVc()
-            default:
-                return
+            
+            let currentUser = self.session.currentUser //登陆状态
+            if currentUser != nil {
+                switch self.courseModel.submitType { //0 已购买，1 立即加入, 2 查看待支付，3 即将开课
+                case 0:
+                    self.showCourseScreen()
+                case 1:
+                    self.gotoChooseCourseVc()
+                case 2:
+                    self.gotoWaitForPayVc()
+                default:
+                    return
+                }
+            } else {
+                self.logoutCurrentUser()//到登陆界面
             }
+        }
+        
+        courseDetailView.auditionButtonHandle = { () in
+//            self.courseDetailView.activityView.stopAnimating()
+            self.showCourseScreen()
         }
         
         courseDetailView.playButtonHandle = { () in

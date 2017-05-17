@@ -48,7 +48,7 @@
 
 #define ELITEU_URL [OEXConfig sharedConfig].apiHostURL//统一在配置文件拿域名，不用分配在
 
-#define APPID_Weixin @"wx89dc4dc519a2f935"//旧的wx89dc4dc519a2f935
+#define APPID_Weixin @"wx89dc4dc519a2f935"
 #define Wexin_Pay_APPSecret @"fa9e442eccb5b78287b9f36a20d376ea"//旧的e80676f525c334b78c22aec043ed1f97
 #define WEIXIN_PARTNER_ID @"wx890dUIWNKMK3o398923ndaADM72Mae"
 
