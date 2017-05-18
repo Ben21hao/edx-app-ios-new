@@ -25,7 +25,6 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
     var videoTranscriptView : VideoTranscript?
     var subtitleTimer = NSTimer()
     var contentView : UIView?
-    
     let loadController : LoadStateViewController
     
     init(environment : Environment, blockID : CourseBlockID?, courseID: String) {
@@ -91,6 +90,12 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         rotateDeviceMessageView = IconMessageView(icon: .RotateDevice, message: Strings.rotateDevice)
         contentView?.addSubview(rotateDeviceMessageView!)
         
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addAction {[weak self] _ in
+            self?.videoController.moviePlayerController?.controls?.hideOptionsAndValues()
+        }
+        rotateDeviceMessageView?.addGestureRecognizer(tapGesture)
+        
         if environment.config.isVideoTranscriptEnabled {
             videoTranscriptView = VideoTranscript(environment: environment)
             videoTranscriptView?.delegate = self
@@ -100,6 +105,32 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
         view.setNeedsUpdateConstraints()
         
+        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: UIAccessibilityVoiceOverStatusChanged) { (_, observer, _) in
+            observer.setAccessibility()
+        }
+    }
+    
+    func setAccessibility() {
+        if let ratingController = self.presentedViewController as? RatingViewController where UIAccessibilityIsVoiceOverRunning() {
+            // If Timely App Reviews popup is showing then set popup elements as accessibilityElements
+            view.accessibilityElements = [ratingController.ratingContainerView.subviews]
+            setParentAccessibility(ratingController)
+        }
+        else {
+            view.accessibilityElements = [view.subviews]
+            setParentAccessibility()
+        }
+    }
+    
+    func setParentAccessibility(ratingController: RatingViewController? = nil) {
+        if let parentController = self.parentViewController as? CourseContentPageViewController {
+            if let ratingController = ratingController {
+                parentController.setAccessibility(ratingController.ratingContainerView.subviews, isShowingRating: true)
+            }
+            else {
+                parentController.setAccessibility(parentController.view.subviews)
+            }
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

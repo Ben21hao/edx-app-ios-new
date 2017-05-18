@@ -156,6 +156,26 @@
 "BY_AUTHOR" = "通过 {author_name}";
 /* Prefix used with Staff of Community TA on the posts screen */
 "BY_AUTHOR_LOWER_CASE" = "通过 {author_name}";
+
+/* Accessibility label for rating control of app review. */
+"APP_REVIEW.RATING_CONTROL_ACCESSIBILITY_LABEL" = "评分控制";
+/* Alert title for positive app review */
+"APP_REVIEW.RATE_THE_APP" = "评价此App";
+/* Positive review message */
+"APP_REVIEW.POSITIVE_REVIEW_MESSAGE" = "速撰写评论告诉他人你对这个App的看法。";
+/* Send feedback message for negative app review */
+"APP_REVIEW.SEND_FEEDBACK" = "提供反馈意见？";
+/* Help us improve message for negative app review */
+"APP_REVIEW.HELP_US_IMPROVE" = "请帮助我们改进App！";
+/* Maybe later message for positive/negative app review */
+"APP_REVIEW.MAYBE_LATER" = "稍后再说";
+/* Question for rating view */
+"APP_REVIEW.RATE_THE_APP_QUESTION" = "您会给本App打多少分？";
+/* Submit button for rating view */
+"APP_REVIEW.SUBMIT" = "提交";
+/* App Review message email title */
+"APP_REVIEW.MESSAGE_SUBJECT" = "用户评论";
+
 /* Course completion title */
 "CERTIFICATES.COURSE_COMPLETION_TITLE"="恭喜！";
 /* Course completion subtitle */
@@ -218,8 +238,6 @@
 "COURSE_DETAIL.ENROLL_NOW" = "马上加入";
 /* Button title allowing user to view a course from the course's catalog detail page */
 "COURSE_DETAIL.VIEW_COURSE" = "查看课程";
-/* Back bar button title of course */
-"COURSE"="课程";
 /* Title of tab showing course content */
 "COURSEWARE_TAB_TITLE"="课件";
 /* Message shown when there is no course content */
@@ -593,6 +611,8 @@
 "STARTING"="开始 - {start_date}";
 /* Label for posts pinned by Staff */
 "STAFF"="STAFF";
+/* Explore Subjects button text on the first screen */
+"STARTUP.EXPLORE_SUBJECTS"="探索主题";
 /* Button allowing user to submit feedback about the app via email */
 "SUBMIT_FEEDBACK.OPTION_TITLE" = "提交反馈";
 /* Support message email title */
@@ -640,7 +660,7 @@
 /*Error message when operation failed with unknow error*/
 "UNKNOWN_ERROR" = "您的操作不能完成。";
 /* Text shown to display the current version number. Environment is a server name like "prod", "dev", stage" and may be empty. For example "Version 1.2.3 Prod" */
-"VERSION_DISPLAY" = "版本 {number}";//版本 {number} {environment}
+"VERSION_DISPLAY" = "版本 {number}";//"版本 {number} {environment}
 /* Error shown when video download fails */
 "VIDEO_CONTENT_NOT_AVAILABLE"="此视频当前不可用，稍后再检查。";
 /* Floating overlay text shown after deleting a video. {count} is a number of videos */
@@ -1003,6 +1023,10 @@
 "ALL_TEXT" = "全文↓";
 /*收起*/
 "STOP_UP" = "收起↑";
+/*显示更多*/
+"SHOW_MORE" = "显示更多";
+/*收起*/
+"PACK_UP" = "收起";
 /*学习时长*/
 "STUDY_TIME" = "学习时长";
 /*报名人数*/
@@ -1100,9 +1124,7 @@
 /*请输入小于30位的密码*/
 "LESS_PASSWORD" = "请输入小于30位的密码";
 /*使用邮箱或手机号码注册*/
-"PHONE_OR_EMAIL_REGISTER" = "使用邮箱或手机号码注册。";
-/*请输入邮箱或手机号码。并按操作提示完成密码重置。*/
-"PHONE_OR_EMAIL_RESET_PASSWORD" = "请输入邮箱或手机号码。并按操作提示完成密码重置。";
+"PHONE_OR_EMAIL_REGISTER" = "请输入邮箱或手机号码。并按操作提示完成密码重置。";
 /*服务条款*/
 "SERVICE_ITEM" = "服务条款";
 /*邮箱或手机号码*/
@@ -1295,7 +1317,6 @@
 "ACADEMIC_ESSAYS" = "学术邗物文章";
 /*管理咨询项目Management Consulting*/
 "MANAGEREMENT_CONSULTING" = "管理咨询项目";
-
 
 /*助教 Teaching Assistant*/
 "TEACH_ASSISTANT" = "助教";

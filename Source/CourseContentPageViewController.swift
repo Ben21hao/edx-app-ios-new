@@ -72,9 +72,9 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
         self.dataSource = self
         self.delegate = self
         
-        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
-        fixedSpace.width = barButtonFixedSpaceWidth
-//        navigationItem.rightBarButtonItems = [webController.barButtonItem, fixedSpace, modeController.barItem]
+        //  let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+        //  fixedSpace.width = barButtonFixedSpaceWidth
+        //  navigationItem.rightBarButtonItems = [webController.barButtonItem, fixedSpace, modeController.barItem]
         
         addStreamListeners()
 }
@@ -107,12 +107,33 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setToolbarHidden(true, animated: animated)
+        removeObservers()
     }
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        
+        setNavigationBarType()
+
+        // This is super hacky. Controls like sliders - that depend on pan gestures were getting intercepted
+        // by the page view's scroll view. This seemed like the only solution.
+        // Filed http://www.openradar.appspot.com/radar?id=6188034965897216 against Apple to better expose
+        // this API.
+        // Verified on iOS9 and iOS 8
+        if let scrollView = (self.view.subviews.flatMap { return $0 as? UIScrollView }).first {
+            scrollView.delaysContentTouches = false
+        }
+        addObservers()
+    }
+    
+    func setNavigationBarType() {
+        
+        self.titleL = UILabel(frame:CGRect(x:0, y:0, width:40, height:40))
+        self.navigationItem.titleView = self.titleL
+        self.titleL?.font = UIFont(name:"OpenSans",size:18.0)
+        self.titleL?.textColor = UIColor.whiteColor()
         
         let leftButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48))
         leftButton.setImage(UIImage.init(named: "backImagee"), forState: .Normal)
@@ -124,16 +145,6 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
         
         let leftBarItem = UIBarButtonItem.init(customView: leftButton)
         self.navigationItem.leftBarButtonItem = leftBarItem
-
-        
-        // This is super hacky. Controls like sliders - that depend on pan gestures were getting intercepted
-        // by the page view's scroll view. This seemed like the only solution.
-        // Filed http://www.openradar.appspot.com/radar?id=6188034965897216 against Apple to better expose
-        // this API.
-        // Verified on iOS9 and iOS 8
-        if let scrollView = (self.view.subviews.flatMap { return $0 as? UIScrollView }).first {
-            scrollView.delaysContentTouches = false
-        }
     }
     
     private func addStreamListeners() {
@@ -157,10 +168,43 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
         )
     }
     
+    private func addObservers() {
+        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: NOTIFICATION_VIDEO_PLAYER_NEXT) { (notification, observer, removable) in
+            observer.moveInDirection(.Forward)
+        }
+        NSNotificationCenter.defaultCenter().oex_addObserver(self, name: NOTIFICATION_VIDEO_PLAYER_PREVIOUS) { (notification, observer, removable) in
+            observer.moveInDirection(.Reverse)
+        }
+    }
+    
+    private func removeObservers() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_VIDEO_PLAYER_NEXT, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_VIDEO_PLAYER_PREVIOUS, object: nil)
+    }
+    
     private func loadIfNecessary() {
         if !contentLoader.hasBacking {
             let stream = courseQuerier.spanningCursorForBlockWithID(blockID, initialChildID: initialChildID, forMode: modeController.currentMode)
             contentLoader.backWithStream(stream.firstSuccess())
+        }
+    }
+    
+    // Accessibility elements can be set from child. This was required for only enable VO for Timely App Reviews
+    func setAccessibility(elements: [UIView]?, isShowingRating: Bool? = false) {
+        // Setting toolbarItems empty because isAccessibiltyElement false was not working for toolbarItems.
+        //TODO: Needs to revist this approch and find a way to disable accessibility for toolbarItems
+        if isShowingRating ?? false {
+            toolbarItems = []
+        }
+        else {
+            updateNavigationBars()
+        }
+        
+        if let elements = elements {
+            view.accessibilityElements = elements
+        }
+        else {
+            view.accessibilityElements = [view.subviews]
         }
     }
     
@@ -204,14 +248,8 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
             // only animate change if we haven't set a title yet, so the initial set happens without
             // animation to make the push transition work right
             let actions : () -> Void = {
-//                self.navigationItem.title = item.block.displayName
-               
-                //添加标题文本
-                self.titleL = UILabel(frame:CGRect(x:0, y:0, width:40, height:40))
+                
                 self.titleL?.text = item.block.displayName
-                self.navigationItem.titleView = self.titleL
-                self.titleL?.font = UIFont(name:"OpenSans",size:18.0)
-                self.titleL?.textColor = UIColor.whiteColor()
                 self.webController.info = self.openOnWebInfoForBlock(item.block)
             }
             if let navigationBar = navigationController?.navigationBar where navigationItem.title != nil {
