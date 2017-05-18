@@ -1351,7 +1351,7 @@
 /*今天 Today*/
 "TODAY" = "Today";
 /*明天 Tomorrow*/
-"TOMORROW" = "TOMORROW";
+"TOMORROW" = "Tomorrow";
 /*后天 The day after tomorrow*/
 "AFTER_TOMOROW" = "The day after tomorrow";
 

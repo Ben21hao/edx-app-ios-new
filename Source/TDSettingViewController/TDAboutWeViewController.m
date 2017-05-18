@@ -12,7 +12,7 @@
 
 @property (nonatomic,strong) UIImageView *mapImage;
 @property (nonatomic,strong) UIImageView *eliteuImage;
-@property (nonatomic,strong) UILabel *webLabel;
+@property (nonatomic,strong) UITextView *webTextView;
 @property (nonatomic,strong) UILabel *verctionLabel;
 @property (nonatomic,strong) UILabel *companyLabel;
 
@@ -41,16 +41,23 @@
     self.view.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
     
     self.mapImage = [[UIImageView alloc] init];
-    self.mapImage.image = [UIImage imageNamed:@"bg_map"];
+    self.mapImage.image = [UIImage imageNamed:@"placeholderCourseCardImage"];
     [self.view addSubview:self.mapImage];
     
     self.eliteuImage = [[UIImageView alloc] init];
     self.eliteuImage.image = [UIImage imageNamed:@"edx_logo_login"];
     [self.view addSubview:self.eliteuImage];
     
-    NSString *webSite = [NSString stringWithFormat:@"%@：www.eliteu.cn",NSLocalizedString(@"WEBSITE_COMPANY", nil)];
-    self.webLabel = [self setLabelConstraint:webSite];
-    self.webLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
+    NSString *webSiteStr = [NSString stringWithFormat:@"%@：www.eliteu.cn",NSLocalizedString(@"WEBSITE_COMPANY", nil)];
+    self.webTextView = [[UITextView alloc] init];
+    self.webTextView.font = [UIFont fontWithName:@"OpenSans" size:12];
+    self.webTextView.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
+    self.webTextView.textColor = [UIColor colorWithHexString:colorHexStr8];
+    self.webTextView.editable = NO;
+    self.webTextView.showsVerticalScrollIndicator = NO;
+    self.webTextView.scrollEnabled = NO;
+    self.webTextView.text = webSiteStr;
+    [self.view addSubview:self.webTextView];
     
     NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
     NSString *version = infoDic[@"CFBundleShortVersionString"];
@@ -107,9 +114,9 @@
         make.size.mas_equalTo(size);
     }];
     
-    [self.webLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.webTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(self.mapImage.mas_centerX);
-        make.top.mas_equalTo(self.eliteuImage.mas_bottom).offset(0);
+        make.top.mas_equalTo(self.eliteuImage.mas_bottom).offset(18);
     }];
     
     [self.companyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
