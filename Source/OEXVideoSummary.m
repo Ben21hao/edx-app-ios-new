@@ -73,7 +73,13 @@
         self.videoThumbnailURL = [summary objectForKey:@"video_thumbnail_url"];
         self.videoID = [summary objectForKey:@"id"] ;
 
-        self.duration = [OEXSafeCastAsClass([summary objectForKey:@"duration"], NSNumber) doubleValue];
+//        self.duration = [OEXSafeCastAsClass([summary objectForKey:@"duration"], NSNumber) doubleValue];
+        NSString *timeStr = summary[@"duration"];
+        
+        if (![timeStr isEqual:[NSNull null]]) {
+            //            NSLog(@"timeStr +++++++  %@",timeStr);
+            self.duration = [OEXSafeCastAsClass([NSNumber numberWithDouble:[summary[@"duration"] doubleValue]], NSNumber) stringValue];
+        }
         
         self.onlyOnWeb = [[summary objectForKey:@"only_on_web"] boolValue];
 

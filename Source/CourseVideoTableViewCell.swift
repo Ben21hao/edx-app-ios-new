@@ -33,7 +33,9 @@ class CourseVideoTableViewCell: UITableViewCell, CourseBlockContainerCell {
     var localState : OEXHelperVideoDownload? {
         didSet {
             updateDownloadViewForVideoState()
-            content.setDetailText(OEXDateFormatting.formatSecondsAsVideoLength(Double((localState?.summary?.duration)!) ?? 0))
+            if localState?.summary?.duration != nil {
+                content.setDetailText(OEXDateFormatting.formatSecondsAsVideoLength(Double((localState?.summary?.duration)!) ?? 0))
+            }
         }
     }
     

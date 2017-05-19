@@ -17,6 +17,8 @@ static NSString* const OEXStandardDateFormatMicroseconds = @"yyyy-MM-dd'T'HH:mm:
 @implementation OEXDateFormatting
 
 + (NSString*)formatSecondsAsVideoLength:(NSTimeInterval)totalSeconds {
+    NSLog(@"时间格式 --->>> %f",totalSeconds);
+    
     int seconds = (int)totalSeconds % 60;
     int minutes = (int)(totalSeconds / 60) % 60;
     int hours = (int)(totalSeconds / 3600);

@@ -262,19 +262,22 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
     public func prepareTableViewData(enrollment: UserCourseEnrollment) {
         cellItems = []
         
-        if let certificateUrl = getCertificateUrl(enrollment) {
-            let item = CertificateDashboardItem(certificateImage: UIImage(named: "courseCertificate")!, certificateUrl: certificateUrl, action: {
-                let url = NSURL(string: certificateUrl)!
-                self.environment.router?.showCertificate(url, title: enrollment.course.name, fromController: self)
-            })
-            cellItems.append(item)
-        }
+        /*证书*/
+//        if let certificateUrl = getCertificateUrl(enrollment) {
+//            let item = CertificateDashboardItem(certificateImage: UIImage(named: "courseCertificate")!, certificateUrl: certificateUrl, action: {
+//                let url = NSURL(string: certificateUrl)!
+//                self.environment.router?.showCertificate(url, title: enrollment.course.name, fromController: self)
+//            })
+//            cellItems.append(item)
+//        }
 
+          /*课件*/
         var item = StandardCourseDashboardItem(title: Strings.courseDashboardCourseware, detail: Strings.courseDashboardCourseDetail, icon : .Courseware) {[weak self] () -> Void in
             self?.showCourseware()
         }
         cellItems.append(item)
         
+          /*讨论*/
         if shouldShowDiscussions(enrollment.course) {
             let courseID = self.courseID
             item = StandardCourseDashboardItem(title: Strings.courseDashboardDiscussion, detail: Strings.courseDashboardDiscussionDetail, icon: .Discussions) {[weak self] () -> Void in
@@ -283,16 +286,19 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
             cellItems.append(item)
         }
         
+          /*资料*/
         item = StandardCourseDashboardItem(title: Strings.courseDashboardHandouts, detail: Strings.courseDashboardHandoutsDetail, icon: .Handouts) {[weak self] () -> Void in
             self?.showHandouts()
         }
         cellItems.append(item)
         
+          /*公告*/
         item = StandardCourseDashboardItem(title: Strings.courseDashboardAnnouncements, detail: Strings.courseDashboardAnnouncementsDetail, icon: .Announcements) {[weak self] () -> Void in
             self?.showAnnouncements()
         }
         cellItems.append(item)
         
+          /*班级*/
         item = StandardCourseDashboardItem(title: Strings.classTitle, detail: Strings.entetClass, icon: .Group) {[weak self] () -> Void in
             self?.showQRViewController()
         }

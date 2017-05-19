@@ -491,7 +491,7 @@ static OEXInterface* _sharedInterface = nil;
     return [_storage insertVideoData: @""
                                Title: helperVideo.summary.name
                                 Size: [NSString stringWithFormat:@"%.2f", [helperVideo.summary.size doubleValue]]
-                            Duration: [NSString stringWithFormat:@"%.2f", helperVideo.summary.duration]
+                            Duration: [NSString stringWithFormat:@"%@", helperVideo.summary.duration]
                        DownloadState: helperVideo.downloadState
                             VideoURL: helperVideo.summary.videoURL
                              VideoID: helperVideo.summary.videoID

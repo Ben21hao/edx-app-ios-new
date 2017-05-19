@@ -466,7 +466,7 @@ typedef  enum OEXAlertType
             cell.lbl_Time.text = @"NA";
         }
         else {
-            cell.lbl_Time.text = [OEXDateFormatting formatSecondsAsVideoLength: obj_video.summary.duration];
+            cell.lbl_Time.text = [OEXDateFormatting formatSecondsAsVideoLength: [obj_video.summary.duration doubleValue]];
         }
 
         //Played state

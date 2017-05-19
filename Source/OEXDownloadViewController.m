@@ -172,7 +172,7 @@
             cell.lbl_time.text = @"NA";
         }
         else {
-            cell.lbl_time.text = [OEXDateFormatting formatSecondsAsVideoLength: downloadingVideo.summary.duration];
+            cell.lbl_time.text = [OEXDateFormatting formatSecondsAsVideoLength: [downloadingVideo.summary.duration doubleValue]];
         }
 
         float result = (([downloadingVideo.summary.size doubleValue] / 1024) / 1024);

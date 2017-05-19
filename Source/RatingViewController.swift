@@ -30,6 +30,8 @@ class RatingViewController: UIViewController, RatingContainerDelegate {
     static func canShowAppReview(environment: Environment) -> Bool {
         // guard let _ = environment.config.appReviewURI where environment.interface?.reachable ?? false && environment.config.isAppReviewsEnabled else { return false }
         
+        guard environment.interface?.reachable ?? false && environment.config.isAppReviewsEnabled else { return false }
+        
         if let appRating = environment.interface?.getSavedAppRating(), let lastVersionForAppReview = environment.interface?.getSavedAppVersionWhenLastRated(){
             let versionDiff = (Float(NSBundle.mainBundle().oex_shortVersionString()) ?? 0.0) - (Float(lastVersionForAppReview) ?? 0.0)
             if appRating >= minimumPositiveRating || versionDiff < minimumVersionDifferenceForNegativeRating {
