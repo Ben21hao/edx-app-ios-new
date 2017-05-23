@@ -20,7 +20,7 @@ protocol DiscussionNewPostViewControllerDelegate : class {
     func newPostController(controller  : DiscussionNewPostViewController, addedPost post: DiscussionThread)
 }
 
-public class DiscussionNewPostViewController: UIViewController, UITextViewDelegate, MenuOptionsViewControllerDelegate, InterfaceOrientationOverriding {
+public class DiscussionNewPostViewController: TDSwiftBaseViewController, UITextViewDelegate, MenuOptionsViewControllerDelegate, InterfaceOrientationOverriding {
  
     public typealias Environment = protocol<DataManagerProvider, NetworkManagerProvider, OEXRouterProvider, OEXAnalyticsProvider>
     
@@ -114,7 +114,8 @@ public class DiscussionNewPostViewController: UIViewController, UITextViewDelega
                 
                 if let post = result.data {
                     self?.delegate?.newPostController(self!, addedPost: post)
-                    self?.dismissViewControllerAnimated(true, completion: nil)
+//                    self?.dismissViewControllerAnimated(true, completion: nil)
+                    self?.navigationController?.popViewControllerAnimated(true)
                 }
                 else {
                     DiscussionHelper.showErrorMessage(self, error: result.error)
@@ -126,14 +127,13 @@ public class DiscussionNewPostViewController: UIViewController, UITextViewDelega
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor(), NSFontAttributeName : UIFont(name: "OpenSans", size: 18.0)!]
-        self.navigationItem.title = Strings.post
-        
-        let cancelItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: nil)
-        cancelItem.oex_setAction { [weak self]() -> Void in
-            self?.dismissViewControllerAnimated(true, completion: nil)
-        }
-        self.navigationItem.leftBarButtonItem = cancelItem
+        self.titleViewLabel.text = Strings.post
+
+//        let cancelItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: nil)
+//        cancelItem.oex_setAction { [weak self]() -> Void in
+//            self?.dismissViewControllerAnimated(true, completion: nil)
+//        }
+//        self.navigationItem.leftBarButtonItem = cancelItem
         
         contentTitleLabel.isAccessibilityElement = false
         titleLabel.isAccessibilityElement = false
@@ -260,11 +260,11 @@ public class DiscussionNewPostViewController: UIViewController, UITextViewDelega
     }
     
     override public func shouldAutorotate() -> Bool {
-        return true
+        return false
     }
     
     override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .AllButUpsideDown
+        return .Portrait
     }
     
     private func loadedData() {

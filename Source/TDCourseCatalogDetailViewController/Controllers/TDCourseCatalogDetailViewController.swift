@@ -281,9 +281,10 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         self.navigationController?.pushViewController(videoVc, animated: true)
     }
     
-    func gotoWaitForPayVc () { //待支付
+    func gotoWaitForPayVc (type: Int) { //待支付
         let userCouponVC = WaitForPayViewController()
         userCouponVC.username = self.username //传当前用户名
+        userCouponVC.whereFrom = type
         self.navigationController?.pushViewController(userCouponVC, animated: true)
     }
     
@@ -329,7 +330,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         case 1:
             self.gotoChooseCourseVc()
         case 2:
-            self.gotoWaitForPayVc()
+            self.gotoWaitForPayVc(0)
         default:
             return
         }
@@ -587,9 +588,9 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         }
         
         self.freeView.sureButtonHandle = { (AnyObject) -> () in
-            let willBeginStr = NSUserDefaults.standardUserDefaults().valueForKey("Course_Wait_Pay")//待支付
-            if willBeginStr != nil {
-                self.gotoWaiforPay()
+            
+            if self.courseModel.submitType == 2 {
+                self.gotoWaitForPayVc(1)
                 
             } else {
                 self.gotoChooseCourseVC()
@@ -601,24 +602,13 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
     
     
     func gotoChooseCourseVC() {
-        let session = OEXRouter.sharedRouter().environment.session
         let courseId = NSUserDefaults.standardUserDefaults().valueForKey("Free_Course_CourseID")
         let chooseCourseVC = TDChooseCourseViewController.init()
-        chooseCourseVC.username = session.currentUser?.username
+        chooseCourseVC.username = self.username
         chooseCourseVC.courseID = "\(courseId!)"
         chooseCourseVC.whereFrom = 1
         self.navigationController?.pushViewController(chooseCourseVC, animated: true)
     }
-    
-    func gotoWaiforPay() {
-        let session = OEXRouter.sharedRouter().environment.session
-        
-        let userCouponVC1 = WaitForPayViewController()
-        userCouponVC1.username = session.currentUser?.username //传当前用户名
-        userCouponVC1.whereFrom = 1
-        self.navigationController?.pushViewController(userCouponVC1, animated: true)
-    }
-    
     
     //MARK:  ----->>> UI <<<------
 

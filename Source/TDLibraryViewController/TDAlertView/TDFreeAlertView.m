@@ -15,8 +15,8 @@
 #import "OEXAnalytics.h"
 #import "OEXAuthentication.h"
 
-#define USER_LOGIN_NAME @"User_Login_Name"
-#define USER_LOGIN_PASSWORD @"User_Login_Password"
+#define USER_LOGIN_NAME @"User_Login_Name_New"
+#define USER_LOGIN_PASSWORD @"User_Login_Password_New"
 
 @interface TDFreeAlertView () <UITextFieldDelegate>
 

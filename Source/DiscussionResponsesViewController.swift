@@ -318,11 +318,11 @@ class DiscussionResponsesViewController: TDSwiftBaseViewController, UITableViewD
     }
     
     override func shouldAutorotate() -> Bool {
-        return true
+        return false
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .AllButUpsideDown
+        return .Portrait
     }
     
     private func logScreenEvent(){

@@ -12,7 +12,7 @@ protocol DiscussionNewCommentViewControllerDelegate : class {
     func newCommentController(controller  : DiscussionNewCommentViewController, addedComment comment: DiscussionComment)
 }
 
-public class DiscussionNewCommentViewController: UIViewController, UITextViewDelegate, InterfaceOrientationOverriding {
+public class DiscussionNewCommentViewController: TDSwiftBaseViewController, UITextViewDelegate, InterfaceOrientationOverriding {
     
     public typealias Environment = protocol<DataManagerProvider, NetworkManagerProvider, OEXRouterProvider, OEXAnalyticsProvider, OEXStylesProvider>
     
@@ -125,7 +125,8 @@ public class DiscussionNewCommentViewController: UIViewController, UITextViewDel
                     let dataManager = self?.environment.dataManager.courseDataManager.discussionManagerForCourseWithID(courseID)
                     dataManager?.commentAddedStream.send((threadID: comment.threadID, comment: comment))
                     self?.delegate?.newCommentController(self!, addedComment: comment)
-                    self?.dismissViewControllerAnimated(true, completion: nil)
+//                    self?.dismissViewControllerAnimated(true, completion: nil)
+                self?.navigationController?.popViewControllerAnimated(true)
             }
             else {
                 self?.addCommentButton.enabled = true
@@ -170,11 +171,11 @@ public class DiscussionNewCommentViewController: UIViewController, UITextViewDel
         }
         self.view.addGestureRecognizer(tapGesture)
         
-        let cancelItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: nil)
-        cancelItem.oex_setAction { [weak self]() -> Void in
-            self?.dismissViewControllerAnimated(true, completion: nil)
-        }
-        self.navigationItem.leftBarButtonItem = cancelItem
+//        let cancelItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: nil, action: nil)
+//        cancelItem.oex_setAction { [weak self]() -> Void in
+//            self?.dismissViewControllerAnimated(true, completion: nil)
+//        }
+//        self.navigationItem.leftBarButtonItem = cancelItem
 
         self.addCommentButton.enabled = false
         
@@ -277,8 +278,7 @@ public class DiscussionNewCommentViewController: UIViewController, UITextViewDel
         self.contentTitleLabel.attributedText = NSAttributedString.joinInNaturalLayout([responseTextViewStyle.attributedStringWithText(titleText), responseTextViewStyle.attributedStringWithText(Strings.asteric)])
         self.contentTitleLabel.isAccessibilityElement = false
         
-        self.navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor(), NSFontAttributeName : UIFont(name: "OpenSans", size: 18.0)!]
-        self.navigationItem.title = navigationItemTitle
+        self.titleViewLabel.text = navigationItemTitle
             
         if case .Comment(_) = self.context, let thread = thread{
             DiscussionHelper.updateEndorsedTitle(thread, label: answerLabel, textStyle: answerLabelStyle)

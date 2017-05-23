@@ -163,14 +163,14 @@
 #pragma mark - 	加入指定课程到试听课
 - (void)getMyFreeCourseDetail:(NSString *)username courseID:(NSString *)courseID onViewController:(UIViewController *)vc {
     
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
     self.username = username;
     self.courseId = courseID;
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:username forKey:@"username"];
     [params setValue:courseID forKey:@"course_id"];
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *url = [NSString stringWithFormat:@"%@/api/courses/v1/add_course_to_listening_courses/",ELITEU_URL];
     [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -233,8 +233,8 @@
 #pragma mark - 登录相关操作
 - (void)beginLoginActionViewController:(UIViewController *)vc {
     
-    self.acountStr = [[NSUserDefaults standardUserDefaults] valueForKey:@"User_Login_Name"];
-    self.password = [[NSUserDefaults standardUserDefaults] valueForKey:@"User_Login_Password"];
+    self.acountStr = [[NSUserDefaults standardUserDefaults] valueForKey:@"User_Login_Name_New"];
+    self.password = [[NSUserDefaults standardUserDefaults] valueForKey:@"User_Login_Password_New"];
     
     if (self.acountStr.length > 0 && self.password.length > 0) {
         [OEXAuthentication requestTokenWithUser:self.acountStr password:self.password completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
