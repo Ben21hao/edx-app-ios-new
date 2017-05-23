@@ -47,7 +47,6 @@
  */
 - (BOOL)networkingState;
 
-
 /*
  数字小数点后面显示小一点
  */
@@ -57,6 +56,11 @@
  数字颜色与大小
  */
 - (NSMutableAttributedString *)setDetailString:(NSString *)titleStr withFont:(NSInteger)font withColorStr:(NSString *)colorStr;
+/*
+ 一个小数点以上
+ */
+- (NSMutableAttributedString *)setSeveralDetailString:(NSString *)titleStr withFont:(NSInteger)font;
+
 
 /*
  昵称保留一下关键词不能使用
@@ -84,9 +88,42 @@
 - (NSString *)interceptStr:(NSString *)dateStr;
 
 /*
+ 时间转换2013-11-17T11:59:22+08:00 ->> 2013-11-17 11:59:22
+ */
+- (NSString *)changeStypeForTime:(NSString *)timeStr;
+
+/*
+ 时间间隔
+ */
+- (NSTimeInterval)intervalForTimeStr:(NSString *)timeStr;
+
+/*
+ 计算东八区的时间
+ */
+- (NSDate *)getChinaTime:(NSDate *)date;
+
+/*
+ 将世界时间串换成东八区时间串
+ */
+- (NSString *)changeToEight:(NSString *)timeStr;
+
+//当前时间加上秒数
+- (NSString *)addSecondsForNow:(NSNumber *)second;
+
+/*
+ 计算试听剩余时间
+ */
+- (int)getFreeCourseSecond;
+
+/*
  获取字符串size
  */
 - (CGSize)getSringSize:(NSString *)str withFont:(NSInteger)font;
+
+/*
+ 屏幕横竖屏
+ */
+- (void)interfaceOrientation:(UIInterfaceOrientation)orientation;
 
 /*
  返回虚线image的方法

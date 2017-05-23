@@ -16,9 +16,11 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
     let webView : UIWebView
     let loadController : LoadStateViewController
     let handouts : BackedStream<String> = BackedStream()
-   
+    private var whereFrom = 0
+    private var enrollment: UserCourseEnrollment?
+    
     private var titleL : UILabel? //自定义标题
-    init(environment : Environment, courseID : String) {
+    init(environment : Environment, courseID : String, whereFrom: Int, enrollment: UserCourseEnrollment?) {
         self.environment = environment
         self.courseID = courseID
         self.webView = UIWebView()
@@ -26,8 +28,15 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
         
         super.init(env: environment)
         
-        addListener()
-}
+        self.whereFrom = whereFrom
+        self.enrollment = enrollment;
+        
+        if self.whereFrom == 1 {
+            getFreeCourseHandout()
+        } else {
+            addListener()
+        }
+    }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -35,6 +44,36 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+
+        loadController.setupInController(self, contentView: webView)
+        setViewConstraint()
+        setNavigationStyles()
+    
+        loadHandouts()
+    }
+    
+    override func reloadViewData() {
+        loadHandouts()
+    }
+    
+    private func setViewConstraint() {
+        webView.delegate = self
+        view.addSubview(webView)
+        
+        webView.snp_makeConstraints { (make) -> Void in
+            make.edges.equalTo(self.view)
+        }
+    }
+
+    private func setNavigationStyles() {
+        
+        self.view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
+        
+        self.titleL = UILabel(frame:CGRect(x:0, y:0, width:40, height:40))
+        self.titleL?.text = Strings.courseHandouts
+        self.navigationItem.titleView = self.titleL
+        self.titleL?.font = UIFont(name:"OpenSans",size:18.0)
+        self.titleL?.textColor = UIColor.whiteColor()
         
         let leftButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48))
         leftButton.setImage(UIImage.init(named: "backImagee"), forState: .Normal)
@@ -46,43 +85,10 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
         
         let leftBarItem = UIBarButtonItem.init(customView: leftButton)
         self.navigationItem.leftBarButtonItem = leftBarItem
-
-        
-        loadController.setupInController(self, contentView: webView)
-        addSubviews()
-        setConstraints()
-        setStyles()
-        webView.delegate = self
-        loadHandouts()
-    }
-    
-    override func reloadViewData() {
-        loadHandouts()
-    }
-    
-    private func addSubviews() {
-        view.addSubview(webView)
-    }
-    
-    private func setConstraints() {
-        webView.snp_makeConstraints { (make) -> Void in
-            make.edges.equalTo(self.view)
-        }
     }
     
     func leftBarItemAction() {
         self.navigationController?.popViewControllerAnimated(true)
-    }
-    
-    private func setStyles() {
-        self.view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
-//        self.navigationItem.title = Strings.courseHandouts
-        //添加标题文本
-        self.titleL = UILabel(frame:CGRect(x:0, y:0, width:40, height:40))
-        self.titleL?.text = Strings.courseHandouts
-        self.navigationItem.titleView = self.titleL
-        self.titleL?.font = UIFont(name:"OpenSans",size:18.0)
-        self.titleL?.textColor = UIColor.whiteColor()
     }
     
     private func streamForCourse(course : OEXCourse) -> Stream<String>? {
@@ -124,6 +130,23 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
             })
     }
     
+    func getFreeCourseHandout() {
+        
+        let requestModel = TDRequestBaseModel.init()
+        requestModel.getCourseHandout(self.courseID, withHandoutUrl: self.enrollment?.course.course_handouts)
+        
+        requestModel.getCourseHandoutHandle = {(htmlStr) -> () in
+            if htmlStr.characters.count == 0 {
+                self.loadController.state = .Loaded
+                self.webView.makeToast("暂无资料", duration: 1.08, position: CSToastPositionCenter)
+            } else {
+                let displayHTML = OEXStyles.sharedStyles().styleHTMLContent(htmlStr, stylesheet: "handouts-announcements")
+                let apiHostUrl = OEXConfig.sharedConfig().apiHostURL()
+                self.webView.loadHTMLString(displayHTML!, baseURL: apiHostUrl)
+            }
+        }
+    }
+    
     override public func updateViewConstraints() {
         loadController.insets = UIEdgeInsets(top: self.topLayoutGuide.length, left: 0, bottom: self.bottomLayoutGuide.length, right: 0)
         super.updateViewConstraints()
@@ -140,4 +163,11 @@ public class CourseHandoutsViewController: OfflineSupportViewController, UIWebVi
         return true
     }
     
+    public func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+        self.loadController.state = LoadState.failed()
+    }
+    
+    public func webViewDidFinishLoad(webView: UIWebView) {
+        self.loadController.state = .Loaded
+    }
 }

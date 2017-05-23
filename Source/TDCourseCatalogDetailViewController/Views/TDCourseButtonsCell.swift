@@ -49,7 +49,7 @@ class TDCourseButtonsCell: UITableViewCell {
         discountLabel.textAlignment = .Center
         bgView.addSubview(discountLabel)
         
-        auditionButton.setTitle("免费试听", forState: .Normal)
+//        auditionButton.setTitle("免费试听", forState: .Normal)
 //        self.bgView.backgroundColor = UIColor.redColor()
     }
     

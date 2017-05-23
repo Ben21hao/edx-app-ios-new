@@ -96,7 +96,7 @@
     if (username.length <= 0) {
         return NO;
     }
-
+    
     NSString *match = @"(^[\u4e00-\u9fa5]+$)";
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF matches %@", match];
     return [predicate evaluateWithObject:username];
@@ -151,15 +151,13 @@
 #pragma mark - 小数点后面.00变小
 /*
  无颜色设置
- type 1 无划线
- type 2 有划线
  */
 - (NSMutableAttributedString *)setString:(NSString *)titleStr withFont:(NSInteger)font type:(NSInteger)type { // type : 1 正常显示； 2 有划线
     if ([titleStr containsString:@"."]) {
         NSRange range = [titleStr rangeOfString:@"."];
         NSString *frontStr = [titleStr substringToIndex:range.location + 1];
         NSString *behindStr = [titleStr substringFromIndex:range.location + 1];
-//        NSLog(@"小数点前面 --> %@ == 后面 ----> %@",frontStr,behindStr);
+        //        NSLog(@"小数点前面 --> %@ == 后面 ----> %@",frontStr,behindStr);
         
         NSInteger smallFont = font * 0.8;
         if (type == 1) {
@@ -184,20 +182,19 @@
             [str1 appendAttributedString:str2];
             return str1;
         }
-    } else { //无小数点
+    } else {
         NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:titleStr
                                                                                  attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"OpenSans" size:font] }];
         return str1;
     }
 }
-/* 
+/*
  有颜色设置
- 无划线
  */
 - (NSMutableAttributedString *)setDetailString:(NSString *)titleStr withFont:(NSInteger)font withColorStr:(NSString *)colorStr {
     if ([titleStr containsString:@"."]) {
         NSRange range = [titleStr rangeOfString:@"."];
-        NSString *behindStr = [titleStr substringWithRange:NSMakeRange(range.location + 1, 2)];//小数点后面两位
+        NSString *behindStr = [titleStr substringWithRange:NSMakeRange(range.location + 1, 2)];
         
         NSInteger smallFont = font * 0.8;
         NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:titleStr
@@ -210,14 +207,60 @@
                                                                                               NSFontAttributeName : [UIFont fontWithName:@"OpenSans" size:smallFont],
                                                                                               NSForegroundColorAttributeName : [UIColor colorWithHexString:colorStr]
                                                                                               }];
-        [str1 replaceCharactersInRange:NSMakeRange(range.location + 1, 2) withAttributedString:str2];//替换
+        [str1 replaceCharactersInRange:NSMakeRange(range.location + 1, 2) withAttributedString:str2];
         return str1;
         
-    } else {//无小数点
+    } else {
         NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:titleStr
                                                                                  attributes:@{
                                                                                               NSFontAttributeName : [UIFont fontWithName:@"OpenSans" size:font],
                                                                                               NSForegroundColorAttributeName : [UIColor colorWithHexString:colorStr]
+                                                                                              }];
+        return str1;
+    }
+}
+
+/*
+ 一个小数点以上
+ */
+- (NSMutableAttributedString *)setSeveralDetailString:(NSString *)titleStr withFont:(NSInteger)font {
+    if ([titleStr containsString:@"."]) {
+        NSArray *strArray = [titleStr componentsSeparatedByString:@"."];
+        
+        NSMutableAttributedString *allStr = [[NSMutableAttributedString alloc] init];
+        
+        for (int i = 0 ; i < strArray.count; i ++) {
+            NSString *str = strArray[i];
+            
+            if (i == 0) {
+                NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:str
+                                                                                         attributes:@{
+                                                                                                      NSFontAttributeName : [UIFont fontWithName:@"OpenSans" size:font]
+                                                                                                      }];
+                [allStr appendAttributedString:str1];
+            } else {
+                
+                NSString *zeroStr = [str substringToIndex:2];
+                NSInteger smallFont = font * 0.8;
+                NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@".%@",str]
+                                                                                         attributes:@{
+                                                                                                      NSFontAttributeName : [UIFont fontWithName:@"OpenSans" size:font]
+                                                                                                      }];
+                NSMutableAttributedString *str2 = [[NSMutableAttributedString alloc] initWithString:zeroStr
+                                                                                         attributes:@{
+                                                                                                      NSFontAttributeName : [UIFont fontWithName:@"OpenSans" size:smallFont]
+                                                                                                      }];
+                [str1 replaceCharactersInRange:NSMakeRange(1, 2) withAttributedString:str2];
+                [allStr appendAttributedString:str1];
+            }
+        }
+        
+        return allStr;
+        
+    } else {
+        NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:titleStr
+                                                                                 attributes:@{
+                                                                                              NSFontAttributeName : [UIFont fontWithName:@"OpenSans" size:font]
                                                                                               }];
         return str1;
     }
@@ -233,7 +276,7 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager GET:url parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
+        
         NSDictionary *responseDic = (NSDictionary *)responseObject;
         id code = responseDic[@"code"];
         if ([code intValue] == 200) {
@@ -242,7 +285,7 @@
             }
         } else {
             
-             [view makeToast:NSLocalizedString(@"CONNOT_USE_NICKNAME", nil) duration:1.08 position:CSToastPositionCenter];
+            [view makeToast:NSLocalizedString(@"CONNOT_USE_NICKNAME", nil) duration:1.08 position:CSToastPositionCenter];
             if (self.checkNickNameHandle) {
                 self.checkNickNameHandle(NO);
             }
@@ -321,11 +364,104 @@
     return [str substringToIndex:10];
 }
 
+#pragma mark - 时间转换2013-11-17T11:59:22+08:00 ->> 2013-11-17 11:59:22
+- (NSString *)changeStypeForTime:(NSString *)timeStr {
+    if (timeStr.length < 19) {
+        return timeStr;
+    }
+    NSMutableString *str = [[NSMutableString alloc] initWithString:timeStr];
+    NSString *str1 = [str stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+    NSString *str2 = [str1 substringToIndex:19];
+    NSLog(@"时间格式----------->> %@",str2);
+    return str2;
+}
+
+#pragma mark - 两个时间差
+- (NSTimeInterval)intervalForTimeStr:(NSString *)timeStr { //timeStr 为东八区时间串
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *startDate =[dateFormat dateFromString:timeStr];
+    
+    //统一用东八区时间
+    NSDate *localStartDate = [self getChinaTime:startDate];
+    NSDate *now = [self getChinaTime:[NSDate date]];
+    
+    NSTimeInterval nowInterval = [now timeIntervalSince1970]*1;//手机系统时间
+    NSTimeInterval endInterval = [localStartDate timeIntervalSince1970]*1;//课程结束时间
+    return endInterval - nowInterval;
+}
+
+- (NSDate *)getChinaTime:(NSDate *)date {//计算东八区的时间
+    NSTimeZone* localTimeZone = [NSTimeZone localTimeZone];//获取本地时区(中国时区)
+    NSInteger offset = [localTimeZone secondsFromGMTForDate:date];//计算世界时间与本地时区的时间偏差值
+    NSDate *localDate = [date dateByAddingTimeInterval:offset];//世界时间＋偏差值 得出中国区时间
+    return localDate;
+}
+
+//将世界时间串换成东八区时间串
+- (NSString *)changeToEight:(NSString *)timeStr { //timeStr 为世界时间串，少于东八区8个小时
+    NSString *dateStr = [self changeStypeForTime:timeStr];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *startDate =[dateFormat dateFromString:dateStr];
+    
+    NSDate *localStartDate = [self getChinaTime:startDate];
+    NSString *localStr = [dateFormat stringFromDate:localStartDate];
+    return localStr;
+}
+
+//当前时间加上秒数
+- (NSString *)addSecondsForNow:(NSNumber *)second {
+    NSDate *now = [NSDate date];
+    NSDate *triaDate = [now dateByAddingTimeInterval:second.integerValue];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSString *triaStr = [dateFormat stringFromDate:triaDate];
+    return triaStr;
+}
+
+/*
+ 计算试听剩余时间
+ */
+- (int)getFreeCourseSecond {
+    
+    NSString *dateStr = [[NSUserDefaults standardUserDefaults] valueForKey:@"Free_Course_Date_Str"];
+    
+    NSString *timeStr = [self changeStypeForTime:dateStr];
+    int timeIntervale = [self intervalForTimeStr:timeStr];
+    
+    if (timeIntervale > 0) {//还没过期
+        return timeIntervale;
+    } else {//试听时间已过
+        return 0;
+    }
+}
+
 #pragma mark - 获取字符串size
 - (CGSize)getSringSize:(NSString *)str withFont:(NSInteger)font {
     
     CGSize size = [str boundingRectWithSize:CGSizeMake(TDWidth, TDHeight) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:font]} context:nil].size;
     return size;
+}
+
+#pragma mark - 屏幕横竖屏
+- (void)interfaceOrientation:(UIInterfaceOrientation)orientation {
+    
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        
+        int val = orientation;
+        [invocation setArgument:&val atIndex:2]; // 从2开始是因为0 1 两个参数已经被selector和target占用
+        [invocation invoke];
+    }
 }
 
 #pragma mark - 返回虚线image的方法
@@ -355,6 +491,7 @@
     
     return timeStr;
 }
+
 
 
 @end

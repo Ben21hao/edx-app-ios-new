@@ -17,29 +17,33 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
     let environment : Environment
     let blockID : CourseBlockID?
     let courseQuerier : CourseOutlineQuerier
-    let videoController : OEXVideoPlayerInterface
-    
     let loader = BackedStream<CourseBlock>()
+    
+        let loadController : LoadStateViewController
+    let videoController : OEXVideoPlayerInterface
+    let videoPlayerVC : TDVideoUrlPlayController//用来播放url的
+    var isUrlVideo = false
     
     var rotateDeviceMessageView : IconMessageView?
     var videoTranscriptView : VideoTranscript?
     var subtitleTimer = NSTimer()
     var contentView : UIView?
-    let loadController : LoadStateViewController
-    
+
     init(environment : Environment, blockID : CourseBlockID?, courseID: String) {
         self.blockID = blockID
         self.environment = environment
         courseQuerier = environment.dataManager.courseDataManager.querierForCourseWithID(courseID)
         videoController = OEXVideoPlayerInterface()
         loadController = LoadStateViewController()
+        videoPlayerVC = TDVideoUrlPlayController()
         
         super.init(nibName: nil, bundle: nil)
         
         addChildViewController(videoController)
         videoController.didMoveToParentViewController(self)
         videoController.delegate = self
-        addLoadListener()
+        
+        addLoadListener()//获取数据
     }
     
     var courseID : String {
@@ -66,7 +70,13 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
                         {
                             self?.showLoadedBlock(block, forVideo: video)
                         }
+                        else if let video = block.type.asVideo {
+                            self?.isUrlVideo = true
+                            self?.openVideoUrl(video.videoURL!)
+                            
+                        }
                         else {
+                            //                            print("------>>>>>>>>>>>> \(block.displayName) -- \(block.type.asVideo?.videoURL)")
                             self?.showError(nil)
                         }
             }, failure : {[weak self] error in
@@ -83,11 +93,11 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         
         loadController.setupInController(self, contentView : contentView!)
         
-        contentView?.addSubview(videoController.view)
         videoController.view.translatesAutoresizingMaskIntoConstraints = false
         videoController.fadeInOnLoad = false
+        contentView?.addSubview(videoController.view)
         
-        rotateDeviceMessageView = IconMessageView(icon: .RotateDevice, message: Strings.rotateDevice)
+        rotateDeviceMessageView = IconMessageView(icon: .RotateDevice, message: Strings.rotateDevice)//旋转屏幕
         contentView?.addSubview(rotateDeviceMessageView!)
         
         let tapGesture = UITapGestureRecognizer()
@@ -166,6 +176,7 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
+        
         videoController.setAutoPlaying(false)
         self.subtitleTimer.invalidate()
     }
@@ -193,38 +204,64 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         super.updateViewConstraints()
     }
     
-    private func applyPortraitConstraints() {
+    private func applyPortraitConstraints() {//竖直
         
         contentView?.snp_remakeConstraints {make in
             make.edges.equalTo(view)
         }
         
-        videoController.height = view.bounds.size.width * CGFloat(STANDARD_VIDEO_ASPECT_RATIO)
-        videoController.width = view.bounds.size.width
-        
-        videoController.view.snp_remakeConstraints {make in
-            make.leading.equalTo(contentView!)
-            make.trailing.equalTo(contentView!)
-            if #available(iOS 9, *) {
-                make.top.equalTo(self.topLayoutGuide.bottomAnchor)
-            }
-            else {
-                make.top.equalTo(self.snp_topLayoutGuideBottom)
+        if isUrlVideo == false {
+            videoController.height = view.bounds.size.width * CGFloat(STANDARD_VIDEO_ASPECT_RATIO)
+            videoController.width = view.bounds.size.width
+            
+            videoController.view.snp_remakeConstraints {make in
+                make.leading.equalTo(contentView!)
+                make.trailing.equalTo(contentView!)
+                if #available(iOS 9, *) {
+                    make.top.equalTo(self.topLayoutGuide.bottomAnchor)
+                }
+                else {
+                    make.top.equalTo(self.snp_topLayoutGuideBottom)
+                }
+                
+                make.height.equalTo(view.bounds.size.width * CGFloat(STANDARD_VIDEO_ASPECT_RATIO))
             }
             
-            make.height.equalTo(view.bounds.size.width * CGFloat(STANDARD_VIDEO_ASPECT_RATIO))
+            setRotateViewCostraint(videoController)
+            
+        } else {
+            //            NSNotificationCenter.defaultCenter().postNotificationName("VideoView_InterFace_Orientation_Potraint", object: nil)
+            self.navigationController?.setToolbarHidden(false, animated: true)
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+            
+            videoPlayerVC.hideStatusBar = false
+            videoPlayerVC.barView.fullScreenButton.selected = false
+            
+            videoPlayerVC.view.snp_remakeConstraints{ (make) in
+                make.left.right.equalTo(contentView!)
+                if #available(iOS 9, *) {
+                    make.top.equalTo(self.topLayoutGuide.bottomAnchor)
+                } else {
+                    make.top.equalTo(self.snp_topLayoutGuideBottom)
+                }
+                make.height.equalTo(view.bounds.size.width * CGFloat(STANDARD_VIDEO_ASPECT_RATIO))
+            }
+            
+            setRotateViewCostraint(videoPlayerVC)
         }
+    }
+    
+    func setRotateViewCostraint(topViewController: UIViewController) {
         
         rotateDeviceMessageView?.snp_remakeConstraints {make in
-            make.top.equalTo(videoController.view.snp_bottom)
+            make.top.equalTo(topViewController.view.snp_bottom)
             make.leading.equalTo(contentView!)
             make.trailing.equalTo(contentView!)
             // There's a weird OS bug where the bottom layout guide doesn't get set properly until
             // the layout cycle after viewDidAppear, so use the parent in the mean time
             if #available(iOS 9, *) {
                 make.bottom.equalTo(self.bottomLayoutGuide.topAnchor)
-            }
-            else {
+            } else {
                 make.bottom.equalTo(self.snp_bottomLayoutGuideTop)
             }
         }
@@ -237,35 +274,69 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
             make.bottom.equalTo(view.snp_bottom).offset(-barHeight)
         }
     }
+
     
-    private func applyLandscapeConstraints() {
+    private func applyLandscapeConstraints() {//横屏
         
         contentView?.snp_remakeConstraints {make in
             make.edges.equalTo(view)
         }
         
-        let playerHeight = view.bounds.size.height - (navigationController?.toolbar.bounds.height ?? 0)
-        
-        videoController.height = playerHeight
-        videoController.width = view.bounds.size.width
-        
-        videoController.view.snp_remakeConstraints {make in
-            make.leading.equalTo(contentView!)
-            make.trailing.equalTo(contentView!)
-            if #available(iOS 9, *) {
-                make.top.equalTo(self.topLayoutGuide.bottomAnchor)
-            }
-            else {
-                make.top.equalTo(self.snp_topLayoutGuideBottom)
+        if isUrlVideo == false {
+            let playerHeight = view.bounds.size.height - (navigationController?.toolbar.bounds.height ?? 0)
+            
+            videoController.height = playerHeight
+            videoController.width = view.bounds.size.width
+            
+            videoController.view.snp_remakeConstraints {make in
+                make.leading.equalTo(contentView!)
+                make.trailing.equalTo(contentView!)
+                if #available(iOS 9, *) {
+                    make.top.equalTo(self.topLayoutGuide.bottomAnchor)
+                }
+                else {
+                    make.top.equalTo(self.snp_topLayoutGuideBottom)
+                }
+                
+                make.height.equalTo(playerHeight)
             }
             
-            make.height.equalTo(playerHeight)
+//            rotateDeviceMessageView?.snp_remakeConstraints {make in
+//                make.height.equalTo(0.0)
+//            }
+            setPotraitViewCostraint(videoController)
+            
+        } else {
+            //            NSNotificationCenter.defaultCenter().postNotificationName("VideoView_InterFace_Orientation_Lands", object: nil)
+            self.navigationController?.setToolbarHidden(true, animated: true)
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+            
+            videoPlayerVC.hideStatusBar = true
+            videoPlayerVC.barView.fullScreenButton.selected = true
+            videoPlayerVC.view.snp_remakeConstraints{ (make) in
+                make.leading.equalTo(contentView!)
+                make.trailing.equalTo(contentView!)
+                if #available(iOS 9, *) {
+                    make.top.equalTo(self.topLayoutGuide.bottomAnchor)
+                } else {
+                    make.top.equalTo(self.snp_topLayoutGuideBottom)
+                }
+                make.height.equalTo(TDScreenWidth)
+            }
+            setPotraitViewCostraint(videoPlayerVC)
         }
+    }
+
+    func setPotraitViewCostraint(topViewController: UIViewController) {
         
         rotateDeviceMessageView?.snp_remakeConstraints {make in
+            make.top.equalTo(topViewController.view.snp_bottom)
+            make.leading.equalTo(contentView!)
+            make.trailing.equalTo(contentView!)
             make.height.equalTo(0.0)
         }
     }
+
     
     func movieTimedOut() {
         if let controller = videoController.moviePlayerController where controller.fullscreen {
@@ -280,7 +351,7 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         loadController.state = LoadState.failed(error, icon: .UnknownError, message: Strings.videoContentNotAvailable)
     }
     
-    private func showYoutubeMessage(url: NSURL) {
+    private func showYoutubeMessage(url: NSURL) {//优酷 -- 通过url播放视频
         let buttonInfo = MessageButtonInfo(title: Strings.Video.viewOnYoutube) {
             if UIApplication.sharedApplication().canOpenURL(url){
                 UIApplication.sharedApplication().openURL(url)
@@ -288,6 +359,28 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         }
         loadController.state = LoadState.empty(icon: .CourseModeVideo, message: Strings.Video.onlyOnYoutube, attributedMessage: nil, accessibilityMessage: nil, buttonInfo: buttonInfo)
     }
+    
+    func openVideoUrl(urlStr: String) {//用url来播放
+        
+        addChildViewController(videoPlayerVC)
+        videoPlayerVC.didMoveToParentViewController(self)
+        videoPlayerVC.url = urlStr
+        
+        contentView?.addSubview(videoPlayerVC.view)
+        videoPlayerVC.view.snp_makeConstraints { (make) in
+            make.left.right.equalTo(contentView!)
+            if #available(iOS 9, *) {
+                make.top.equalTo(self.topLayoutGuide.bottomAnchor)
+            } else {
+                make.top.equalTo(self.snp_topLayoutGuideBottom)
+            }
+            make.height.equalTo(view.bounds.size.width * CGFloat(STANDARD_VIDEO_ASPECT_RATIO))
+        }
+        
+        loadController.state = .Loaded
+        videoController.view.hidden = true
+    }
+
     
     private func showLoadedBlock(block : CourseBlock, forVideo video: OEXHelperVideoDownload) {
         navigationItem.title = block.displayName
@@ -299,7 +392,7 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
         videoController.playVideoFor(video)
     }
     
-    private func canDownloadVideo() -> Bool {
+    private func canDownloadVideo() -> Bool {//判断网络是否可下载视频
         let hasWifi = environment.reachability.isReachableViaWiFi() ?? false
         let onlyOnWifi = environment.dataManager.interface?.shouldDownloadOnlyOnWifi ?? false
         return !onlyOnWifi || hasWifi
@@ -315,20 +408,22 @@ class VideoBlockViewController : UIViewController, CourseBlockViewController, OE
     
     override func willTransitionToTraitCollection(newCollection: UITraitCollection, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         
-        
-        guard let videoPlayer = videoController.moviePlayerController else { return }
-        
-        if videoPlayer.fullscreen {
+        if isUrlVideo == false {
+            guard let videoPlayer = videoController.moviePlayerController else { return }
             
-            if newCollection.verticalSizeClass == .Regular {
-                videoPlayer.setFullscreen(false, withOrientation: self.currentOrientation())
+            if videoPlayer.fullscreen {
+                
+                if newCollection.verticalSizeClass == .Regular {
+                    videoPlayer.setFullscreen(false, withOrientation: self.currentOrientation())
+                }
+                else {
+                    videoPlayer.setFullscreen(true, withOrientation: self.currentOrientation())
+                }
             }
-            else {
+            else if videoController.shouldRotate && newCollection.verticalSizeClass == .Compact {
                 videoPlayer.setFullscreen(true, withOrientation: self.currentOrientation())
+                print("ppppppppppppppp")
             }
-        }
-        else if videoController.shouldRotate && newCollection.verticalSizeClass == .Compact {
-            videoPlayer.setFullscreen(true, withOrientation: self.currentOrientation())
         }
     }
     

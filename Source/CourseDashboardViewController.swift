@@ -55,7 +55,8 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
 
     private let environment: Environment
     private let courseID: String
-    
+    private var whereFrom = 0
+    private var enrollment: UserCourseEnrollment?
     private let courseCard = CourseCardView(frame: CGRectZero)
     
     private let tableView: UITableView = UITableView()
@@ -73,9 +74,11 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
         ProgressController(owner: self, router: self.environment.router, dataInterface: self.environment.interface)
     }()
     
-    public init(environment: Environment, courseID: String) {
+    public init(environment: Environment, courseID: String, whereFrom: Int ,enrollment: UserCourseEnrollment?) {
         self.environment = environment
         self.courseID = courseID
+        self.whereFrom = whereFrom
+        self.enrollment = enrollment;
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -93,9 +96,17 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
         self.setLeftButtonStyle()
         self.setViewConstraint()
         
-        courseStream.backWithStream(environment.dataManager.enrollmentManager.streamForCourseWithID(courseID))
-        courseStream.listen(self) {[weak self] in
-            self?.resultLoaded($0)
+        /* 数据 */
+        if self.whereFrom == 1 {
+            self.loadedCourseWithEnrollment(self.enrollment!)
+            loadController.state = .Loaded
+            
+        } else {
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("Come_From_Course_Detail")
+            courseStream.backWithStream(environment.dataManager.enrollmentManager.streamForCourseWithID(courseID)) //couseID获取数据
+            courseStream.listen(self) {[weak self] in
+                self?.resultLoaded($0)
+            }
         }
         
         NSNotificationCenter.defaultCenter().oex_addObserver(self, name: EnrollmentShared.successNotification) { (notification, observer, _) -> Void in
@@ -352,7 +363,8 @@ public class CourseDashboardViewController: UIViewController, UITableViewDataSou
     }
     
     private func showHandouts() { //资料
-        self.environment.router?.showHandoutsFromController(self, courseID: courseID)
+        let enroll = self.whereFrom == 1 ? self.enrollment : nil
+        self.environment.router?.showHandoutsFromController(self, courseID: courseID, whereFrom: self.whereFrom, enrollment: enroll)
     }
     
     private func showAnnouncements() { //公告

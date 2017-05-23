@@ -89,26 +89,7 @@ public class CourseOutlineViewController :
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        let leftButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48))
-        leftButton.setImage(UIImage.init(named: "backImagee"), forState: .Normal)
-        leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23)
-        leftButton.addTarget(self, action: #selector(leftBarItemAction), forControlEvents: .TouchUpInside)
-        
-        self.navigationController?.interactivePopGestureRecognizer?.enabled = true
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
-        let leftBarItem = UIBarButtonItem.init(customView: leftButton)
-        self.navigationItem.leftBarButtonItem = leftBarItem
-        
-        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
-        fixedSpace.width = barButtonFixedSpaceWidth
-        navigationItem.rightBarButtonItems = [webController.barButtonItem,fixedSpace,modeController.barItem]//视频
-//        let rightButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48));
-//        rightButton.setTitle(Strings.teachAssistant, forState: .Normal)
-//        rightButton.addTarget(self, action: #selector(rightButtonAction), forControlEvents: .TouchUpInside)
-//        rightButton.titleLabel?.font = UIFont.init(name: "OpenSans", size: 16)
-//        let ringhtBarItem = UIBarButtonItem.init(customView: rightButton);
-//        self.navigationItem.rightBarButtonItem = ringhtBarItem;
+        setNavigationStyle()
         
         view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
         view.addSubview(tableController.view)
@@ -142,6 +123,31 @@ public class CourseOutlineViewController :
                 Logger.logError("ANALYTICS", "Unable to load block: \($0)")
             }
         )
+    }
+    
+    func setNavigationStyle() {
+        
+        let leftButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48))
+        leftButton.setImage(UIImage.init(named: "backImagee"), forState: .Normal)
+        leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23)
+        leftButton.addTarget(self, action: #selector(leftBarItemAction), forControlEvents: .TouchUpInside)
+        
+        self.navigationController?.interactivePopGestureRecognizer?.enabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        let leftBarItem = UIBarButtonItem.init(customView: leftButton)
+        self.navigationItem.leftBarButtonItem = leftBarItem
+        
+        let fixedSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+        fixedSpace.width = barButtonFixedSpaceWidth
+        navigationItem.rightBarButtonItems = [webController.barButtonItem,fixedSpace,modeController.barItem]//视频
+        
+        //        let rightButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48));
+        //        rightButton.setTitle(Strings.teachAssistant, forState: .Normal)
+        //        rightButton.addTarget(self, action: #selector(rightButtonAction), forControlEvents: .TouchUpInside)
+        //        rightButton.titleLabel?.font = UIFont.init(name: "OpenSans", size: 16)
+        //        let ringhtBarItem = UIBarButtonItem.init(customView: rightButton);
+        //        self.navigationItem.rightBarButtonItem = ringhtBarItem;
     }
     
     func leftBarItemAction() {

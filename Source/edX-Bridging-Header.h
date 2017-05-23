@@ -76,6 +76,8 @@
 
 #import "TDBaseToolModel.h"
 #import "TDRequestManager.h"
+#import "TDRequestBaseModel.h"
+#import "TDFreeAlertView.h"
 #import "UIView+Toast.h"
 #import "UIColor+JHHexColor.h"
 #import "TDAssistantServiceViewController.h"
@@ -89,6 +91,7 @@
 #import "TDCommentViewController.h"
 #import "QRViewController.h"
 #import "TDVideoPlayerViewController.h"
+#import "TDVideoUrlPlayController.h"
 #import "TDOrderAssistantViewController.h"
 #import "TDChooseCourseViewController.h"
 #import "TDCutImageViewController.h"

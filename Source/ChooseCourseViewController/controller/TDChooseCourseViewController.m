@@ -113,7 +113,24 @@
     [super viewWillAppear:animated];
     
     self.titleViewLabel.text = NSLocalizedString(@"COURSE_LIST", nil);
+    
+    if (self.whereFrom == TDChooseCourseFromFree) {
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+        }
+    }
 }
+
+- (void)backButtonAction:(UIButton *)sender {
+    
+    if (self.whereFrom == TDChooseCourseFromBuy) {
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    } else if (self.whereFrom == TDChooseCourseFromFree) {
+        [self.navigationController popToViewController:self.navigationController.childViewControllers[1] animated:YES];
+    }
+}
+
 
 #pragma mark - 数据
 - (void)requestData {

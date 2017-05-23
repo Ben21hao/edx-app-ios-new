@@ -225,6 +225,26 @@
     return handled;
 }
 
+/*前后台处理*/
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    NSLog(@"-------> =后台= <---------");
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    NSLog(@"-------> =前台= <---------");
+    
+    
+    NSString *secondStr = [[NSUserDefaults standardUserDefaults] valueForKey:@"Free_Course_Free_Time"];
+    
+    if ([secondStr floatValue] > 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"App_EnterForeground_Free_Course" object:nil];
+    }
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    NSLog(@"-------> =注销= <---------");
+}
+
 #pragma mark Push Notifications
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {

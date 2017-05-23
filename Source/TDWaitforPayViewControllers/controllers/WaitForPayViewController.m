@@ -56,7 +56,7 @@
 @property (nonatomic,assign) int payWay;//记录支付方式
 @property (nonatomic,strong) NSString *orderId;
 
-@property (nonatomic,strong) UIButton *backButton;
+@property (nonatomic,strong) UIButton *returnButton;
 
 @property (nonatomic,strong) TDBaseToolModel *baseTool;
 @property (nonatomic,assign) BOOL hideShowPurchase;//0 为审核中；1 为审核通过
@@ -127,23 +127,27 @@ static NSString *cellID = @"WaitForPayTableViewCell";
 
     self.titleViewLabel.text = NSLocalizedString(@"PREPARE_PAY", nil);
     self.leftButton.hidden = YES;
-    self.backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
-    [self.backButton setImage:[UIImage imageNamed:@"backImagee"] forState:UIControlStateNormal];
-    self.backButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23);
-    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    self.returnButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
+    [self.returnButton setImage:[UIImage imageNamed:@"backImagee"] forState:UIControlStateNormal];
+    self.returnButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23);
+    self.returnButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:18.0];
+    [self.returnButton addTarget:self action:@selector(returnButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    if (self.whereFrom == 1) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    } else {
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+            self.navigationController.interactivePopGestureRecognizer.delegate = self;
+        }
     }
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.returnButton];
     
-    [self.backButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.backButton];
-    
-    WS(weakSelf);
-    self.baseTool.judHidePurchseHandle = ^(BOOL isHidePurchase){
-        weakSelf.hideShowPurchase = isHidePurchase;
-    };
-    [self.baseTool showPurchase];
+    //    WS(weakSelf);
+    //    self.baseTool.judHidePurchseHandle = ^(BOOL isHidePurchase){
+    //        weakSelf.hideShowPurchase = isHidePurchase;
+    //    };
+    //    [self.baseTool showPurchase];
+
 
 }
 
@@ -151,6 +155,14 @@ static NSString *cellID = @"WaitForPayTableViewCell";
     [super viewWillDisappear:animated];
     
     [self canclePayView];
+}
+
+- (void)returnButtonAction:(UIButton *)sender {
+    if (self.whereFrom == 1) {
+        [self.navigationController popToViewController:self.navigationController.childViewControllers[1] animated:YES];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - 无数据

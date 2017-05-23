@@ -50,8 +50,8 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
     ///Manages the caching of the viewControllers that have been viewed atleast once.
     ///Removes the ViewControllers from memory in case of a memory warning
     private let cacheManager : BlockViewControllerCacheManager
-    //自定义标题
-    private var titleL : UILabel?
+    
+    private var titleL : UILabel? //自定义标题
     public init(environment : Environment, courseID : CourseBlockID, rootID : CourseBlockID?, initialChildID: CourseBlockID? = nil) {
         self.environment = environment
         self.blockID = rootID
@@ -130,10 +130,11 @@ public class CourseContentPageViewController : UIPageViewController, UIPageViewC
     
     func setNavigationBarType() {
         
-        self.titleL = UILabel(frame:CGRect(x:0, y:0, width:40, height:40))
-        self.navigationItem.titleView = self.titleL
+        self.titleL = UILabel(frame:CGRect(x:0, y:0, width:198, height:40))
         self.titleL?.font = UIFont(name:"OpenSans",size:18.0)
         self.titleL?.textColor = UIColor.whiteColor()
+        self.titleL?.textAlignment = .Center
+        self.navigationItem.titleView = self.titleL
         
         let leftButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48))
         leftButton.setImage(UIImage.init(named: "backImagee"), forState: .Normal)

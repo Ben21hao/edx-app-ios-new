@@ -200,7 +200,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
     
     func coursesTableChoseCourse(course: OEXCourse) {
         if let course_id = course.course_id {
-            self.environment.router?.showCourseWithID(course_id, fromController: self, animated: true)
+            self.environment.router?.showCourseWithID(course_id, fromController: self, animated: true,whereFrom: 0,enrollment: nil)
         }
         else {
             preconditionFailure("course without a course id")

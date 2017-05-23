@@ -33,6 +33,7 @@ class CourseVideoTableViewCell: UITableViewCell, CourseBlockContainerCell {
     var localState : OEXHelperVideoDownload? {
         didSet {
             updateDownloadViewForVideoState()
+            
             if localState?.summary?.duration != nil {
                 content.setDetailText(OEXDateFormatting.formatSecondsAsVideoLength(Double((localState?.summary?.duration)!) ?? 0))
             }
@@ -41,6 +42,7 @@ class CourseVideoTableViewCell: UITableViewCell, CourseBlockContainerCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         contentView.addSubview(content)
         content.snp_makeConstraints { (make) -> Void in
             make.edges.equalTo(contentView)
@@ -68,6 +70,11 @@ class CourseVideoTableViewCell: UITableViewCell, CourseBlockContainerCell {
         
         content.trailingView = downloadView
         downloadView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
+        
+        let fromDetailView = NSUserDefaults.standardUserDefaults().valueForKey("Come_From_Course_Detail")
+        if fromDetailView != nil {
+            downloadView.hidden = true
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

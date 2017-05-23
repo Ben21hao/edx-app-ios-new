@@ -1511,3 +1511,56 @@
 /*预约单不存在 The order does not exist. */
 "NOT_EXIST_ORDER" = "预约单不存在";
 
+/*免费试听（30分钟）---Free trial (30 mins) */
+"FREE_TRIAL" = "免费试听（30分钟）";
+/* 免费获取试听资格 Start a free trial course*/
+"START_FREE_COURSE" = "免费获取试听资格";
+/* 手机号码可作为账号登录 Mobile number can be used as login account. */
+"MOBILE_USED_ACOUNT" = "手机号码可作为账号登录";
+/* 立即试听  Start*/
+"FREE_START" = "立即试听";
+/* 试听结束 Free trial ended*/
+"FREE_TRIAL_ENDED" = "试听结束";
+/*  30分钟免费试听已结束。意犹未尽？立即加入课程，学习不设限！
+ 30-minute free trial ended. Want to experience more?
+ Enroll now with no study time limit!*/
+"FREE_ENDED_ENROLL" = "30分钟免费试听已结束。意犹未尽？\n立即加入课程，学习不设限！";
+/* 结束试听：Quit */
+"FREE_QUIT" = "结束试听";
+/*立即加入：Enroll*/
+"FREE_ENROLL" = "立即加入";
+/*免费试听已结束 Free trial ended*/
+"FREE_COURSE_ENDED" = "试听结束 加入课程";
+/*获取免费试听资格失败Failed to get a free trial course*/
+"FAILED_GET_FREE" = "获取免费试听资格失败";
+/*a.Mobile number has already been registered, please try again.手机号码已经注册过，请重新输入或直接登录*/
+"PHONE_HAD_REGITSTER" = "手机号码已经注册过，请重新输入或直接登录";
+/*请选择课程Please select course*/
+"SELECT_COURSE"= "请选择课程";
+/*继续试听Continue*/
+"FREE_TIAL_TIME" = "继续试听";
+/*已经购买课程无需试听Course have been purchased without get free trial*/
+"HAD_BUY" = "已经购买课程无需试听";
+/*获取试听资格失败Failure to get free course*/
+"FAILED_GET_FREE" = "操作失败，请重试";
+/*教授简介Introduction*/
+"PROFESSOR_INTRODUCE" = "教授简介";
+/*主要成就Main Achievements*/
+"MAIN_ACHIECEMENT" = "主要成就";
+/*教育背景Educational Background*/
+"EDUCATIONNAL_BACKGROUND" = "教育背景";
+/*其他成就Others*/
+"OTHERS_ACHIEVEMENT" = "其他成就";
+/*研究领域Research Fields*/
+"RESEARCH_FIELD" = "研究领域";
+/*学术邗物文章Academic Essays*/
+"ACADEMIC_ESSAYS" = "学术邗物文章";
+/*管理咨询项目Management Consulting*/
+"MANAGEREMENT_CONSULTING" = "管理咨询项目";
+/*至少填写2个字*/
+"ALEAST_TEO_CHARACTER" = "至少填写2个字";
+/*系统提示*/
+"SYSTEM_WARING" = "系统提示";
+/*您的登录信息已过期，请重新登录。*/
+"LOGIN_OVER_DUE" = "您的登录信息已过期，请重新登录。";
+

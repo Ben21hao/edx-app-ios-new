@@ -117,7 +117,7 @@ extension OEXRouter {
         let controller = EnrolledCoursesViewController(environment: self.environment)
         showContentStackWithRootController(controller, animated: animated)
         if let courseID = courseID {
-            self.showCourseWithID(courseID, fromController: controller, animated: false)
+                        self.showCourseWithID(courseID, fromController: controller, animated: false,whereFrom: 0, enrollment: nil)
         }
     }
     
@@ -181,9 +181,10 @@ extension OEXRouter {
         let navigationController = UINavigationController(rootViewController: newPostController)
         controller.presentViewController(navigationController, animated: true, completion: nil)
     }
-    
-    func showHandoutsFromController(controller : UIViewController, courseID : String) {
-        let handoutsViewController = CourseHandoutsViewController(environment: environment, courseID: courseID)
+
+    //资料
+    func showHandoutsFromController(controller : UIViewController, courseID : String, whereFrom: Int, enrollment: UserCourseEnrollment?) {
+        let handoutsViewController = CourseHandoutsViewController(environment: environment, courseID: courseID, whereFrom: whereFrom, enrollment: enrollment)
         controller.navigationController?.pushViewController(handoutsViewController, animated: true)
     }
 
@@ -214,8 +215,9 @@ extension OEXRouter {
         c.loadRequest(NSURLRequest(URL: url))
     }
     
-    func showCourseWithID(courseID : String, fromController: UIViewController, animated: Bool = true) {
-        let controller = CourseDashboardViewController(environment: self.environment, courseID: courseID)
+    //商务统计
+    func showCourseWithID(courseID : String, fromController: UIViewController, animated: Bool = true, whereFrom: Int, enrollment: UserCourseEnrollment?) {//whereFrom: 0 已购买的课程，1 试听课程
+        let controller = CourseDashboardViewController(environment: self.environment, courseID: courseID,whereFrom: whereFrom, enrollment:enrollment)
         fromController.navigationController?.pushViewController(controller, animated: animated)
     }
     

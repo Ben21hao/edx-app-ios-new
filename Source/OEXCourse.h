@@ -78,11 +78,12 @@ OEXStartType OEXStartTypeForString(NSString* type);
 @property (readonly, nonatomic, copy, nullable) NSString *end_at; //购买课程赠送宝典结束时间
 @property (readonly, nonatomic, copy, nullable) NSNumber *is_eliteu_course;//是否为付费课程
 
-@property (nonatomic,assign) NSInteger submitType; //0 已购买，1 立即加入, 2 查看待支付，3 即将开课
-
 @property (readonly, nonatomic, copy, nullable) NSNumber *course_status; //课程状态 1.未购买未试听 2.试听 3.试听已结束 4.已购买
 @property (readonly, nonatomic, copy, nullable) NSString *trial_expire_at; //试听课程失效时间
 @property (readonly, nonatomic, copy, nullable) NSNumber *trial_seconds;//剩余试听时间；－2 代表未购买未试听；－1 代表已购买；0 代表试听已结束；其他正整数 试听中
+@property (nonatomic,strong) NSString *freeStr;//试听按钮文本
+
+@property (nonatomic,assign) NSInteger submitType; //0 已购买，1 立即加入, 2 查看待支付，3 即将开课
 
 @end
 

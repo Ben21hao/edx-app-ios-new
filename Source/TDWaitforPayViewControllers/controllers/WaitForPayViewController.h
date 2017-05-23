@@ -12,5 +12,6 @@
 @interface WaitForPayViewController : TDBaseViewController
 
 @property (nonatomic,strong) NSString *username;
+@property (nonatomic,assign) NSInteger whereFrom;
 
 @end
