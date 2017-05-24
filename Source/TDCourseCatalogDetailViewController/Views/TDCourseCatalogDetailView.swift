@@ -24,7 +24,6 @@ class TDCourseCatalogDetailView: UIView,UITableViewDataSource {
     internal var auditionButtonHandle : (() -> ())?
     internal var showAllTextHandle : ((Bool) -> ())?
     var showAllText = false
-    var submitTitle : String?
     
     var courseModel = OEXCourse()
 

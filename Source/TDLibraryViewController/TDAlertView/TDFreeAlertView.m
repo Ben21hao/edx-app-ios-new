@@ -419,11 +419,11 @@
     self.line3.backgroundColor = [UIColor colorWithHexString:colorHexStr6];
     [self.bgView addSubview:self.line3];
     
-    self.cancelButton = [self setButton:cancelStr color:colorHexStr11 titleColor:colorHexStr9];
+    self.cancelButton = [self setButton:cancelStr color:colorHexStr13 titleColor:colorHexStr9];
     [self.cancelButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.cancelButton];
     
-    self.sureButton = [self setButton:sureStr color:colorHexStr11 titleColor:colorHexStr2];
+    self.sureButton = [self setButton:sureStr color:colorHexStr13 titleColor:colorHexStr2];
     [self.sureButton addTarget:self action:@selector(sureButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.sureButton];
     

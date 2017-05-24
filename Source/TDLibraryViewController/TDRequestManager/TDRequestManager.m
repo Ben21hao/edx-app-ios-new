@@ -36,22 +36,24 @@
     [manager POST:url parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSDictionary *responseDic = (NSDictionary *)responseObject;
-        int code = [responseDic[@"code"] intValue]; // 300 加入异常，400已经加过
-        if (code == 200) {
-            if (self.addOwnCompanyCourseHandle) {
-                self.addOwnCompanyCourseHandle();
-            }
-        } else if (code == 400) {
-            [[[UIApplication sharedApplication] keyWindow].rootViewController.view makeToast:@"课程已经加入" duration:1.08 position:CSToastPositionCenter];
+        int code = [responseDic[@"code"] intValue]; // 300 加入异常，400 课程已经加入
+        if (code == 200 || code == 400) {
+            
         } else {
-           [[[UIApplication sharedApplication] keyWindow].rootViewController.view makeToast:@"课程加入异常" duration:1.08 position:CSToastPositionCenter];
+            [[[UIApplication sharedApplication] keyWindow].rootViewController.view makeToast:@"课程加入异常" duration:1.08 position:CSToastPositionCenter];
         }
+        if (self.addOwnCompanyCourseHandle) {
+            self.addOwnCompanyCourseHandle(code);
+        }
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
+        if (self.addOwnCompanyCourseHandle) {
+            self.addOwnCompanyCourseHandle(1001);
+        }
         [[[UIApplication sharedApplication] keyWindow].rootViewController.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"error--%@",error);
     }];
-    
 }
 
 @end

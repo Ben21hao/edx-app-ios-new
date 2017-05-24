@@ -192,11 +192,11 @@ public class DiscussionNewCommentViewController: TDSwiftBaseViewController, UITe
     }
     
     override public func shouldAutorotate() -> Bool {
-        return true
+        return false
     }
     
     override public func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return .AllButUpsideDown
+        return .Portrait
     }
     
     private func logScreenEvent(){

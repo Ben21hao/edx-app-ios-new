@@ -148,7 +148,6 @@ static NSString *cellID = @"WaitForPayTableViewCell";
     //    };
     //    [self.baseTool showPurchase];
 
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

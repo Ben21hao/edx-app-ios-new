@@ -181,7 +181,7 @@ extension OEXRouter {
         }
 //        let navigationController = UINavigationController(rootViewController: newPostController)
 //        controller.presentViewController(navigationController, animated: true, completion: nil)
-                controller.navigationController?.pushViewController(newPostController, animated: true)
+        controller.navigationController?.pushViewController(newPostController, animated: true)
     }
 
     //资料

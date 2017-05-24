@@ -36,7 +36,6 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         return TDCourseCatalogDetailView(frame: CGRectZero, environment: self.environment)
     }()
     
-    
     var showAllText = false
     var prepareOrder = false
     
@@ -318,8 +317,11 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         
         let manager = TDRequestManager()
         manager.addOwnCompanyCourse(self.courseID, username: self.username, companyID: self.companyID)
-        manager.addOwnCompanyCourseHandle = { () in
-            self.environment.router?.showMyCourses()
+        manager.addOwnCompanyCourseHandle = { (type: NSInteger) -> () in
+            
+            if type == 200 || type == 400 {
+                self.environment.router?.showMyCourses()
+            }
         }
     }
     
