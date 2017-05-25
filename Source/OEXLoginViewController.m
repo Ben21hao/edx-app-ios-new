@@ -326,8 +326,8 @@
 //        self.versionLabel.text = @"";
 //    }
     
-    NSString* appVersion = [NSBundle mainBundle].oex_buildVersionString;
-    self.versionLabel.text = [Strings versionDisplayWithNumber:appVersion];
+//    NSString* appVersion = [NSBundle mainBundle].oex_buildVersionString;
+//    self.versionLabel.text = [Strings versionDisplayWithNumber:appVersion];
     
     self.eyesButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:20.0];
     [self.eyesButton setTitle:@"\U0000f070" forState:UIControlStateNormal];
@@ -352,7 +352,7 @@
     image.layer.cornerRadius = 4;
     
     textField.textColor = [UIColor colorWithHexString:colorHexStr9];
-    textField.placeholder = [Strings usernamePlaceholder];
+    textField.placeholder = [textField isEqual:_tf_EmailID] ? [Strings usernamePlaceholder] : [Strings passwordPlaceholder];
     textField.text = @"";
     textField.accessibilityLabel = nil;
     textField.textAlignment = NSTextAlignmentNatural;

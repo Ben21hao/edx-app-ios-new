@@ -447,7 +447,7 @@
         self.codeTextFiled = [self setTextField:NSLocalizedString(@"PLEASE_ENTER_VERI", nil)];
         [self.messageView addSubview:self.codeTextFiled];
         
-        self.codeButton = [self setButton:NSLocalizedString(@"GET_VERIFICATION", nil) color:colorHexStr2 titleColor:colorHexStr11];
+        self.codeButton = [self setButton:NSLocalizedString(@"GET_VERIFICATION", nil) color:colorHexStr2 titleColor:colorHexStr13];
         self.codeButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
         [self.codeButton addTarget:self action:@selector(codeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.messageView addSubview:self.codeButton];

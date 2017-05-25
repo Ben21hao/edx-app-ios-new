@@ -649,6 +649,7 @@
 		B5CF305F1EB1A75700F1BF6A /* TDRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CF305B1EB1A75700F1BF6A /* TDRegisterViewController.m */; };
 		B5CF30631EB1A79E00F1BF6A /* TDWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CF30621EB1A79E00F1BF6A /* TDWebViewController.m */; };
 		B5DE85071EBC1453007C78F4 /* TDCourseButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DE85061EBC1453007C78F4 /* TDCourseButtonsCell.swift */; };
+		B5F313751ED5824A00B9DAE0 /* stipulation.htm in Resources */ = {isa = PBXBuildFile; fileRef = B5F313731ED5824900B9DAE0 /* stipulation.htm */; };
 		B5FAF6D31EB02CC2000C2169 /* TDRechargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FAF6C91EB02CC2000C2169 /* TDRechargeViewController.m */; };
 		B5FAF6D41EB02CC2000C2169 /* TDSelectPayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FAF6CC1EB02CC2000C2169 /* TDSelectPayModel.m */; };
 		B5FAF6D51EB02CC2000C2169 /* TDRechargeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FAF6CF1EB02CC2000C2169 /* TDRechargeView.m */; };
@@ -1754,6 +1755,7 @@
 		B5CF30611EB1A79E00F1BF6A /* TDWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDWebViewController.h; sourceTree = "<group>"; };
 		B5CF30621EB1A79E00F1BF6A /* TDWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDWebViewController.m; sourceTree = "<group>"; };
 		B5DE85061EBC1453007C78F4 /* TDCourseButtonsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDCourseButtonsCell.swift; sourceTree = "<group>"; };
+		B5F313741ED5824A00B9DAE0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/stipulation.htm; sourceTree = "<group>"; };
 		B5FAF6C81EB02CC2000C2169 /* TDRechargeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDRechargeViewController.h; sourceTree = "<group>"; };
 		B5FAF6C91EB02CC2000C2169 /* TDRechargeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDRechargeViewController.m; sourceTree = "<group>"; };
 		B5FAF6CB1EB02CC2000C2169 /* TDSelectPayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSelectPayModel.h; sourceTree = "<group>"; };
@@ -4292,6 +4294,7 @@
 			isa = PBXGroup;
 			children = (
 				B53EA90C1EA621BE00CEC936 /* Images.xcassets */,
+				B5F313731ED5824900B9DAE0 /* stipulation.htm */,
 				773A04691AF289650076532C /* edX-Bridging-Header.h */,
 				B47780581AADA95400436DB4 /* Terms-and-Services.htm */,
 				BECB7B161924C0C3009C77F1 /* edX-Info.plist */,
@@ -4683,6 +4686,7 @@
 				69ECC6521D50D1170030CF87 /* inline-content.css in Resources */,
 				69ECC64C1D50D1170030CF87 /* Default-568h@2x.png in Resources */,
 				9ED269CC1AF0E67200328A34 /* OEXMyVideosViewController.storyboard in Resources */,
+				B5F313751ED5824A00B9DAE0 /* stipulation.htm in Resources */,
 				69ECC6471D50D1170030CF87 /* separator3.png in Resources */,
 				1A55019C1BBA30C900D5F9DD /* profiles.json in Resources */,
 				B50DF9891EAAF15B001F38BD /* UserYouViewController.xib in Resources */,
@@ -5498,6 +5502,14 @@
 				B57A0E941EAEECD400323A47 /* zh-Hans */,
 			);
 			name = educations.json;
+			sourceTree = "<group>";
+		};
+		B5F313731ED5824900B9DAE0 /* stipulation.htm */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5F313741ED5824A00B9DAE0 /* en */,
+			);
+			name = stipulation.htm;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -492,6 +492,16 @@
     return timeStr;
 }
 
+#pragma mark - 获取当前版本号
+- (NSString *)getAppVersionNum:(NSInteger)type {
+    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *version = infoDic[@"CFBundleShortVersionString"];
+    NSString *versionStr = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"VERSION_APP", nil),version];
+    if (type == 1) {
+        versionStr = [Strings versionDisplayWithNumber:version];
+    }
+    return versionStr;
+}
 
 
 @end

@@ -59,10 +59,8 @@
     self.webTextView.text = webSiteStr;
     [self.view addSubview:self.webTextView];
     
-    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
-    NSString *version = infoDic[@"CFBundleShortVersionString"];
-    NSString *versionStr = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"VERSION_APP", nil),version];
-    
+    TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
+    NSString *versionStr = [baseTool getAppVersionNum:0];
     self.verctionLabel = [self setLabelConstraint:versionStr];
     
     NSDate *now = [NSDate date];

@@ -268,11 +268,11 @@ static NSString *cellID = @"WaitForPayTableViewCell";
     
     NSLog(@"send %@  ----->order %@",self.sendOrdID,order.order_id);
 
-    if (self.hideShowPurchase) {
+//    if (self.hideShowPurchase) {
         [self paySheetView:order];
-    } else {
-        [self createOrderWithType:3];
-    }
+//    } else {
+//        [self createOrderWithType:3];
+//    }
 }
 
 #pragma mark - 点击支付
@@ -502,7 +502,7 @@ static NSString *cellID = @"WaitForPayTableViewCell";
     //单号
     UILabel *label = [[UILabel alloc] init];
     label.font = [UIFont systemFontOfSize:14];
-    label.text = [NSString stringWithFormat:@"%@%@",NSLocalizedString(@"ORDER_NUMBER", nil),order.order_id];
+    label.text = [NSString stringWithFormat:@"%@%@",NSLocalizedString(@"ORDER_NUM", nil),order.order_id];
     label.textColor = [UIColor colorWithHexString:colorHexStr10];
     [orderView addSubview:label];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {

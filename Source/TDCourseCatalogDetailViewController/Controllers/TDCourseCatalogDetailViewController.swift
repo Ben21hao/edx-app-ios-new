@@ -341,9 +341,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
     
     func initialFreeButtonText() { //初始化试听按钮文本
         
-        let currentUser = self.session.currentUser //登陆状态
-        
-        if  (currentUser != nil){//已登录
+
             
             let seconds = self.courseModel.trial_seconds?.intValue
             if seconds == 0 || seconds == nil {//试听已结束
@@ -381,11 +379,15 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
                 }
             }
             
-            self.courseDetailView.applyCourse(self.courseModel)//渲染显示数据
-            
+        
+        let currentUser = self.session.currentUser //登陆状态
+        
+        if  (currentUser != nil){//已登录
         } else {//未登录
             self.courseModel.freeStr = Strings.freeTrial//免费试听30分钟
         }
+        
+        self.courseDetailView.applyCourse(self.courseModel)//渲染显示数据
     }
     
     func addAuditionButtonHandle() { // 点击 免费试听按钮

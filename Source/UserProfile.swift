@@ -21,6 +21,7 @@ public class UserProfile {
         case HasImage = "has_image"
         case ImageURL = "image_url_full"
         case Username = "username"
+        case user_id = "user_id" //用户id
         case LanguagePreferences = "language_proficiencies"
         case Country = "country"
         case Bio = "bio"
@@ -40,11 +41,13 @@ public class UserProfile {
         case code = "code"
         case companyDic = "company"//公司dic
         case logoUrl = "logo"//公司logo
+        
     }
     
     let hasProfileImage: Bool
     let imageURL: String?
     let username: String?
+    let user_id: Int? //用户id
     var preferredLanguages: [NSDictionary]?
     var countryCode: String?
     var bio: String?
@@ -76,6 +79,7 @@ public class UserProfile {
             hasProfileImage = false
             imageURL = nil
         }
+        user_id = json[ProfileFields.user_id].int
         username = json[ProfileFields.Username].string
         preferredLanguages = json[ProfileFields.LanguagePreferences].arrayObject as? [NSDictionary]
         countryCode = json[ProfileFields.Country].string
@@ -102,10 +106,11 @@ public class UserProfile {
         print("json-----\(json)")
     }
     
-    internal init(username : String, bio : String? = nil, parentalConsent : Bool? = false, countryCode : String? = nil, accountPrivacy : ProfilePrivacy? = nil,name : String, education : String? = nil,nickname : String,remainscore : Double,phone : String,email : String,coupon : Double,order : Double) {
+    internal init(user_id : Int, username : String, bio : String? = nil, parentalConsent : Bool? = false, countryCode : String? = nil, accountPrivacy : ProfilePrivacy? = nil,name : String, education : String? = nil,nickname : String,remainscore : Double,phone : String,email : String,coupon : Double,order : Double) {
         
         self.accountPrivacy = accountPrivacy
         self.username = username
+        self.user_id = user_id
         self.hasProfileImage = false
         self.imageURL = nil
         self.parentalConsent = parentalConsent

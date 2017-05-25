@@ -959,7 +959,7 @@
 /*优惠活动*/
 "COUPON_ACTIVITY" = "Select a special offer";
 /*单号*/
-"ORDER_NUMBER" = "Order No:";
+"ORDER_NUM" = "Order No:";
 /*合计*/
 "IN_TOTAL_PRICE" = "Total:";
 /*支付*/

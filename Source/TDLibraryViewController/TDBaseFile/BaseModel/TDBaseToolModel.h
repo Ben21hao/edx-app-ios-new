@@ -136,6 +136,12 @@
  */
 - (NSString *)dateFormatStart:(NSString *)dateStr;
 
+/*
+ 0  当前版本号
+ 1  版本
+ */
+- (NSString *)getAppVersionNum:(NSInteger)type;
+
 @end
 
 

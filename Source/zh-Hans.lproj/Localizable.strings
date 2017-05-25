@@ -405,9 +405,9 @@
 /* Screen title showing a user's courses */
 "MY_COURSES"="我的课程";
 /* Screen title showing a user's settings */
-"MY_SETTINGS"="我的设置";
+"MY_SETTINGS"="设置";
 /* Screen title showing a user's downloaded videos */
-"MY_VIDEOS" = "我的视频";
+"MY_VIDEOS" = "我的下载";
 /* Marked as answer for endorsed responses */
 "MARKED_ANSWER" = "标记为答案";
 /* Overlay error shown when attempting an action without an internet connection */
@@ -598,7 +598,7 @@
 /* Text for a Twitter or Facebook post to a course about page */
 "SHARE_A_COURSE"="我正在{platform_name}上课! 看看这个:";
 /* Sign in screen title and button initiating login process after user enters credentials like username and password */
-"SIGN_IN_TEXT"="登陆";
+"SIGN_IN_TEXT"="登录";
 /* Button initiating login process after user enters credentials like username and password */
 "SIGN_IN_BUTTON_TEXT"="登录";
 /* Message shown while user waits for response to a sign in request */
@@ -908,7 +908,7 @@
 /*选择支付方式*/
 "SELECT_PAYWAY" = "选择支付方式";
 /*选择充值金额(当前宝典 :*/
-"CURRENT_COINS" = "选择充值金额(当前宝典 : ";
+"CURRENT_COINS" = "选择充值金额 (当前宝典 : ";
 /*输入其他金额*/
 "ENTER_OTHERPRICE" = "输入其他金额";
 /*宝典*/
@@ -962,7 +962,7 @@
 /*优惠活动*/
 "COUPON_ACTIVITY" = "优惠活动";
 /*单号*/
-"ORDER_NUMBER" = "单号：";
+"ORDER_NUM" = "单号：";
 /*合计*/
 "IN_TOTAL_PRICE" = "合计:";
 /*支付*/
@@ -1125,6 +1125,8 @@
 "LESS_PASSWORD" = "请输入小于30位的密码";
 /*使用邮箱或手机号码注册*/
 "PHONE_OR_EMAIL_REGISTER" = "请输入邮箱或手机号码。并按操作提示完成密码重置。";
+/*请输入邮箱或手机号码。并按操作提示完成密码重置。*/
+"PHONE_OR_EMAIL_RESET_PASSWORD" = "请输入邮箱或手机号码。并按操作提示完成密码重置。";
 /*服务条款*/
 "SERVICE_ITEM" = "服务条款";
 /*邮箱或手机号码*/

@@ -267,6 +267,7 @@
     self.messageLabel.font = [UIFont fontWithName:@"OpenSans" size:15];
     self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr9];
     self.messageLabel.text = NSLocalizedString(@"PHONE_OR_EMAIL_REGISTER", nil);
+    self.messageLabel.numberOfLines = 0;
     [self.view addSubview:self.messageLabel];
     
     self.accountTextField = [[UITextField alloc] init];
@@ -301,6 +302,7 @@
 - (void)setViewConstraint {
     [self.messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(self.view.mas_left).offset(18);
+        make.right.mas_equalTo(self.view.mas_right).offset(-18);
         make.top.mas_equalTo(self.view.mas_top).offset(18);
     }];
     
