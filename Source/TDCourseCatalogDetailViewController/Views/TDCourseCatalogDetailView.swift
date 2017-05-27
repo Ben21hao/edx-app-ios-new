@@ -158,10 +158,10 @@ class TDCourseCatalogDetailView: UIView,UITableViewDataSource {
                     cell.submitButton.setTitle(Strings.CourseDetail.viewCourse, forState: .Normal)
                     cell.submitType = self.courseModel.submitType
                 case 1:
-                    cell.submitButton.setAttributedTitle(setSubmitTitle(), forState: .Normal)
+                    cell.submitButton.setAttributedTitle(setSubmitTitle(Strings.CourseDetail.enrollNow), forState: .Normal)
                     setButtonCellDiscountLabel(cell)
                 case 2:
-                    cell.submitButton.setTitle(Strings.viewPrepareOrder, forState: .Normal)
+                    cell.submitButton.setAttributedTitle(setSubmitTitle(Strings.viewPrepareOrder), forState: .Normal)
                     setButtonCellDiscountLabel(cell)
                 default:
                     cell.submitButton.setTitle(Strings.willBeginCourse, forState: .Normal)
@@ -222,9 +222,9 @@ class TDCourseCatalogDetailView: UIView,UITableViewDataSource {
         }
     }
     
-    func setSubmitTitle() -> NSAttributedString {
+    func setSubmitTitle(titleStr: String) -> NSAttributedString {
         let baseTool = TDBaseToolModel.init()
-        let priceStr = baseTool.setDetailString("\(Strings.CourseDetail.enrollNow)￥\(String(format: "%.2f",(self.courseModel.course_price?.doubleValue)!))", withFont: 16, withColorStr: "#ffffff")
+        let priceStr = baseTool.setDetailString("\(titleStr)￥\(String(format: "%.2f",(self.courseModel.course_price?.doubleValue)!))", withFont: 16, withColorStr: "#ffffff")
          return priceStr //马上加入
     }
     

@@ -25,7 +25,7 @@ class TDCourseDataCell: UITableViewCell {
     
     func configView() {
         bgView.backgroundColor = UIColor.whiteColor()
-        self.addSubview(bgView)
+        self.contentView.addSubview(bgView)
 
         leftLabel.font = UIFont.init(name: "FontAwesome", size: 20)
         leftLabel.text = "\u{f0c0}"
@@ -46,8 +46,8 @@ class TDCourseDataCell: UITableViewCell {
     
     func setViewConstraint() {
         bgView.snp_makeConstraints { (make) in
-            make.left.right.top.equalTo(self)
-            make.bottom.equalTo(self).offset(1)
+            make.left.right.top.equalTo(self.contentView)
+            make.bottom.equalTo(self.contentView).offset(1)
         }
         
         leftLabel.snp_makeConstraints { (make) in

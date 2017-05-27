@@ -24,7 +24,7 @@ class TDCourseIntroduceCell: UITableViewCell {
     
     func configView() {
         bgView.backgroundColor = UIColor.whiteColor()
-        self.addSubview(bgView)
+        self.contentView.addSubview(bgView)
         
         introduceLabel.numberOfLines = 0
         introduceLabel.font = UIFont.init(name: "OpenSans", size: 14)
@@ -42,7 +42,7 @@ class TDCourseIntroduceCell: UITableViewCell {
     
     func setViewConstraint() {
         bgView.snp_makeConstraints { (make) in
-            make.left.right.top.bottom.equalTo(self)
+            make.left.right.top.bottom.equalTo(self.contentView)
         }
         
         moreButton.snp_makeConstraints { (make) in

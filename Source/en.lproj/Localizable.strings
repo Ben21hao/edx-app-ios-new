@@ -1562,3 +1562,5 @@
 "SYSTEM_WARING" = "System Prompt";
 /*您的登录信息已过期，请重新登录。*/
 "LOGIN_OVER_DUE" = "Your login has expired, please login again.";
+/*请先登录再加入课程Log in before you enroll in this course.*/
+"LOGIN_BEFORE_ENROLL" = "Log in before you enroll in this course.";

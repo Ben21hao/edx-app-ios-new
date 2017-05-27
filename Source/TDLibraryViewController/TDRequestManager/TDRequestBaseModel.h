@@ -48,6 +48,13 @@
 @property (nonatomic,copy) void(^courseDetailHandle)(OEXCourse *courseModel);
 
 /*
+ 判断是否为待支付课程
+ */
+- (void)judgeCurseIsWaitforPay:(NSString *)username courseId:(NSString *)courseId;
+@property (nonatomic,copy) void(^waitforPayCourseHandle)(NSInteger isWaitPayCourse);
+
+
+/*
  加入指定课程到试听课
  */
 - (void)getMyFreeCourseDetail:(NSString *)username courseID:(NSString *)courseID onViewController:(UIViewController *)vc;

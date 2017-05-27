@@ -798,7 +798,7 @@
 /*请输入手机号码*/
 "PLEASE_ENTER_PHONE_NUMBER" = "请输入手机号码";
 /*请输入验证码*/
-"PLEASE_ENTER_VERI" = "请输入验证码";
+"PLEASE_ENTER_VERI" = "请输入手机验证码";
 /*请输入密码*/
 "PLEASE_ENTER_PASSWORD" = "请输入新密码";
 /*获取验证码*/
@@ -1565,4 +1565,5 @@
 "SYSTEM_WARING" = "系统提示";
 /*您的登录信息已过期，请重新登录。*/
 "LOGIN_OVER_DUE" = "您的登录信息已过期，请重新登录。";
-
+/*请先登录再加入课程Log in before you enroll in this course.*/
+"LOGIN_BEFORE_ENROLL" = "请先登录再加入课程";

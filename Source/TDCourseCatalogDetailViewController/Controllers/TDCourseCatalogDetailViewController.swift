@@ -70,12 +70,6 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         
         loadCourseData()
         
-//        if self.username != "" {
-//            self.getData()
-//        }
-//        self.listenData()
-//        self.loadCourseMessage()
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(appEnterForeground), name: "App_EnterForeground_Free_Course", object: nil)
     }
     
@@ -102,53 +96,10 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
             
             self!.courseModel = courseModel
             self!.initialFreeButtonText() //初始化免费试听文本
-            self!.loadController.state = .Loaded
         }
         retquestModel.requestErrorHandle = {[weak self] error in
             self?.loadController.state = LoadState.failed(error)
         }
-    }
-    
-    func getData() -> Void {
-        let path = "\(ELITEU_URL)/api/courses/v1/get_wait_order_list/?username=\(self.username)"
-        let url:NSURL = NSURL(string: path)!
-        
-        let request : NSMutableURLRequest = NSMutableURLRequest(URL: url)
-        let session : NSURLSession = NSURLSession.sharedSession()
-        let dataTask : NSURLSessionDataTask = session.dataTaskWithRequest(request) { (data, respone, error) in
-            
-            if(error == nil) {
-                
-                var dict : NSDictionary? = nil
-                do {
-                    dict = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.init(rawValue: 0)) as?NSDictionary
-                } catch {
-                    
-                }
-                print("+++++++++++++++++++++++%@+++++++++++++",dict)
-                
-                if let dataArrary = dict!["data"] as? NSArray {
-                    for i in 0..<dataArrary.count {
-                        if  let dataDic = dataArrary[i] as? NSDictionary {
-                            if let subDataArray = dataDic["order_items"] as? NSArray {
-                                for j in 0 ..< subDataArray.count  {
-                                    if let subDataDic = subDataArray[j] as? NSDictionary {
-                                        if let courseId = subDataDic["course_id"] as? NSString {
-                                            if self.courseID == courseId {
-//                                                self.prepareOrder = true
-                                                self.courseModel.submitType = 2//查看待支付
-                                                self.courseDetailView.freeButtonStrHandle()
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        dataTask.resume()
     }
     
     //MARK: tableview Delegate
@@ -357,53 +308,78 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
     
     func initialFreeButtonText() { //初始化试听按钮文本
         
-
+        let seconds = self.courseModel.trial_seconds?.intValue
+        if seconds == 0 || seconds == nil {//试听已结束
             
-            let seconds = self.courseModel.trial_seconds?.intValue
-            if seconds == 0 || seconds == nil {//试听已结束
+            freeCourseEndedStr()
+            print("试听剩余时间 trial_seconds --->>> 为0 或 空")
+            
+        } else {
+            if seconds == -1 || seconds == -2 {//－2 代表未购买未试听 ;－1 代表已购买
+                self.courseModel.freeStr = Strings.freeTrial//免费试听30分钟
                 
-                freeCourseEndedStr()
-                print("试听剩余时间 trial_seconds --->>> 为0 或 空")
-                
-            } else {
-                if seconds == -1 || seconds == -2 {//－2 代表未购买未试听 ;－1 代表已购买
-                    self.courseModel.freeStr = Strings.freeTrial//免费试听30分钟
-                    
-                } else {//试听中
-                    self.setFreeBttuonText("\(self.courseModel.trial_seconds!)")
-                }
+            } else {//试听中
+                self.setFreeBttuonText("\(self.courseModel.trial_seconds!)")
             }
-            print(" 时间 ----> \(self.courseModel.course_status) --> \(self.courseModel.trial_expire_at)")
-            
-            /* ------> 加入课程按钮设置 <------ */
-            if self.courseModel.course_status?.intValue == 4 { //已购买
-                self.courseModel.submitType = 0//查看课程
-                
-            } else {//未购买
-                
-                let now = NSDate()
-                if now.isEarlierThanOrEqualTo(self.courseModel.start_display_info.date) {
-                    
-                    self.courseModel.submitType = 3//即将开课
-                    
-                } else {
-                    self.courseModel.submitType = 1//马上加入
-                    
-                    if username != "" {
-                        self.getData()
-                    }
-                }
-            }
-            
+        }
         
         let currentUser = self.session.currentUser //登录状态
-        
         if  (currentUser != nil){//已登录
         } else {//未登录
             self.courseModel.freeStr = Strings.freeTrial//免费试听30分钟
         }
+        print(" 时间 ----> \(self.courseModel.course_status) --> \(self.courseModel.trial_expire_at)")
         
+        
+        /* ------> 加入课程按钮设置 <------ */
+        if self.courseModel.course_status?.intValue == 4 { //已购买
+            self.courseModel.submitType = 0//查看课程
+            reloadCourseDetail()
+            
+        } else {//未购买
+            
+            let now = NSDate()
+            if now.isEarlierThanOrEqualTo(self.courseModel.start_display_info.date) {
+                
+                self.courseModel.submitType = 3//即将开课
+                reloadCourseDetail()
+                
+            } else {
+                
+                self.courseModel.submitType = 1//马上加入
+                if username != "" {
+                    judgeWaitforPayCourse()
+                    
+                } else {
+                    reloadCourseDetail()
+                }
+            }
+        }
+    }
+    
+    func judgeWaitforPayCourse() {
+        
+        let retquestModel = TDRequestBaseModel.init()
+        retquestModel.judgeCurseIsWaitforPay(self.username, courseId: self.courseID)
+        
+        retquestModel.waitforPayCourseHandle = { [weak self] (isWaitPayCourse) in
+            
+            if isWaitPayCourse > 0 {
+                self!.courseModel.submitType = 2//查看待支付
+            }
+            self!.reloadCourseDetail()
+        }
+        
+        retquestModel.courseDetailHandle = { [weak self] (courseModel) in
+            
+            self!.courseModel = courseModel
+            self!.initialFreeButtonText() //初始化免费试听文本
+        }
+    }
+    
+    func reloadCourseDetail() {
         self.courseDetailView.applyCourse(self.courseModel)//渲染显示数据
+        self.loadController.state = .Loaded
     }
     
     func addAuditionButtonHandle() { // 点击 免费试听按钮
@@ -649,14 +625,19 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
             if currentUser != nil {
                 self.gotoStudyView = 2
                 self.addCourseButtonHandle()
+                
             } else {
-                self.logoutCurrentUser()//到登录界面
+                
+                self.view.makeToast(Strings.loginBeforeEnroll, duration: 0.5, position: CSToastPositionCenter)
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW,Int64(0.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), {
+                   self.logoutCurrentUser()//到登录界面
+                })
             }
         }
         
         /* 试听按钮 */
         courseDetailView.auditionButtonHandle = { () in
-//            self.showCourseScreen()
             
             self.courseDetailView.activityView.stopAnimating()
             self.addAuditionButtonHandle()
@@ -678,55 +659,4 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    /* 旧的代码 */
-    private func listenData() { //数据
-        self.courseStream.listen(self, success: {[weak self] (course, enrolled) in
-            
-            self!.courseModel = course
-            print(" 时间 ----> \(self?.courseModel.start_display_info.displayDate) --> \(self?.courseModel.start_display_info.date) ---->>>>\(self?.courseModel.trial_seconds) ++ \(self?.courseModel.trial_expire_at)")
-            
-            self!.initialFreeButtonText() //初始化免费试听文本
-            
-            if enrolled { //已报名
-                self?.courseModel.submitType = 0//查看课程
-                
-            } else { //未报名
-                let now = NSDate()
-                if now.isEarlierThanOrEqualTo(self?.courseModel.start_display_info.date) {
-                    self?.courseModel.submitType = 3//即将开课
-                    
-                } else {
-                    if self?.prepareOrder == true {
-                        self?.courseModel.submitType = 2//查看待支付
-                    } else {
-                        self?.courseModel.submitType = 1//立即加入
-                    }
-                }
-            }
-            
-            self?.courseDetailView.applyCourse(course)//渲染显示数据
-            self?.loadController.state = .Loaded
-            
-            }, failure: {[weak self] error in
-                self?.loadController.state = LoadState.failed(error)
-            }
-        )
-        
-        self.courseDetailView.loaded.listen(self) {[weak self] _ in
-            self?.loadController.state = .Loaded
-        }
-    }
-    
-    private func loadCourseMessage() { //获取课程信息
-        
-        let request = CourseCatalogAPI.getCourse(courseID)
-        let courseStream = environment.networkManager.streamForRequest(request)
-        let enrolledStream = environment.dataManager.enrollmentManager.streamForCourseWithID(courseID).resultMap {
-            return .Success($0.isSuccess)
-        }
-        let stream = joinStreams(courseStream, enrolledStream).map{($0, enrolled: $1) }
-        self.courseStream.backWithStream(stream)
-    }
-    
 }

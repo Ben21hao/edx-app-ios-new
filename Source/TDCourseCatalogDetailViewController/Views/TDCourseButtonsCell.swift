@@ -22,7 +22,7 @@ class TDCourseButtonsCell: UITableViewCell {
         setViewConstraint()
     }
     
-    var submitType : Int = 0 {
+    var submitType : Int = 0 { 
         didSet {
             auditionButton.snp_remakeConstraints { (make) in
                 make.left.equalTo(bgView.snp_left).offset(18)
@@ -35,7 +35,7 @@ class TDCourseButtonsCell: UITableViewCell {
     
     func configView() {
         bgView.backgroundColor = UIColor.whiteColor()
-        self.addSubview(bgView)
+        self.contentView.addSubview(bgView)
         
         setButtonStyle(OEXStyles.sharedStyles().baseColor3(), button: auditionButton)
         bgView.addSubview(auditionButton)
@@ -55,8 +55,8 @@ class TDCourseButtonsCell: UITableViewCell {
     
     func setViewConstraint() {
         bgView.snp_makeConstraints { (make) in
-            make.left.right.top.equalTo(self)
-            make.bottom.equalTo(self).offset(1)
+            make.left.right.top.equalTo(self.contentView)
+            make.bottom.equalTo(self.contentView).offset(1)
         }
         
         auditionButton.snp_makeConstraints { (make) in

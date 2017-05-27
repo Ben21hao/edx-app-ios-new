@@ -143,20 +143,75 @@
         NSDictionary *responseDic = (NSDictionary *)responseObject;
         OEXCourse *courseModel = [[OEXCourse alloc] initWithDictionary:responseDic];
         
-        TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
-        NSString *triaStr = [baseTool addSecondsForNow:courseModel.trial_seconds];
-        [[NSUserDefaults standardUserDefaults] setValue:triaStr forKey:@"Free_Course_Date_Str"];
+//        TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
+//        NSString *triaStr = [baseTool addSecondsForNow:courseModel.trial_seconds];
+//        [[NSUserDefaults standardUserDefaults] setValue:triaStr forKey:@"Free_Course_Date_Str"];
         
         if (self.courseDetailHandle && courseModel) {
             self.courseDetailHandle(courseModel);
         }
-        NSLog(@"获取试听课程详情 -- %@ -->> %@",responseDic,courseModel.trial_expire_at);
+        NSLog(@"获取课程详情 -- %@ -->> %@",responseDic,courseModel.trial_expire_at);
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (self.requestErrorHandle) {
             self.requestErrorHandle(error);
         }
-        NSLog(@"获取试听课程详情失败 %ld",(long)error.code);
+        NSLog(@"获取课程详情失败 %ld",(long)error.code);
+    }];
+}
+
+/*
+ 判断是否为待支付课程
+ */
+- (void)judgeCurseIsWaitforPay:(NSString *)username courseId:(NSString *)courseId {
+    
+    TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
+    if (![baseTool networkingState]) {
+        return;
+    }
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *url = [NSString stringWithFormat:@"%@/api/courses/v1/get_wait_order_list/?username=%@",ELITEU_URL,username];
+    [manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        id code = responseDic[@"code"];
+        
+        
+        NSInteger type = 0;
+        if ([code intValue] == 200) {
+            
+            NSArray *dataArray = responseDic[@"data"];
+            if (dataArray.count == 0) {
+                type = 0;
+            }
+            
+            for (NSDictionary *orderDic in dataArray) {
+                NSArray *courseArray = orderDic[@"order_items"];
+                if (courseArray.count == 0) {
+                    type = 0;
+                }
+                
+                for (NSDictionary *courseDic in courseArray) {
+                    if ([courseId isEqualToString:[NSString stringWithFormat:@"%@",courseDic[@"course_id"]]]) {
+                        type += 1;
+                    }
+                }
+            }
+
+        } else {
+            type = 0;
+        }
+        
+        if (self.waitforPayCourseHandle) {
+            self.waitforPayCourseHandle(type);
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (self.waitforPayCourseHandle) {
+            self.waitforPayCourseHandle(0);
+        }
+        NSLog(@"获取待支付课程失败 %ld",(long)error.code);
     }];
 }
 
@@ -192,11 +247,10 @@
             
             TDBaseToolModel *toolModel = [[TDBaseToolModel alloc] init];
             NSString *timeStr = [toolModel addSecondsForNow:[NSNumber numberWithInteger:enrollment.trial_seconds]];
-            [[NSUserDefaults standardUserDefaults] setValue:timeStr forKey:@"Free_Course_Date_Str"];
+            [[NSUserDefaults standardUserDefaults] setValue:timeStr forKey:@"Free_Course_Date_Str"]; //试听结束时间 = 当前时间 + 剩余秒数
             
-            [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",(long)enrollment.trial_seconds] forKey:@"Free_Course_Free_Time"];
-            [[NSUserDefaults standardUserDefaults] setValue:courseID forKey:@"Free_Course_CourseID"];
-            [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"Free_Course_Has_Add"];
+            [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",(long)enrollment.trial_seconds] forKey:@"Free_Course_Free_Time"];//剩余秒数
+            [[NSUserDefaults standardUserDefaults] setValue:courseID forKey:@"Free_Course_CourseID"];//试听课程ID
             
             NSLog(@"加入试听课程的结果 ---  %ld -->> %@ - 目录 %@",(long)enrollment.trial_seconds,enrollment.trial_expire_at,enrollment.course.video_outline);
             
