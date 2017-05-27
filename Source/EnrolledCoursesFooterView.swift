@@ -49,14 +49,14 @@ class EnrolledCoursesFooterView : UIView {
         self.promptLabel.snp_makeConstraints {make in
             make.leading.equalTo(container).offset(StandardHorizontalMargin)
             make.trailing.equalTo(container).offset(-StandardHorizontalMargin)
-            make.top.equalTo(container).offset(StandardVerticalMargin)
+            make.top.equalTo(container).offset(StandardVerticalMargin + 10)
         }
         
         self.findCoursesButton.snp_makeConstraints {make in
             make.leading.equalTo(promptLabel)
             make.trailing.equalTo(promptLabel)
             make.top.equalTo(promptLabel.snp_bottom).offset(StandardVerticalMargin)
-            make.bottom.equalTo(container).offset(-StandardVerticalMargin)
+            make.bottom.equalTo(container).offset(-StandardVerticalMargin - 18)
         }
         
         findCoursesButton.oex_addAction({[weak self] _ in

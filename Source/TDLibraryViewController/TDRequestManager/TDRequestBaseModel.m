@@ -215,7 +215,7 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
-        if (self.isReqeustAgain == YES) {//弹框，提示重新登陆，然后跳转到登陆界面
+        if (self.isReqeustAgain == YES) {//弹框，提示重新登录，然后跳转到登录界面
             if (self.addFreeCourseFailed) {
                 self.addFreeCourseFailed();
             }

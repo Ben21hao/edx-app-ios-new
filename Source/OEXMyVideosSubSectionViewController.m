@@ -130,8 +130,10 @@ typedef NS_ENUM (NSUInteger, OEXAlertType) {
     self.videoVideo.exclusiveTouch = YES;
 
     [self setTitle:self.course.name];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@" " style:UIBarButtonItemStylePlain target:self action:@selector(navigateBack)];
 
+    self.titleViewLabel.text = self.course.name;
+    [self.leftButton addTarget:self action:@selector(navigateBack) forControlEvents:UIControlEventTouchUpInside];
+    
     self.dataInterface = self.environment.interface;
     
     //Init video view and video player
@@ -383,6 +385,8 @@ typedef NS_ENUM (NSUInteger, OEXAlertType) {
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath {
+    tableView.tableFooterView = [UIView new];
+    
     static NSString* cellIndentifier = @"CellCourseVideo";
 
     OEXCourseVideosTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];

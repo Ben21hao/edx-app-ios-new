@@ -27,7 +27,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
     private var timeNum: Int = 0
     private var freeFinish = 0
     private var getFree = 0 //是否已经点击了免费试听
-    private var gotoStudyView = 0
+    private var gotoStudyView = 0 //0 从前面页面进来；1 从学习界面回来； 2 从不是学习的界面回来
     
     private lazy var loadController = LoadStateViewController()
     private var freeView = TDFreeAlertView() //获取免费试听界面
@@ -58,7 +58,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let currentUser = self.session.currentUser //登陆状态
+        let currentUser = self.session.currentUser //登录状态
         if currentUser == nil {
             NSNotificationCenter.defaultCenter().postNotificationName("OEXSessionEndedNotification", object: nil)
         }
@@ -157,6 +157,10 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 
+                if self.courseModel.moreDescription?.characters.count == 0 && self.courseModel.short_description?.characters.count == 0 {
+                    return 0
+                }
+                
                 var introduceStr = " "
                 if self.showAllText == true {
                     if self.courseModel.moreDescription != nil {
@@ -169,11 +173,10 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
                     }
                 }
                 let size = getSizeForString(introduceStr)
-                
-                if self.courseModel.moreDescription?.characters.count == 0 && self.courseModel.short_description?.characters.count == 0 {
-                    return 0
-                }
                 return size.height + 48
+                
+//                let size =  getLabelHeightByWidth(TDScreenWidth - 36, title: introduceStr, font: 14)
+//                return size + 48
                 
             } else if indexPath.row == 1 {
                 
@@ -204,6 +207,19 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         return 60
     }
     
+    /* 通过label自适应来计算高度 */
+    func getLabelHeightByWidth(width: CGFloat,title: String, font: NSInteger) -> CGFloat {
+        let label = UILabel.init(frame: CGRectMake(0, 0, width, 0))
+        label.text = title
+        label.font = UIFont.init(name: "OpenSans", size: 14)
+        label.numberOfLines = 0
+        label.sizeToFit()
+        let height = label.frame.size.height
+        return height
+        
+    }
+    
+    /* 通过 字符串 来计算高度 -- 不是很准确*/
     func getSizeForString(str: String) -> CGSize {
         
         let size = str.boundingRectWithSize(CGSizeMake(TDScreenWidth - 58, TDScreenHeight), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName : UIFont.init(name: "OpenSans", size: 14)!], context: nil).size
@@ -380,7 +396,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
             }
             
         
-        let currentUser = self.session.currentUser //登陆状态
+        let currentUser = self.session.currentUser //登录状态
         
         if  (currentUser != nil){//已登录
         } else {//未登录
@@ -396,7 +412,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
             addCourseButtonHandle()
             
         } else {
-            let currentUser = session.currentUser //登陆状态
+            let currentUser = session.currentUser //登录状态
             
             if  (currentUser != nil || self.getFree == 1){ //已登录 / 已点击了立即试听
                 if (self.courseModel.course_status?.intValue == 3) { //试听结束 - 功能为加入课程一样
@@ -471,7 +487,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
             self.courseDetailView.activityView.stopAnimating()
         }
         
-        requestModel.addFreeCourseFailed = { () in//加入失败，重新登陆
+        requestModel.addFreeCourseFailed = { () in//加入失败，重新登录
             self.courseDetailView.activityView.stopAnimating()
             
             let alertView = UIAlertView.init(title: Strings.systemWaring, message: Strings.loginOverDue, delegate: self, cancelButtonTitle: Strings.ok)
@@ -621,18 +637,20 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         
         courseDetailView.showAllTextHandle = { showAll in
             self.showAllText = showAll
-            self.courseDetailView.tableView.reloadData()
+//            self.courseDetailView.tableView.reloadData()
+            let indexpath = NSIndexPath.init(forRow: 0, inSection: 0)
+            self.courseDetailView.tableView.reloadRowsAtIndexPaths([indexpath], withRowAnimation: .Fade)
         }
         
         /* 加入课程按钮 */
         courseDetailView.submitButtonHandle = { () in
             
-            let currentUser = self.session.currentUser //登陆状态
+            let currentUser = self.session.currentUser //登录状态
             if currentUser != nil {
                 self.gotoStudyView = 2
                 self.addCourseButtonHandle()
             } else {
-                self.logoutCurrentUser()//到登陆界面
+                self.logoutCurrentUser()//到登录界面
             }
         }
         

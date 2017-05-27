@@ -352,7 +352,7 @@
     image.layer.cornerRadius = 4;
     
     textField.textColor = [UIColor colorWithHexString:colorHexStr9];
-    textField.placeholder = [textField isEqual:_tf_EmailID] ? [Strings usernamePlaceholder] : [Strings passwordPlaceholder];
+    textField.placeholder = [textField isEqual:_tf_EmailID] ? [Strings phoneOrEmail] : [Strings passwordPlaceholder];
     textField.text = @"";
     textField.accessibilityLabel = nil;
     textField.textAlignment = NSTextAlignmentNatural;
@@ -390,7 +390,7 @@
 
     if(username) {
         _tf_EmailID.text = username;
-        _tf_EmailID.accessibilityLabel = [Strings usernamePlaceholder];
+        _tf_EmailID.accessibilityLabel = [Strings phoneOrEmail];
     }
 }
 
@@ -681,7 +681,7 @@
     }
     
     if (self.tf_Password.text.length > 0) {
-        [[NSUserDefaults standardUserDefaults] setObject:self.tf_Password.text forKey:USER_LOGIN_PASSWORD]; //登陆密码
+        [[NSUserDefaults standardUserDefaults] setObject:self.tf_Password.text forKey:USER_LOGIN_PASSWORD]; //登录密码
     }
     
     [self tappedToDismiss];
@@ -812,7 +812,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if ([textField isEqual:_tf_EmailID] && [textField.text isEqualToString:@""] && string.length > 0) {
-        textField.accessibilityLabel = [Strings usernamePlaceholder];
+        textField.accessibilityLabel = [Strings phoneOrEmail];
     }
     else if([textField isEqual:_tf_EmailID] && [string isEqualToString:@""] && textField.text.length == 1) {
         textField.accessibilityLabel = nil;

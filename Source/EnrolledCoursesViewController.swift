@@ -48,7 +48,7 @@ class EnrolledCoursesViewController : OfflineSupportViewController, CoursesTable
         self.userPreferencesFeed.refresh()
         
         let currentUser = OEXRouter.sharedRouter().environment.session.currentUser
-        if (currentUser != nil) {//登陆状态
+        if (currentUser != nil) {//登录状态
             
             refreshController.setupInScrollView(self.tableController.tableView)
             refreshController.delegate = self

@@ -448,6 +448,8 @@ typedef  enum OEXAlertType
         return cell;
     }
     else {      // table_Recent
+        tableView.tableFooterView = [UIView new];
+        
         static NSString* cellIndentifier = @"CellCourseVideo";
         OEXCourseVideosTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
         cell.btn_Download.hidden = YES;

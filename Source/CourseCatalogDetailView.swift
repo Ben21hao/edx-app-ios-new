@@ -392,7 +392,7 @@ class CourseCatalogDetailView : UIView, UIWebViewDelegate,UIScrollViewDelegate {
         }
         
         let sixLabel = UILabel()
-        sixLabel.text = "助教"
+        sixLabel.text = Strings.teachAssistant
         sixthCell.addSubview(sixLabel)
         
         sixLabel.snp_makeConstraints { (make) in

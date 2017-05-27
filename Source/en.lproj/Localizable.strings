@@ -1044,7 +1044,7 @@
 "AREADY_COMMENT" = "You've already commented";
 /*安全验证*/
 "SECURITY_VALIDATION" = "Security Validation";
-/*请输入登陆密码*/
+/*请输入登录密码*/
 "LOGIN_PASSWORD" = "Enter login password";
 /*教授详情*/
 "PROFESSOR_DETAIL" = "Details";

@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OEXMyVideosSubSectionViewController : UIViewController <UIAlertViewDelegate>
+@interface OEXMyVideosSubSectionViewController : TDBaseViewController <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray* arr_CourseData;
 @property (nonatomic, strong) OEXCourse* course;

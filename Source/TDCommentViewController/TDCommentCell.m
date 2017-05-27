@@ -212,7 +212,7 @@ const CGFloat contentLabelFontSize = 14;
         
         UIButton *starBttuon = [[UIButton alloc] init];
         
-        if (i > [scoreStr intValue]) {
+        if (i >= [scoreStr intValue]) {
             [starBttuon setImage:[UIImage imageNamed:@"star11"] forState:UIControlStateNormal];
         } else {
             [starBttuon setImage:[UIImage imageNamed:@"star1"] forState:UIControlStateNormal];

@@ -24,7 +24,7 @@
     _outTime.transform = CGAffineTransformMakeRotation(-0.6);
     
     self.detailButton.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:28];
-    [self.detailButton setTitle:@"\U0000f128" forState:UIControlStateNormal];
+    [self.detailButton setTitle:@"\U0000f059" forState:UIControlStateNormal];
     [self.detailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal | UIControlStateSelected];
     [self.detailButton addTarget:self action:@selector(showDetailAction:) forControlEvents:UIControlEventTouchUpInside];
     
