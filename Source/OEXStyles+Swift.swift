@@ -131,7 +131,7 @@ extension OEXStyles {
     
 // Standard border styles
     var entryFieldBorderStyle : BorderStyle {
-        return BorderStyle(width: .Size(1), color: OEXStyles.sharedStyles().neutralLight())
+        return BorderStyle(width: .Size(0.5), color: OEXStyles.sharedStyles().baseColor8())
     }
     
 //Standard Divider styles
@@ -161,8 +161,8 @@ extension UISearchBar {
     func applyStandardStyles(withPlaceholder placeholder : String? = nil) {
         self.placeholder = placeholder
         self.showsCancelButton = false
-        self.searchBarStyle = .Default
-        self.backgroundColor = OEXStyles.sharedStyles().neutralWhiteT()
+        self.searchBarStyle = .Minimal
+        self.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
         
     }
 }

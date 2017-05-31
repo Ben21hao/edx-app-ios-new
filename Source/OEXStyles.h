@@ -71,6 +71,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (UIColor *)baseColor8;
 - (UIColor *)baseColor9;
 - (UIColor *)baseColor10;
+- (UIColor *)baseColor11;
+- (UIColor *)baseColor12;
+- (UIColor *)baseColor13;
 
 #pragma mark Secondary
 

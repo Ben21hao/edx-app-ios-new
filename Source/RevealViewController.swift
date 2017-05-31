@@ -16,13 +16,13 @@ class RevealViewController: SWRevealViewController, SWRevealViewControllerDelega
     
     override init!(rearViewController: UIViewController!, frontViewController: UIViewController!) {
         super.init(rearViewController: rearViewController, frontViewController: frontViewController)
-        self.rearViewRevealWidth = 300
+        self.rearViewRevealWidth = TDScreenWidth * 5/6
         self.rightViewRevealWidth = self.rearViewRevealWidth
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.rearViewRevealWidth = 300
+        self.rearViewRevealWidth = TDScreenWidth * 5/6
         self.rightViewRevealWidth = self.rearViewRevealWidth
     }
     

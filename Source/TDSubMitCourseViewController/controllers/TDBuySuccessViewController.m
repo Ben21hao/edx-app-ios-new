@@ -17,7 +17,9 @@
 
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSDictionary *dataDic;
-@property (nonatomic,assign) NSInteger requestNum;
+
+@property (nonatomic,strong) NSTimer *timer;
+@property (nonatomic,assign) NSInteger timeNum;
 
 @end
 
@@ -38,11 +40,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.requestNum = 0;
     [self setViewConstraint];
     [self requestData];
     
     [self setLoadDataView];
+    
+    self.timeNum = 0;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(repeatAction) userInfo:nil repeats:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -56,6 +60,12 @@
         [weakSelf gotoStudy];
     };
     [self.leftButton addTarget:self action:@selector(popAction:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self timerIndivalde];
 }
 
 #pragma mark - 去学习
@@ -80,7 +90,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.orderId forKey:@"order_id"];
     
-    NSLog(@"订单号 --》 %@ ==========  %@",self.orderId,dic);
+    NSLog(@"订单号 --->>> %@ ==========  %@",self.orderId,dic);
     
     NSString *url = [NSString stringWithFormat:@"%@/api/courses/v1/get_order_status/",ELITEU_URL];
     
@@ -93,10 +103,7 @@
             [self.tableView reloadData];
             
         } else {
-            if (self.requestNum == 0) {
-                self.requestNum = 1;
-                [self requestData];
-            }
+            
         }
         NSLog(@"----- 支付成功 ----- %@",responDic);
         
@@ -104,8 +111,39 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self.loadIngView removeFromSuperview];
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@" error -------%@",error);
     }];
+}
+
+- (void)repeatAction {
+    
+    self.timeNum++;
+    
+    [self requerestDataRepeatAction];
+    
+    if (self.timeNum > 5) {
+        [self timerIndivalde];
+    }
+}
+
+- (void)requerestDataRepeatAction {
+    
+    if (self.dataDic != nil) {
+        [self timerIndivalde];
+        return;
+    }
+    if (self.timeNum > 5) {
+        [self timerIndivalde];
+        return;
+    }
+    [self requestData];
+}
+
+- (void)timerIndivalde {
+    [self.loadIngView removeFromSuperview];
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 #pragma mark - tableView Delegate

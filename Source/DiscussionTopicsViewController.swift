@@ -29,7 +29,7 @@ public class DiscussionTopicsViewController: OfflineSupportViewController, UITab
     
     private let contentView = UIView()
     private let tableView = UITableView()
-    private let searchBarSeparator = UIView()
+    private let separatorLine = UIView()
     
     public init(environment: Environment, courseID: String) {
         self.environment = environment
@@ -58,6 +58,8 @@ public class DiscussionTopicsViewController: OfflineSupportViewController, UITab
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = OEXStyles.sharedStyles().baseColor5()
+        
         let leftButton = UIButton.init(frame: CGRectMake(0, 0, 48, 48))
         leftButton.setImage(UIImage.init(named: "backImagee"), forState: .Normal)
         leftButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23)
@@ -71,13 +73,14 @@ public class DiscussionTopicsViewController: OfflineSupportViewController, UITab
 
         self.titleViewLabel.text = Strings.discussionTopics
    
-        view.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
-        searchBarSeparator.backgroundColor = UIColor.init(RGBHex: 0xe6e9ed, alpha: 1)
+        self.separatorLine.backgroundColor = OEXStyles.sharedStyles().baseColor6()
         
+        contentView.backgroundColor = OEXStyles.sharedStyles().standardBackgroundColor()
         self.view.addSubview(contentView)
+        
         self.contentView.addSubview(tableView)
         self.contentView.addSubview(searchBar)
-        self.contentView.addSubview(searchBarSeparator)
+        self.contentView.addSubview(separatorLine)
         
         // Set up tableView
         tableView.dataSource = self
@@ -106,7 +109,7 @@ public class DiscussionTopicsViewController: OfflineSupportViewController, UITab
             make.height.equalTo(48);
         }
         
-        searchBarSeparator.snp_makeConstraints { (make) -> Void in
+        separatorLine.snp_makeConstraints { (make) -> Void in
             make.height.equalTo(OEXStyles.dividerSize())
             make.leading.equalTo(contentView)
             make.trailing.equalTo(contentView)
@@ -114,7 +117,7 @@ public class DiscussionTopicsViewController: OfflineSupportViewController, UITab
         }
         
         tableView.snp_makeConstraints { make -> Void in
-            make.top.equalTo(searchBarSeparator)
+            make.top.equalTo(separatorLine)
             make.leading.equalTo(contentView)
             make.trailing.equalTo(contentView)
             make.bottom.equalTo(contentView)
@@ -192,7 +195,7 @@ public class DiscussionTopicsViewController: OfflineSupportViewController, UITab
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        tableView.separatorColor = UIColor.init(RGBHex: 0xe6e9ed, alpha: 1)
+        tableView.separatorColor = OEXStyles.sharedStyles().baseColor6()
         
         let cell = tableView.dequeueReusableCellWithIdentifier(DiscussionTopicCell.identifier, forIndexPath: indexPath) as! DiscussionTopicCell
         

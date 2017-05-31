@@ -126,6 +126,7 @@ public class DiscussionNewPostViewController: TDSwiftBaseViewController, UITextV
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = OEXStyles.sharedStyles().baseColor5()
         
         self.titleViewLabel.text = Strings.post
 
@@ -144,12 +145,13 @@ public class DiscussionNewPostViewController: TDSwiftBaseViewController, UITextV
         contentTextView.placeholderTextColor = OEXStyles.sharedStyles().neutralLight()
         contentTextView.applyBorderStyle(OEXStyles.sharedStyles().entryFieldBorderStyle)
         contentTextView.delegate = self
-        titleTextField.accessibilityLabel = Strings.title
-        
-        self.view.backgroundColor = OEXStyles.sharedStyles().baseColor5()
         
         configureSegmentControl()
+        
+        titleTextField.accessibilityLabel = Strings.title
         titleTextField.defaultTextAttributes = OEXStyles.sharedStyles().textAreaBodyStyle.attributes
+        titleTextField.applyBorderStyle(OEXStyles.sharedStyles().entryFieldBorderStyle)
+        
         setTopicsButtonTitle()
         let insets = OEXStyles.sharedStyles().standardTextViewInsets
         topicButton.titleEdgeInsets = UIEdgeInsetsMake(0, insets.left, 0, insets.right)
@@ -232,8 +234,8 @@ public class DiscussionNewPostViewController: TDSwiftBaseViewController, UITextV
                 assert(true, "Invalid Segment ID, Remove this segment index OR handle it in the ThreadType enum")
             }
             }, forEvents: UIControlEvents.ValueChanged)
-        discussionQuestionSegmentedControl.tintColor = OEXStyles.sharedStyles().neutralDark()
-        discussionQuestionSegmentedControl.setTitleTextAttributes([NSForegroundColorAttributeName: OEXStyles.sharedStyles().neutralWhite()], forState: UIControlState.Selected)
+        discussionQuestionSegmentedControl.tintColor = OEXStyles.sharedStyles().baseColor8()
+//        discussionQuestionSegmentedControl.setTitleTextAttributes([NSForegroundColorAttributeName: OEXStyles.sharedStyles().neutralWhite()], forState: UIControlState.Selected)
         discussionQuestionSegmentedControl.selectedSegmentIndex = 0
         
         updateSelectedTabColor()
@@ -245,11 +247,11 @@ public class DiscussionNewPostViewController: TDSwiftBaseViewController, UITextV
         for i in 0..<subViews.count {
             if subViews.objectAtIndex(i).isSelected ?? false {
                 let view = subViews.objectAtIndex(i) as! UIView
-                view.tintColor = OEXStyles.sharedStyles().primaryBaseColor()
+                view.tintColor = OEXStyles.sharedStyles().baseColor1()
             }
             else {
                 let view = subViews.objectAtIndex(i) as! UIView
-                view.tintColor = OEXStyles.sharedStyles().neutralDark()
+                view.tintColor = OEXStyles.sharedStyles().baseColor7()
             }
         }
     }
@@ -280,7 +282,7 @@ public class DiscussionNewPostViewController: TDSwiftBaseViewController, UITextV
     private func setTopicsButtonTitle() {
         if let topic = selectedTopic, name = topic.name {
             let title = Strings.topic(topic: name)
-            topicButton.setAttributedTitle(OEXTextStyle(weight : .Normal, size: .Small, color: OEXStyles.sharedStyles().neutralDark()).attributedStringWithText(title), forState: .Normal)
+            topicButton.setAttributedTitle(OEXTextStyle(weight : .Normal, size: .Small, color: OEXStyles.sharedStyles().baseColor8()).attributedStringWithText(title), forState: .Normal)
         }
     }
     

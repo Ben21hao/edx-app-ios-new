@@ -262,18 +262,18 @@ class OEXRearTableViewController : UITableViewController {
         if indexPath.row == OEXRearViewOptions.Debug.rawValue && !environment.config.shouldShowDebug() {
             return 0
         }
+        else if indexPath.row == OEXRearViewOptions.SubmitFeedback.rawValue {
+            return 0
+        }
         else if indexPath.row == OEXRearViewOptions.FindCourses.rawValue && !environment.config.courseEnrollmentConfig.isCourseDiscoveryEnabled() {
             return 0
         }
         else if indexPath.row == OEXRearViewOptions.Logout.rawValue {
             let screenHeight = UIScreen.mainScreen().bounds.height
-            let tableviewHeight = tableView.contentSize.height
+            //            let tableviewHeight = tableView.contentSize.height
+            let tableviewHeight : CGFloat = 468
             return max((screenHeight - tableviewHeight) + LogoutCellDefaultHeight, LogoutCellDefaultHeight)
         }
-        else if indexPath.row == OEXRearViewOptions.SubmitFeedback.rawValue {
-            return 0
-        }
-        
         
         return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
     }

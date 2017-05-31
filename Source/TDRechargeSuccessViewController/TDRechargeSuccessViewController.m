@@ -35,6 +35,12 @@
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(repeatAction) userInfo:nil repeats:YES];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self timerIndivalde];
+}
+
 - (void)repeatAction {
     
     self.timeNum++;

@@ -155,6 +155,15 @@ static OEXStyles* sSharedStyles;
 - (UIColor *)baseColor10 {
     return [UIColor colorWithHexString:colorHexStr10];
 }
+- (UIColor *)baseColor11 {
+    return [UIColor colorWithHexString:colorHexStr11];
+}
+- (UIColor *)baseColor12 {
+    return [UIColor colorWithHexString:colorHexStr12];
+}
+- (UIColor *)baseColor13 {
+    return [UIColor colorWithHexString:colorHexStr13];
+}
 
 #pragma mark Secondary
 
