@@ -758,7 +758,7 @@
 /*密码长度少于6位数*/
 "PASSWORD_LENGTH_IS_LESS_THAN_SIX" = "密码至少6位字符";
 /*验证码错误*/
-"VERIFICATION_CODE_ERROR" = "验证码错误";
+"VERIFICATION_CODE_ERROR" = "请输入手机验证码";
 /*跳过*/
 "JUMP_OVER" = "跳过";
 /*注册*/
@@ -781,8 +781,8 @@
 "ENTER_CORRECT_NUMBER" = "请输入正确的手机号码";
 /*注册失败*/
 "REGISTRATION_FAILURE" = "注册失败";
-/*手机号码已经注册过，请重新输入*/
-"PHONE_NUMBER_HAS_BEEN_REGISTERED" = "手机号码已经注册过，请重新输入或直接登录。";
+/*手机号码已存在，请登录或重新输入*/
+"PHONE_NUMBER_HAS_BEEN_REGISTERED" = "手机号码已存在，请登录";
 /*注册成功*/
 "REGISTRATION_SUCCESS" = "注册成功";
 /*请登录*/
@@ -863,10 +863,12 @@
 "EMAIL_FORMAT_ERROR" = "邮箱格式错误";
 /*邮箱已存在*/
 "EMAIL_IS_REGISTERED" = "邮箱已存在";
+/*邮箱已存在，请登录*/
+"EMAIL_REGISTERED_LOGIN" = "邮箱已存在，请登录";
 /*已发送验证邮件，请前往邮箱查看。*/
 "EMAIL_AREADY_SEND" = "已发送验证邮件，请前往邮箱查看。";
 /*未知错误*/
-"UNKNOWN_ERROR" = "未知错误";
+"UNKNOWN_ERROR" = "验证邮件发送失败，请重试";
 /*确定绑定*/
 "SURE_BIND" = "确定绑定";
 /*手机格式错误*/
@@ -1535,8 +1537,8 @@
 "FREE_COURSE_ENDED" = "试听结束 加入课程";
 /*获取免费试听资格失败Failed to get a free trial course*/
 "FAILED_GET_FREE" = "获取免费试听资格失败";
-/*a.Mobile number has already been registered, please try again.手机号码已经注册过，请重新输入或直接登录*/
-"PHONE_HAD_REGITSTER" = "手机号码已经注册过，请重新输入或直接登录";
+/*a.Mobile number has already been registered, please try again.手机号码已存在，请登录或重新输入*/
+"PHONE_HAD_REGITSTER" = "手机号码已存在，请登录或重新输入";
 /*请选择课程Please select course*/
 "SELECT_COURSE"= "请选择课程";
 /*继续试听Continue*/

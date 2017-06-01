@@ -258,8 +258,9 @@
     TDSubmitCourseViewController *submitVC = [[TDSubmitCourseViewController alloc] init];
     submitVC.totalM = [self.totalMoney floatValue];//总价格
     submitVC.username = self.username;
+    submitVC.courseId = self.courseID;
     submitVC.activity_id = self.activityItem.activity_id;//活动id
-    submitVC.array0 = self.selectCourseArray;
+    submitVC.courseArray = self.selectCourseArray;
     submitVC.hideShowPurchase = self.hideShowPurchase;
     if ([self.giftCoin floatValue] > 0) {
         submitVC.giftCoin = self.giftCoin;

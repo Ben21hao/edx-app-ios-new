@@ -178,7 +178,7 @@
             [alertView show];
             
         } else if (codeInt == 301) {
-            [self.view makeToast:responDic[@"msg"] duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"EMAIL_REGISTERED_LOGIN", nil) duration:1.08 position:CSToastPositionCenter];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController dismissViewControllerAnimated:YES completion:nil];

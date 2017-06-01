@@ -535,6 +535,7 @@ static const NSTimeInterval RewindTimeInterval = 30;
     self.messageLabel.font = [UIFont fontWithName:@"OpenSans" size:16];
     self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
     self.messageLabel.text = NSLocalizedString(@"ROTATE_DEVICE", nil);
+    self.messageLabel.numberOfLines = 0;
     [self.bottomView addSubview:self.messageLabel];
     
     [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -580,7 +581,8 @@ static const NSTimeInterval RewindTimeInterval = 30;
     }];
     
     [self.messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(self.bottomView.mas_centerX);
+        make.left.mas_equalTo(self.bottomView.mas_left).offset(8);
+        make.right.mas_equalTo(self.bottomView.mas_right).offset(-8);
         make.top.mas_equalTo(self.bottomView.mas_centerY).offset(0);
     }];
     

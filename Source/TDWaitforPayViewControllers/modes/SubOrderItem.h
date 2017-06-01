@@ -10,11 +10,11 @@
 
 @interface SubOrderItem : NSObject
 
-@property(nonatomic,strong)NSString *course_id;
-@property(nonatomic,strong)NSString *display_name;
-@property(nonatomic,strong)NSString *image;
-@property(nonatomic,strong)NSString *min_price;
-@property(nonatomic,strong)NSString *price;
-@property(nonatomic,strong)NSString *teacher_name;
+@property(nonatomic,strong)NSString *course_id;//课程ID
+@property(nonatomic,strong)NSString *display_name;//课程名字
+@property(nonatomic,strong)NSString *image; //图片
+@property(nonatomic,strong)NSString *min_price; //最低价格
+@property(nonatomic,strong)NSString *price;//价格
+@property(nonatomic,strong)NSString *teacher_name;//教授名字
 
 @end

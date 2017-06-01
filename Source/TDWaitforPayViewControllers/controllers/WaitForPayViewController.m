@@ -57,6 +57,7 @@
 @property (nonatomic,strong) NSString *orderId;
 
 @property (nonatomic,strong) UIButton *returnButton;
+@property (nonatomic,assign) NSInteger returnWay;
 
 @property (nonatomic,strong) TDBaseToolModel *baseTool;
 @property (nonatomic,assign) BOOL hideShowPurchase;//0 为审核中；1 为审核通过
@@ -85,7 +86,8 @@ static NSString *cellID = @"WaitForPayTableViewCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"WaitForPayTableViewCell" bundle:nil] forCellReuseIdentifier:cellID];
     
     self.baseTool = [[TDBaseToolModel alloc] init];
-    _payWay = 0;//默认微信支付方式
+    self.payWay = 0;//默认微信支付方式
+    self.returnWay = 0;
     
 //    WS(weakSelf);
 //    self.purchaseManager = [[PurchaseManager alloc] init];
@@ -132,13 +134,13 @@ static NSString *cellID = @"WaitForPayTableViewCell";
     self.returnButton.imageEdgeInsets = UIEdgeInsetsMake(0, -23, 0, 23);
     self.returnButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:18.0];
     [self.returnButton addTarget:self action:@selector(returnButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    if (self.whereFrom == 1) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    } else {
+//    if (self.whereFrom == 1) {
+//        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    } else {
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ) {
             self.navigationController.interactivePopGestureRecognizer.enabled = YES;
             self.navigationController.interactivePopGestureRecognizer.delegate = self;
-        }
+//        }
     }
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.returnButton];
     
@@ -157,7 +159,7 @@ static NSString *cellID = @"WaitForPayTableViewCell";
 }
 
 - (void)returnButtonAction:(UIButton *)sender {
-    if (self.whereFrom == 1) {
+    if (self.whereFrom == 1 && self.returnWay == 1) {
         [self.navigationController popToViewController:self.navigationController.childViewControllers[1] animated:YES];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
@@ -229,9 +231,20 @@ static NSString *cellID = @"WaitForPayTableViewCell";
 }
 
 #pragma mark - 取消订单
-- (void)cancelBtn:(UIButton *)btn{
-    OrderItem * order = [OrderItem mj_objectWithKeyValues:self.ordersArr[btn.tag]];
+- (void)cancelBtn:(UIButton *)btn {
+    
+    OrderItem *order = [OrderItem mj_objectWithKeyValues:self.ordersArr[btn.tag]];
     NSString *orderID = order.order_id;
+    
+    NSArray *courseArray = order.order_items;
+    for (int i = 0; i < courseArray.count; i ++) {
+        SubOrderItem *subord = [SubOrderItem mj_objectWithKeyValues:courseArray[i]];
+        
+        if ([subord.course_id isEqualToString:self.courseId]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Course_Status_Handle" object:nil];
+            self.returnWay = 1;
+        }
+    }
 
     //会话管理者
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

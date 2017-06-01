@@ -200,8 +200,11 @@
 }
 
 - (void)gotoWaitForPayView { //待支付
+    
     WaitForPayViewController *waitForPayVC = [[WaitForPayViewController alloc] init];
     waitForPayVC.username = self.username;
+    waitForPayVC.courseId = self.courseId;
+    waitForPayVC.whereFrom = 1;
     [self.navigationController pushViewController:waitForPayVC animated:YES];
 }
 
@@ -286,8 +289,6 @@
     SVProgressHUD.defaultStyle = SVProgressHUDAnimationTypeNative;
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/JavaScript",@"text/html",@"text/plain", nil];
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.username forKey:@"username"];
@@ -332,6 +333,7 @@
 //                [self submitByAlipay];
             }
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Course_Status_Handle" object:nil];
         } else {
             [self.view makeToast:NSLocalizedString(@"PAY_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
             NSLog(@"--%@",responseDic[@"msg"]);
@@ -406,14 +408,14 @@
 #pragma mark - 返回
 - (void)backButtonAction:(UIButton *)sender {
     if (self.hadCreateOrder) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self backButtonNotiAction];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
 - (void)backButtonNotiAction {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popToViewController:self.navigationController.childViewControllers[1] animated:YES];
 }
 
 #pragma mark - 优惠券
@@ -450,7 +452,7 @@
         self.payMoney = self.totalM * [model.discount_rate floatValue];
         
     } else if ([model.coupon_type intValue] == 4) {//企业优惠券
-        for (ChooseCourseItem *item in self.array0) {
+        for (ChooseCourseItem *item in self.courseArray) {
             item.isCompanyCoupon = YES;
         }
         self.isCampony = YES;
@@ -544,7 +546,7 @@
     if (self.usedcoin == nil) {
         self.usedcoin = @"0";
     }
-    for (ChooseCourseItem *courseItem in self.array0) {
+    for (ChooseCourseItem *courseItem in self.courseArray) {
         [self.courseIdArray addObject:courseItem.course_id];
     }
     self.courseIds = [self.courseIdArray componentsJoinedByString:@","];
@@ -590,7 +592,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return self.array0.count;
+        return self.courseArray.count;
     }
     if (section == 1) {
         return self.leftTielArray.count;
@@ -604,7 +606,7 @@
     
     if ([indexPath section] == 0) {
         TDWaitforPayCell *cell = [[TDWaitforPayCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TDWaitforCell"];
-        cell.model = self.array0[indexPath.row];
+        cell.model = self.courseArray[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         

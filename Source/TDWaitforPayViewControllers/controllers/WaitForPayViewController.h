@@ -12,6 +12,7 @@
 @interface WaitForPayViewController : TDBaseViewController
 
 @property (nonatomic,strong) NSString *username;
-@property (nonatomic,assign) NSInteger whereFrom;
+@property (nonatomic,strong) NSString *courseId;
+@property (nonatomic,assign) NSInteger whereFrom;//1 为结算页
 
 @end

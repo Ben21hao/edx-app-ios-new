@@ -90,7 +90,6 @@ class OEXRearTableViewController : UITableViewController {
             widthConstraint.constant = 0
             heightConstraint.constant = 85
         }
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -100,6 +99,12 @@ class OEXRearTableViewController : UITableViewController {
             profileCell.accessibilityLabel = Strings.Accessibility.LeftDrawer.profileLabel(userName: environment.session.currentUser?.name ?? "", userEmail: environment.session.currentUser?.email ?? "")
             profileCell.accessibilityHint = Strings.Accessibility.LeftDrawer.profileHint
         }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.tableView.userInteractionEnabled = true
     }
     
     private func setupProfileLoader() {
@@ -210,6 +215,7 @@ class OEXRearTableViewController : UITableViewController {
         return OEXStyles.sharedStyles().standardStatusBarStyle()
     }
     
+    //MARK: tableview
     override func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
         let cell = self.tableView(tableView, cellForRowAtIndexPath: indexPath)
         if let separatorImage = cell.contentView.viewWithTag(10) {
@@ -237,15 +243,20 @@ class OEXRearTableViewController : UITableViewController {
             case .UserProfile:
                 guard environment.config.profilesEnabled else { break }
                 guard let currentUserName = environment.session.currentUser?.username else { return }
+                tableView.userInteractionEnabled = false
                 environment.router?.showProfileForUsername(username: currentUserName)
             case .MyCourse:
+                tableView.userInteractionEnabled = false
                 environment.router?.showMyCourses()
             case .MyVideos:
+                tableView.userInteractionEnabled = false
                 environment.router?.showMyVideos()
             case .FindCourses:
+                tableView.userInteractionEnabled = false
                 environment.router?.showCourseCatalog(nil)
                 environment.analytics.trackUserFindsCourses()
             case .MySettings:
+                tableView.userInteractionEnabled = false
                 environment.router?.showMySettings()
             case .SubmitFeedback:
                 launchEmailComposer()

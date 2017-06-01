@@ -779,7 +779,7 @@
 /*注册失败*/
 "REGISTRATION_FAILURE" = "Registration failure";
 /*手机号已经注册过，请重新输入*/
-"PHONE_NUMBER_HAS_BEEN_REGISTERED" = "Mobile number has already been registered, please try again.";
+"PHONE_NUMBER_HAS_BEEN_REGISTERED" = "This mobile number has been registered, please log in.";
 /*注册成功*/
 "REGISTRATION_SUCCESS" = "Account created successfully.";
 /*请登录*/
@@ -860,6 +860,8 @@
 "EMAIL_FORMAT_ERROR" = "Format error";
 /*邮箱已存在*/
 "EMAIL_IS_REGISTERED" = "Email had been used";
+/*邮箱已存在，请登录*/
+"EMAIL_REGISTERED_LOGIN" = "This email has been registered, please log in. ";
 /*已发送验证邮件，请前往邮箱查看。*/
 "EMAIL_AREADY_SEND" = "Email send successfully, please check your mailbox.";
 /*未知错误*/
@@ -1532,7 +1534,7 @@
 "FREE_COURSE_ENDED" = "Free trial ended";
 /*获取免费试听资格失败Failed to get a free trial course*/
 "FAILED_GET_FREE" = "Failed to get a free trial course";
-/*a.Mobile number has already been registered, please try again.手机号码已经注册过，请重新输入或直接登录*/
+/*a.Mobile number has already been registered, please try again.手机号码已存在，请登录或重新输入f*/
 "PHONE_HAD_REGITSTER" = "Mobile number has already been registered, please try again.";
 /*请选择课程Please select course*/
 "SELECT_COURSE"= "Please select course";
