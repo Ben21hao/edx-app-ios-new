@@ -86,8 +86,12 @@
         
         [self.activityView stopAnimating];
         NSDictionary *dict = (NSDictionary *)responseObject;
-        
-        [self.view makeToast:dict[@"msg"] duration:1.08 position:CSToastPositionCenter];
+        id code = dict[@"code"];
+        if ([code intValue] == 200) {
+            [self.view makeToast:NSLocalizedString(@"SEND_EMAIL_SUCCESS", nil) duration:1.08 position:CSToastPositionCenter];
+        } else {
+            [self.view makeToast:dict[@"msg"] duration:1.08 position:CSToastPositionCenter];
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [self.activityView stopAnimating];

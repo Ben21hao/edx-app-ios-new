@@ -62,4 +62,7 @@
 @property (nonatomic,copy) void(^showMsgHandle)(NSString *msgType);
 @property (nonatomic,copy) void(^addFreeCourseFailed)();
 
+- (void)getMyFreeCourseDetail:(NSString *)username courseID:(NSString *)courseID;//重新获取试听课程信息
+@property (nonatomic,copy) void(^getDetailHandle)();
+
 @end

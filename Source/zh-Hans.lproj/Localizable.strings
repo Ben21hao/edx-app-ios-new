@@ -1177,8 +1177,8 @@
 "RECHARGE_BAODIAN" = "充值宝典";
 /*剩余宝典*/
 "AVALIABLE_BAODIAN" = "剩余宝典";
-/*发送激活邮件成功*/
-"SEND_EMAIL_SUCCESS" = "发送激活邮件成功";
+/*激活邮件已发送*/
+"SEND_EMAIL_SUCCESS" = "激活邮件已发送";
 /*未选择*/
 "UN_SELECTED" = "未选择";
 /*应付金额不能小于或等于0*/

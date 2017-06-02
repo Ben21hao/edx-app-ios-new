@@ -284,6 +284,43 @@
     
 }
 
+- (void)getMyFreeCourseDetail:(NSString *)username courseID:(NSString *)courseID {
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:username forKey:@"username"];
+    [params setValue:courseID forKey:@"course_id"];
+    
+    NSString *url = [NSString stringWithFormat:@"%@/api/courses/v1/add_course_to_listening_courses/",ELITEU_URL];
+    [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        int code = [responseDic[@"code"] intValue];
+        
+        if (code == 200) {
+            NSDictionary *enrollDic = responseDic[@"data"][@"enroll"];
+            NSDictionary *dict = [enrollDic oex_replaceNullsWithEmptyStrings];
+            UserCourseEnrollment *enrollment = [[UserCourseEnrollment alloc] initWithDictionary:dict];
+        
+            [[NSUserDefaults standardUserDefaults] setValue:[NSString stringWithFormat:@"%ld",(long)enrollment.trial_seconds] forKey:@"Free_Course_Free_Time"];//剩余秒数
+            
+            if (self.getDetailHandle) {
+                self.getDetailHandle();
+            }
+            NSLog(@"加入试听课程的结果 ---  %ld -->> %@ - 目录 %@",(long)enrollment.trial_seconds,enrollment.trial_expire_at,enrollment.course.video_outline);
+            
+        } else {
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        //        NSString *str = [[NSString alloc] initWithData:error.userInfo[@"com.alamofire.serialization.response.error.data"] encoding:NSUTF8StringEncoding];
+        //        NSLog(@"获取试听课程详情失败 %ld--->>> %@",(long)error.code,str);
+    }];
+    
+}
+
 #pragma mark - 登录相关操作
 - (void)beginLoginActionViewController:(UIViewController *)vc {
     

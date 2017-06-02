@@ -1172,7 +1172,7 @@
 /*剩余宝典*/
 "AVALIABLE_BAODIAN" = "Remaining coins";
 /*发送激活邮件成功*/
-"SEND_EMAIL_SUCCESS" = "Eaill sent successfully.";
+"SEND_EMAIL_SUCCESS" = "Actvation email has been sent.";
 /*未选择*/
 "UN_SELECTED" = "Unselected";
 /*应付金额不能小于或等于0*/
