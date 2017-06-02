@@ -43,7 +43,7 @@ private func setupTable(table: UITableView) {
         self.updateMargins() //needs to be done here because the table loads the data too soon otherwise and it's nil
         
         let rows:[RowType] = [("0.5x",  OEXVideoSpeed.Slow), ("1.0x", OEXVideoSpeed.Default), ("1.5x", OEXVideoSpeed.Fast), ("2.0x", OEXVideoSpeed.XFast)]
-        let speeds = OEXVideoPlayerSetting(title: "Video Speed", rows:rows , isSelected: { (row) -> Bool in
+        let speeds = OEXVideoPlayerSetting(title: Strings.videoSpeed, rows:rows , isSelected: { (row) -> Bool in
             var selected = false
             let savedSpeed = OEXInterface.getCCSelectedPlaybackSpeed()
             
@@ -66,7 +66,7 @@ private func setupTable(table: UITableView) {
                 rows.append(item)
             }
             
-            let cc = OEXVideoPlayerSetting(title: "Closed Captions", rows: rows, isSelected: { (row) -> Bool in
+            let cc = OEXVideoPlayerSetting(title: Strings.closedCaptions, rows: rows, isSelected: { (row) -> Bool in
                 var selected = false
                 if let selectedLanguage:String = OEXInterface.getCCSelectedLanguage() {
                     let lang = rows[row].value as! String

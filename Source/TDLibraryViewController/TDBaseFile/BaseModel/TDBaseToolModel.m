@@ -381,14 +381,14 @@
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
     [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *startDate =[dateFormat dateFromString:timeStr];
+    NSDate *endDate =[dateFormat dateFromString:timeStr];
     
     //统一用东八区时间
-    NSDate *localStartDate = [self getChinaTime:startDate];
+    NSDate *end = [self getChinaTime:endDate];
     NSDate *now = [self getChinaTime:[NSDate date]];
     
     NSTimeInterval nowInterval = [now timeIntervalSince1970]*1;//手机系统时间
-    NSTimeInterval endInterval = [localStartDate timeIntervalSince1970]*1;//课程结束时间
+    NSTimeInterval endInterval = [end timeIntervalSince1970]*1;//课程结束时间
     return endInterval - nowInterval;
 }
 
@@ -427,9 +427,9 @@
 /*
  计算试听剩余时间
  */
-- (int)getFreeCourseSecond {
+- (int)getFreeCourseSecond:(NSString *)keyStr {
     
-    NSString *dateStr = [[NSUserDefaults standardUserDefaults] valueForKey:@"Free_Course_Date_Str"];
+    NSString *dateStr = [[NSUserDefaults standardUserDefaults] valueForKey:keyStr];
     
     NSString *timeStr = [self changeStypeForTime:dateStr];
     int timeIntervale = [self intervalForTimeStr:timeStr];

@@ -570,7 +570,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
     
     func appEnterForeground() { //app进入前台，重新计算时间
         
-        self.timeNum = Int(self.baseTool.getFreeCourseSecond())
+        self.timeNum = Int(self.baseTool.getFreeCourseSecond("Free_Course_Date_Str"))
         
         let retquestModel = TDRequestBaseModel.init()
         retquestModel.getMyFreeCourseDetail(self.username, courseID: self.courseID)

@@ -508,6 +508,7 @@
         [self.view setUserInteractionEnabled:YES];
         
     } else {
+        [self.view endEditing:YES];
         [self.view setUserInteractionEnabled:NO];
         [self.activityIndicator startAnimating];
         [self.btn_Login setTitle:[Strings signInButtonTextOnSignIn] forState:UIControlStateNormal];
@@ -520,7 +521,9 @@
             if (data == nil && response == nil && error == nil) {
                 [self.view setUserInteractionEnabled:YES];
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                
                 [self.activityIndicator stopAnimating];
+                [self.btn_Login setTitle:[self signInButtonText] forState:UIControlStateNormal];
                 
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NEED_ACTIVITY", nil)
                                                                     message:NSLocalizedString(@"SEND_EMAIL_ACTIVITY", nil)

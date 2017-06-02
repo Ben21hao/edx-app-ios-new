@@ -113,7 +113,7 @@
 /*
  计算试听剩余时间
  */
-- (int)getFreeCourseSecond;
+- (int)getFreeCourseSecond:(NSString *)keyStr;
 
 /*
  获取字符串size

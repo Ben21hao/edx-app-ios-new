@@ -23,9 +23,11 @@
 @property (nonatomic,strong) NSTimer *timer;//定时器
 
 @property (nonatomic,strong) UIActivityIndicatorView *activityView;
-@property (nonatomic,strong) TDBaseToolModel *baseTool;
+@property (nonatomic,strong) UIActivityIndicatorView *codeActivitView;
 
 @property (nonatomic,strong) UIButton *leftButton;
+
+@property (nonatomic,strong) TDBaseToolModel *toolModel;
 
 @end
 
@@ -39,7 +41,10 @@
     [self configView];
     [self setViewConstraint];
     
+    self.toolModel = [[TDBaseToolModel alloc] init];
     [self cutDownTime];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnterForeground) name:@"App_EnterForeground_Get_Code" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -47,8 +52,6 @@
     
     self.navigationItem.title = NSLocalizedString(@"RESET_BY_PHONE", nil);
     self.view.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
-    
-    self.baseTool = [[TDBaseToolModel alloc] init];
     
 }
 
@@ -86,6 +89,8 @@
 #pragma mark  - 找回密码--发送验证码请求
 - (void)phoneForCheckNum {
     
+    [self handleResendButton:NO];
+    
     int num = (arc4random() % 1000000);
     NSString *randomNumber = [NSString stringWithFormat:@"%.6d", num];
     self.randomNumber = randomNumber;
@@ -104,12 +109,17 @@
         id code = dict[@"code"];
         
         if ([code integerValue] == 200) {
+            
+            [self cutDownTime];
+            
             [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"SENT", nil)
                                                                     message:NSLocalizedString(@"PASSWORD_RESET_AUTHENTICATION_SENT", nil)
                                                            onViewController:self.navigationController.view
                                                                  shouldHide:YES];
             
         }else if ([code intValue] == 403){//手机没注册
+            [self handleResendButton:YES];
+            
             [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:@""
                                                                     message:NSLocalizedString(@"PHONE_NUMBER_NOT_REGISTER", nil)
                                                            onViewController:self.navigationController.view
@@ -117,6 +127,7 @@
             
             
         } else {
+            [self handleResendButton:YES];
             [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"RESET_FAILED", nil)
                                                                     message:NSLocalizedString(@"RESET_FAILED", nil)
                                                            onViewController:self.navigationController.view
@@ -124,16 +135,34 @@
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%ld",(long)error.code);
+        
+        [self handleResendButton:YES];
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
+        NSLog(@"-------->>> %ld",(long)error.code);
     }];
 }
 
+- (void)handleResendButton:(BOOL)isEnable {
+    
+    isEnable ? [self.codeActivitView stopAnimating] : [self.codeActivitView startAnimating];
+    self.resendButton.userInteractionEnabled = isEnable;
+    [self.resendButton setTitle:isEnable ? NSLocalizedString(@"RESEND", nil) : @"" forState:UIControlStateNormal];
+}
+
+- (void)appEnterForeground {
+    self.timeNum = [self.toolModel getFreeCourseSecond:@"Get_Code_Date_Str"];
+}
 
 #pragma mark -- 倒计时
 - (void)cutDownTime {
     
     self.resendButton.userInteractionEnabled = NO;
+    
     self.timeNum = 60;
+    
+    NSString *timeStr = [self.toolModel addSecondsForNow:[NSNumber numberWithInteger:60]];
+    [[NSUserDefaults standardUserDefaults] setValue:timeStr forKey:@"Get_Code_Date_Str"]; //结束时间 = 当前时间 + 剩余秒数
+    
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeChange) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
@@ -142,11 +171,13 @@
     
     self.resendButton.userInteractionEnabled = NO;
     self.timeNum -= 1;
+    
+    [self.codeActivitView stopAnimating];
     [self.resendButton setTitle:[NSString stringWithFormat:@"%d%@",self.timeNum,NSLocalizedString(@"SECOND", nil)] forState:UIControlStateNormal];
+    
     if (self.timeNum <= 0) {
         [self.timer invalidate];
-        self.resendButton.userInteractionEnabled = YES;
-        [self.resendButton setTitle:NSLocalizedString(@"RESEND", nil) forState:UIControlStateNormal];
+        [self handleResendButton:YES];
     }
 }
 
@@ -155,7 +186,7 @@
     
     [self.codeField resignFirstResponder];
     
-    if (![self.baseTool networkingState]) {
+    if (![self.toolModel networkingState]) {
         [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:[Strings networkNotAvailableTitle]
                                                                 message:[Strings networkNotAvailableMessageTrouble]
                                                        onViewController:self.navigationController.view
@@ -182,7 +213,7 @@
 - (void)resendButtonAction:(UIButton *)sender {
     [self.codeField resignFirstResponder];
     
-    if (![self.baseTool networkingState]) {
+    if (![self.toolModel networkingState]) {
         [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:[Strings networkNotAvailableTitle]
                                                                 message:[Strings networkNotAvailableMessageTrouble]
                                                        onViewController:self.navigationController.view
@@ -191,7 +222,6 @@
     }
     
     [self phoneForCheckNum];
-    [self cutDownTime];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -219,7 +249,7 @@
     self.resendButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:15];
     self.resendButton.layer.masksToBounds = YES;
     self.resendButton.layer.cornerRadius = 4.0;
-    [self.resendButton setTitle:NSLocalizedString(@"RESEND", nil) forState:UIControlStateNormal];
+    [self.resendButton setTitle:NSLocalizedString(@"GET_VERIFICATION", nil) forState:UIControlStateNormal];
     [self.resendButton addTarget:self action:@selector(resendButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.resendButton];
     
@@ -234,6 +264,10 @@
     self.activityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [self.activityView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
     [self.view addSubview:self.activityView];
+    
+    self.codeActivitView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [self.codeActivitView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+    [self.view addSubview:self.codeActivitView];
 }
 
 - (void)setViewConstraint {
@@ -265,6 +299,11 @@
     [self.activityView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.nextButton.mas_centerY);
         make.right.mas_equalTo(self.nextButton.mas_right).offset(-8);
+    }];
+    
+    [self.codeActivitView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.resendButton.mas_centerY);
+        make.centerX.mas_equalTo(self.resendButton.mas_centerX);
     }];
 }
 

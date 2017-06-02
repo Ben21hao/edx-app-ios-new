@@ -737,6 +737,8 @@
 "SENT" = "已发送";
 /*密码重置验证码已发送*/
 "PASSWORD_RESET_AUTHENTICATION_SENT" = "密码重置验证码已发送";
+/*验证码已发送*/
+"AUTHENTICATION_CODE_SENT" = "验证码已发送";
 /*发送失败*/
 "SEND_FAILED" = "发送失败";
 /*该手机未注册*/
@@ -978,7 +980,7 @@
 /*即将开课*/
 "WILL_BEGIN_COURSE" = "即将开课";
 /*查看待支付*/
-"VIEW_PREPARE_ORDER" = "查看待支付";
+"VIEW_PREPARE_ORDER" = "进入待支付";
 /*兑换优惠券*/
 "EXCHANGE_COUPON" = "兑换优惠券";
 /*请输入兑换码*/

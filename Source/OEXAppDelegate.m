@@ -239,6 +239,8 @@
     if ([secondStr floatValue] > 0) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"App_EnterForeground_Free_Course" object:nil];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"App_EnterForeground_Get_Code" object:nil];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

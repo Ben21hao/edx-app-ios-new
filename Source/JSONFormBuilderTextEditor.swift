@@ -82,6 +82,9 @@ class JSONFormBuilderTextEditorViewController: TDSwiftBaseViewController {
             let alertView = UIAlertView.init(title: Strings.reminder, message: Strings.nicknameNull, delegate: self, cancelButtonTitle: Strings.ok)
             alertView.show()
             
+        } else if textView.text.characters.count == 1 {
+            self.view.makeToast( Strings.aleastTeoCharacter, duration: 1.08, position: CSToastPositionCenter)
+            
         } else if textView.text.characters.count <= 6 {
             let baseTool = TDBaseToolModel.init()
             baseTool.checkNickname(textView.text, view: self.view)

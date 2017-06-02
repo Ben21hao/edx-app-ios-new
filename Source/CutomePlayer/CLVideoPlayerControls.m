@@ -79,24 +79,24 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
 
 @property (nonatomic, strong) CLMoviePlayerControlsBar* topBar;
 @property (nonatomic, strong) CLMoviePlayerControlsBar* bottomBar;
-@property (nonatomic, strong) OEXCustomSlider* durationSlider;
-@property (nonatomic, strong) AccessibilityCLButton* playPauseButton;
+@property (nonatomic, strong) OEXCustomSlider* durationSlider;//进度条
+@property (nonatomic, strong) AccessibilityCLButton* playPauseButton;//播放暂停
 @property (nonatomic, strong) MPVolumeView* volumeView;
-@property (nonatomic, strong) CLButton* fullscreenButton;
+@property (nonatomic, strong) CLButton* fullscreenButton;//全屏
 @property (nonatomic, strong) UILabel* timeElapsedLabel;
 @property (nonatomic, strong) UILabel* timeRemainingLabel;
 @property (nonatomic, strong) UILabel* videoTitleLabel;
 @property (nonatomic, strong) CLButton* seekForwardButton;
-@property (nonatomic, strong) CLButton* rewindButton;
+@property (nonatomic, strong) CLButton* rewindButton;//后退
 
-@property (nonatomic, strong) CLButton* btnSettings;
+@property (nonatomic, strong) CLButton* btnSettings;//设置
 @property (nonatomic, strong) UIView* view_OptionsOverlay;
 @property (nonatomic, strong) UIView* view_OptionsInner;
 @property (nonatomic, strong) UITableView* tableSettings;
 @property (nonatomic, strong) CLButton* btnPrevious;
 @property (nonatomic, strong) CLButton* btnNext;
 @property (nonatomic, weak, nullable) OEXInterface* dataInterface;
-@property (strong, nonatomic) OEXVideoPlayerSettings* settings;
+@property (strong, nonatomic) OEXVideoPlayerSettings* settings;//
 
 @property(nonatomic, assign) BOOL seeking;
 @property (nonatomic, assign) BOOL hideNext;
@@ -153,6 +153,7 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
     UIViewController* controller = [UIApplication sharedApplication].keyWindow.rootViewController;
     [controller presentViewController:chooser animated:true completion:nil];
 
+    self.view_OptionsOverlay.hidden = YES;
     self.tableSettings.hidden = YES;
 }
 
@@ -543,7 +544,7 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
         self.topBar.hidden = YES;
     }
 
-    self.subtitleLabel.font = [[OEXStyles sharedStyles] sansSerifOfSize:fontSize];
+   self.subtitleLabel.font = [UIFont fontWithName:@"OpenSans" size:fontSize];
 
     // Label position
     [self setSubtitleLabelFrame];
@@ -725,7 +726,7 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
     _timeRemainingLabel.layer.shadowRadius = 1.f;
     _timeRemainingLabel.layer.shadowOffset = CGSizeMake(1.f, 1.f);
     _timeRemainingLabel.layer.shadowOpacity = 0.8f;
-    _timeRemainingLabel.font = [[OEXStyles sharedStyles] semiBoldSansSerifOfSize:12.f];
+    _timeRemainingLabel.font = [UIFont fontWithName:@"OpenSans-Semibold" size:12.f];
 
     self.btnPrevious = [[CLButton alloc] init];
     [self.btnPrevious setImage:[UIImage imageNamed:@"ic_previous.png"] forState:UIControlStateNormal];
@@ -773,6 +774,9 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
     self.view_OptionsOverlay.backgroundColor = [UIColor blackColor];
     self.view_OptionsOverlay.alpha = 0.5f;
     [self addSubview:self.view_OptionsOverlay];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideOptionsAndValues)];
+    [self.view_OptionsOverlay addGestureRecognizer:tap];
 
     self.view_OptionsInner = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     self.view_OptionsInner.backgroundColor = GREY_COLOR;
@@ -1675,16 +1679,16 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
     CGFloat sliderHeight = 34.f; //default height
     CGFloat labelWidth = 100.f;
     CGFloat paddingforFullscreen = 10.f;
-    CGFloat rewindHeightWidth = 25.f;
-    CGFloat settingsbtnSize = 24.f;
+    CGFloat rewindHeightWidth = 21.f;
+    CGFloat settingsbtnSize = 21.f;
     CGFloat tableOptionWidth = 120.f;
     CGFloat tableOptionHeight = 88.f;
     CGFloat viewInnerWidth = 200.f;
     CGFloat viewInnerHeight = 240.f;
     CGFloat PrevNextButtonSize = 30.f;
     CGFloat LMSButtonSize = 15.f;
-
-    CGFloat fullscreenBtnSize = 20.f;
+    
+    CGFloat fullscreenBtnSize = 21.f;
 
     if(self.style == CLVideoPlayerControlsStyleFullscreen || (self.style == CLVideoPlayerControlsStyleDefault && self.moviePlayer.isFullscreen)) {
         //top bar
@@ -1698,8 +1702,8 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
         // RAHUL
         // For adjusting the option button
         // component position for CC , Next/Prev and Playbackspeed.
-
-        self.btnSettings.frame = CGRectMake(self.fullscreenButton.frame.origin.x - settingsbtnSize - 15, self.barHeight / 2 - settingsbtnSize / 2, settingsbtnSize, settingsbtnSize);
+        
+        self.btnSettings.frame = CGRectMake(self.fullscreenButton.frame.origin.x - settingsbtnSize - 15, self.barHeight / 2 - settingsbtnSize / 2, settingsbtnSize, settingsbtnSize + 3);
 
         self.view_OptionsOverlay.frame = self.frame;
 
@@ -1730,11 +1734,11 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
 
         //right side of bottom bar
 
-        self.fullscreenButton.frame = CGRectMake(self.bottomBar.frame.size.width - paddingforFullscreen - fullscreenBtnSize, self.barHeight / 2 - fullscreenBtnSize / 2, fullscreenBtnSize, fullscreenBtnSize);
+        self.fullscreenButton.frame = CGRectMake(self.bottomBar.frame.size.width - paddingforFullscreen - fullscreenBtnSize, self.barHeight / 2 - fullscreenBtnSize / 2, fullscreenBtnSize, fullscreenBtnSize + 3);
 
         // RAHUL
         // For adjusting the option button
-        self.btnSettings.frame = CGRectMake(self.fullscreenButton.frame.origin.x - settingsbtnSize - 15, self.barHeight / 2 - settingsbtnSize / 2, settingsbtnSize, settingsbtnSize);
+        self.btnSettings.frame = CGRectMake(self.fullscreenButton.frame.origin.x - settingsbtnSize - 15, self.barHeight / 2 - settingsbtnSize / 2, settingsbtnSize, settingsbtnSize + 3);
 
         self.view_OptionsOverlay.frame = self.frame;
 
@@ -1742,9 +1746,9 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
 
         self.timeRemainingLabel.frame = CGRectMake(self.btnSettings.frame.origin.x - labelWidth, 0, labelWidth, self.barHeight);
 
-        CGFloat playWidth = 35.f;
-        CGFloat playHeight = 35.f;
-        self.playPauseButton.frame = CGRectMake((self.frame.size.width / 2) - (playWidth / 2), (self.frame.size.height / 2) - (playHeight / 2), playWidth, playHeight);
+        CGFloat playWidth = 39.f;
+        CGFloat playHeight = 39.f;
+        self.playPauseButton.frame = CGRectMake((self.frame.size.width / 2) - (playWidth / 2) , (self.frame.size.height / 2) - (playHeight / 2), playWidth, playHeight);
 
         [_fullscreenButton setImage:[UIImage ExpandIcon] forState:UIControlStateNormal];
         _fullscreenButton.accessibilityLabel = [Strings accessibilityFullscreen];
@@ -1752,7 +1756,7 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
         [self didHidePrevNext];
     }
 
-    self.rewindButton.frame = CGRectMake(paddingFromBezel, self.barHeight / 2 - rewindHeightWidth / 2 + 1.f, rewindHeightWidth, rewindHeightWidth);
+    self.rewindButton.frame = CGRectMake(paddingFromBezel, self.barHeight / 2 - rewindHeightWidth / 2 + 1.f, rewindHeightWidth, rewindHeightWidth + 3);
 
     //duration slider
     CGFloat timeRemainingX = self.timeRemainingLabel.frame.origin.x;

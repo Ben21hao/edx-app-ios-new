@@ -23,7 +23,9 @@
 @property (nonatomic,strong) NSTimer *timer;//定时器
 
 @property (nonatomic,strong) UIActivityIndicatorView *activityView;
-@property (nonatomic,strong) TDBaseToolModel *baseTool;
+@property (nonatomic,strong) UIActivityIndicatorView *codeActivitView;
+
+@property (nonatomic,strong) TDBaseToolModel *toolModel;
 
 @end
 
@@ -35,6 +37,11 @@
     [self configView];
     [self setViewConstraint];
     
+    self.toolModel = [[TDBaseToolModel alloc] init];
+    
+    [self cutDownTime];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appEnterForeground) name:@"App_EnterForeground_Get_Code" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -42,9 +49,6 @@
     
     self.titleViewLabel.text = NSLocalizedString(@"PHONE_REGISTER", nil);
     self.view.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
-    
-    self.baseTool = [[TDBaseToolModel alloc] init];
-    [self cutDownTime];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -57,6 +61,8 @@
 
 #pragma mark -- 获取验证码
 - (void)getVerificationCode {
+    
+    [self handleResendButton:NO];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
@@ -77,28 +83,45 @@
         id code = dict[@"code"];
         
         if ([code intValue] == 403) {
+            [self handleResendButton:YES];
             
-            [self.timer invalidate];
             [self showPhoneNumberUsed];
             
         } else if([code intValue] == 200){
-            //            [self.view makeToast:@"验证短信已成功发送，请查收" duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"AUTHENTICATION_CODE_SENT", nil) duration:1.08 position:CSToastPositionCenter];
+            
+            [self cutDownTime];
             
         } else {
-            [self.timer invalidate];
-            NSLog(@"验证登录密码 -- %@",dict[@"msg"]);
+            [self handleResendButton:YES];
+            
+            [self.view makeToast:NSLocalizedString(@"FAILED_GET_VERIFICATION", nil) duration:1.08 position:CSToastPositionCenter];
+            
+            NSLog(@"验证登录密码失败 -- %@",code);
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.timer invalidate];
+        
+        [self handleResendButton:YES];
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"%ld",(long)error.code);
     }];
+}
+
+- (void)handleResendButton:(BOOL)isEnable {
+    
+    isEnable ? [self.codeActivitView stopAnimating] : [self.codeActivitView startAnimating];
+    self.resendButton.userInteractionEnabled = isEnable;
+    [self.resendButton setTitle:isEnable ? NSLocalizedString(@"RESEND", nil) : @"" forState:UIControlStateNormal];
+}
+
+- (void)appEnterForeground {
+    self.timeNum = [self.toolModel getFreeCourseSecond:@"Get_Code_Date_Str"];
 }
 
 #pragma mark - 已注册过
 - (void)showPhoneNumberUsed {
     
-    self.resendButton.userInteractionEnabled = YES;
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
                                                         message:NSLocalizedString(@"PHONE_NUMBER_HAS_BEEN_REGISTERED", nil)
                                                        delegate:self
@@ -116,6 +139,10 @@
     
     self.resendButton.userInteractionEnabled = NO;
     self.timeNum = 60;
+    
+    NSString *timeStr = [self.toolModel addSecondsForNow:[NSNumber numberWithInteger:60]];
+    [[NSUserDefaults standardUserDefaults] setValue:timeStr forKey:@"Get_Code_Date_Str"]; //结束时间 = 当前时间 + 剩余秒数
+    
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timeChange) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 }
@@ -124,17 +151,19 @@
     
     self.resendButton.userInteractionEnabled = NO;
     self.timeNum -= 1;
+    
+    [self.codeActivitView stopAnimating];
     [self.resendButton setTitle:[NSString stringWithFormat:@"%d%@",self.timeNum,NSLocalizedString(@"SECOND", nil)] forState:UIControlStateNormal];
+    
     if (self.timeNum <= 0) {
         [self.timer invalidate];
-        self.resendButton.userInteractionEnabled = YES;
-        [self.resendButton setTitle:NSLocalizedString(@"RESEND", nil) forState:UIControlStateNormal];
+        [self handleResendButton:YES];
     }
 }
 
 #pragma mark - 下一步
 - (void)nextButtonAction:(UIButton *)sender {
-    if (![self.baseTool networkingState]) {
+    if (![self.toolModel networkingState]) {
         return;
     }
     
@@ -157,7 +186,7 @@
 #pragma mark - 重新发送
 - (void)resendButtonAction:(UIButton *)sender {
     
-    if (![self.baseTool networkingState]) {
+    if (![self.toolModel networkingState]) {
         [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:[Strings networkNotAvailableTitle]
                                                                 message:[Strings networkNotAvailableMessageTrouble]
                                                        onViewController:self.navigationController.view
@@ -166,7 +195,6 @@
     }
     
     [self getVerificationCode];
-    [self cutDownTime];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -211,6 +239,10 @@
     self.activityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [self.activityView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
     [self.view addSubview:self.activityView];
+    
+    self.codeActivitView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [self.codeActivitView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+    [self.view addSubview:self.codeActivitView];
 }
 
 - (void)setViewConstraint {
@@ -242,6 +274,12 @@
     [self.activityView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.nextButton.mas_centerY);
         make.right.mas_equalTo(self.nextButton.mas_right).offset(-8);
+    }];
+    
+    
+    [self.codeActivitView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.resendButton.mas_centerY);
+        make.centerX.mas_equalTo(self.resendButton.mas_centerX);
     }];
 }
 

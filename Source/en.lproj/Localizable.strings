@@ -734,6 +734,8 @@
 "SENT" = "Already sent";
 /*密码重置验证码已发送*/
 "PASSWORD_RESET_AUTHENTICATION_SENT" = "Password reset authentication code has been sent.";
+/*验证码已发送*/
+"AUTHENTICATION_CODE_SENT" = "Authentication code has been sent.";
 /*发送失败*/
 "SEND_FAILED" = "Send failed";
 /*该手机未注册*/
@@ -974,7 +976,7 @@
 "IS_OVERDUE_COUPON" = "Expired";
 /*即将开课*/
 "WILL_BEGIN_COURSE" = "Soon";
-/*查看待支付*/
+/*进入待支付*/
 "VIEW_PREPARE_ORDER" = "Finish payment";
 /*兑换优惠券*/
 "EXCHANGE_COUPON" = "Redeem Coupons";
