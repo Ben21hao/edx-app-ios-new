@@ -510,7 +510,7 @@
         [self.view setUserInteractionEnabled:YES];
         
     }
-    else if (![baseTool isValidateMobile:self.tf_EmailID.text] && ![baseTool isValidateEmail:self.tf_EmailID.text]) {
+    else if (![baseTool isValidateMobile:self.tf_EmailID.text] && ![baseTool isValidateEmail:self.tf_EmailID.text]) {//不是手机号码和邮箱
         [[UIAlertController alloc] showAlertWithTitle:[Strings floatingErrorLoginTitle]
                                               message:[Strings enterRightPhoneOrEmail]
                                      onViewController:self.navigationController
@@ -548,26 +548,8 @@
 
         [OEXAuthentication requestTokenWithUser:_signInID password:_signInPassword completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
             
-//            NSHTTPURLResponse* httpResp = (NSHTTPURLResponse*) response;
-//            NSLog(@"------>> %ld",(long)httpResp.statusCode);
-            
-            if (data == nil && response == nil && error == nil) {//未激活
-                [self.view setUserInteractionEnabled:YES];
-                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                
-                [self.activityIndicator stopAnimating];
-                [self.btn_Login setTitle:[self signInButtonText] forState:UIControlStateNormal];
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NEED_ACTIVITY", nil)
-                                                                    message:NSLocalizedString(@"SEND_EMAIL_ACTIVITY", nil)
-                                                                   delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                                          otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
-                alertView.tag = 2001;
-                [alertView show];
-            } else {
-                [self handleLoginResponseWith:data response:response error:error];
-            }
+            [self handleLoginResponseWith:data response:response error:error];
+
         }];
     }
 }
@@ -580,7 +562,7 @@
 
     if(!error) {
         NSHTTPURLResponse* httpResp = (NSHTTPURLResponse*) response;
-        NSLog(@"------>> %ld",(long)httpResp.statusCode);
+        NSLog(@"处理------>> %ld",(long)httpResp.statusCode);
         
         if(httpResp.statusCode == 200) {
             [self loginSuccessful];
@@ -590,6 +572,20 @@
         }
         else if(httpResp.statusCode >= 400 && httpResp.statusCode <= 500) {
             NSString* errorStr = [Strings invalidUsernamePassword];
+            
+            NSString *code = [[NSUserDefaults standardUserDefaults] valueForKey:@"User_Login_Failed_Code"];
+            if ([code intValue] == 402) {
+                [self showSentEailAlert];
+                return;
+            }
+            
+            if ([code intValue] == 400) {
+                errorStr = [Strings passwordMiss];
+                
+            } else if ([code intValue] == 404){
+                errorStr = [Strings acountNoExist];
+            }
+            
             [self loginFailedWithErrorMessage:errorStr title:nil];
         }
         else {
@@ -602,6 +598,21 @@
         [self loginHandleLoginError:error];
     }
     self.authProvider = nil;
+}
+
+- (void)showSentEailAlert {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
+    [self.activityIndicator stopAnimating];
+    [self.btn_Login setTitle:[self signInButtonText] forState:UIControlStateNormal];
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NEED_ACTIVITY", nil)
+                                                        message:NSLocalizedString(@"SEND_EMAIL_ACTIVITY", nil)
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                              otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
+    alertView.tag = 2001;
+    [alertView show];
 }
 
 - (void)externalLoginWithProvider:(id <OEXExternalAuthProvider>)provider {

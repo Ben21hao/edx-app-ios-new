@@ -69,28 +69,22 @@ OEXNSDataTaskRequestHandler OEXWrapURLCompletion(OEXURLRequestHandler completion
     [[session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         
             NSHTTPURLResponse* httpResp = (NSHTTPURLResponse*) response;
-            if(httpResp.statusCode == OEXHTTPStatusCode200OK) {
-                
-                NSError* error;
-                NSDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-                OEXAccessToken* token = [[OEXAccessToken alloc] initWithTokenDetails:dictionary];
-                
-                NSInteger code = [dictionary[@"code"] integerValue];
-                
-                NSLog(@"url -->> %@ ,--->>%ld,  dictionary-->> %@",url,(long)code,dictionary);
-                
-                if (code == 402) { //账号未激活
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completionBlock(nil, nil, nil);//暂时这样处理
-                    });
-                    
-                } else {
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [OEXAuthentication handleSuccessfulLoginWithToken:token completionHandler:completionBlock];
-                    });
-                }
-            }
+        if(httpResp.statusCode == OEXHTTPStatusCode200OK) {
+            
+            NSError* error;
+            NSDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            OEXAccessToken* token = [[OEXAccessToken alloc] initWithTokenDetails:dictionary];
+            
+            //                NSLog(@"url -- %@ , dictionary--%@",url,dictionary);
+            id code = dictionary[@"code"];
+            NSLog(@"接口--------->>>%@",code);
+            
+            [[NSUserDefaults standardUserDefaults] setValue:code forKey:@"User_Login_Failed_Code"];//400 密码错误， 402 账号未激活， 404 账号不存在
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [OEXAuthentication handleSuccessfulLoginWithToken:token completionHandler:completionBlock];
+            });
+        }
             else {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionBlock(data, httpResp, error);
@@ -217,7 +211,7 @@ OEXNSDataTaskRequestHandler OEXWrapURLCompletion(OEXURLRequestHandler completion
         if(httpResp.statusCode == 200) {
             NSDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:userdata options:kNilOptions error:nil];
             OEXUserDetails* userDetails = [[OEXUserDetails alloc] initWithUserDictionary:dictionary];
-            if(token != nil && userDetails != nil) {
+            if(token != nil && userDetails != nil) {//保存登录信息
                 [[OEXSession sharedSession] saveAccessToken:token userDetails:userDetails];
             }
             else {

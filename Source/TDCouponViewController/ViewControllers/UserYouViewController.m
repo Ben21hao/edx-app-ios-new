@@ -254,7 +254,7 @@
 //0.断网
 - (void)disconnect {
     [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"EXCHANGE_FAIL", nil)
-                                                            message:NSLocalizedString(@"网络链接出错", nil)
+                                                            message:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil)
                                                    onViewController:self.navigationController.view
                                                          shouldHide:YES];
 }
@@ -319,7 +319,7 @@
                                                          shouldHide:YES];
 }
 
-//8.优惠券
+//8.企业优惠券兑换失败
 - (void)failExchangeCompanyCode{
     [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"EXCHANGE_FAIL", nil)
                                                             message:NSLocalizedString(@"COMPANY_COUPON_FAIL", nil)
@@ -369,9 +369,13 @@
             
         } else if (codeValue == 404) { //7.优惠券不存在!
             [self notExist];
+            
+        } else {
+            [self.view makeToast:NSLocalizedString(@"EXCHANGE_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"error--exchange--%@",error);
     }];
 }

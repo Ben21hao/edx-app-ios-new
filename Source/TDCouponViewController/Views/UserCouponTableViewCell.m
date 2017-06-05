@@ -8,6 +8,7 @@
 
 #import "UserCouponTableViewCell.h"
 #import "UserCouponItem.h"
+#import "edX-Swift.h"
 
 @interface UserCouponTableViewCell ()
 
@@ -56,21 +57,33 @@
     
     TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
     NSString *titleStr;
+    NSString *subTitleStr;
+    
     if ([UserCouponItem.coupon_type isEqualToString:@"满减券"]) {
         float money = [_UserCouponItem.cutdown_price floatValue];
         titleStr = [NSString stringWithFormat:@"￥%.2f",money];
+        subTitleStr = [Strings couponDeduction];
+        
     } else if ([UserCouponItem.coupon_type isEqualToString:@"折扣券"]) {
+        subTitleStr = [Strings couponDiscount];
+        
         float rate = [_UserCouponItem.discount_rate floatValue] * 10.0;
         titleStr = [NSString stringWithFormat:@"%.2lf折",rate];
+        
+        if (![subTitleStr isEqualToString:@"折扣券"]) {
+            titleStr = [NSString stringWithFormat:@"%.0f%% OFF",(1 - [_UserCouponItem.discount_rate floatValue]) * 100];
+        }
+        
     } else {
         float money = [_UserCouponItem.cutdown_price floatValue];
-        titleStr = [NSString stringWithFormat:@"%.2lf元报课",money];
+        titleStr = [Strings couponForCourseWithCount:[NSString stringWithFormat:@"%.2lf",money]];
+        subTitleStr = [Strings couponEnterprise];
     }
     
-//    _firstL.text = [NSString stringWithFormat:@"%@",titleStr];
     _firstL.attributedText = [baseTool setDetailString:titleStr withFont:32 withColorStr:@"#ffffff"];
     _secondL.text = _UserCouponItem.coupon_name;
-    _thirdL.text = _UserCouponItem.coupon_type;
+    _thirdL.text = subTitleStr;
+    
     if (self.UserCouponItem.remark.length > 0) {
         
         if (self.UserCouponItem.status == 1) {
@@ -86,7 +99,7 @@
     self.detailButton.selected = self.UserCouponItem.isSelected;
     
     NSRange range = [self.UserCouponItem.coupon_begin_at rangeOfString:@"T"];
-    _fourthL.text = [NSString stringWithFormat:@"有效期：%@至%@",[_UserCouponItem.coupon_begin_at substringToIndex:range.location],[_UserCouponItem.coupon_end_at substringToIndex:range.location]];
+    self.fourthL.text = [Strings couponPeriodWithStartdate:[_UserCouponItem.coupon_begin_at substringToIndex:range.location] enddate:[_UserCouponItem.coupon_end_at substringToIndex:range.location]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

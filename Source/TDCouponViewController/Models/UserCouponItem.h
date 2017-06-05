@@ -22,5 +22,6 @@
 @property (nonatomic,assign) NSInteger status;//
 @property (nonatomic,strong) NSString *remark;//备注
 @property (nonatomic,assign) BOOL isSelected;//是否点击右上角的问号
+@property (nonatomic,assign) NSInteger type;//1 折扣券，2 满满券，3 企业优惠券
 
 @end

@@ -491,7 +491,7 @@
 /* 'Current Location' label on top row of edit country in user's profile */
 "PROFILE.CURRENT_LOCATION_LABEL" = "Current location:";
 /* Profile edit view title */
-"PROFILE.EDIT_TITLE" = "Edit profile";
+"PROFILE.EDIT_TITLE" = "Edit Profile";
 /* Accessibility label for edit profile button */
 "PROFILE.EDIT_ACCESSIBILITY" = "Edit profile";
 /* Accessibility hint for country field in user profile */
@@ -1568,3 +1568,18 @@
 "LOGIN_OVER_DUE" = "Your login has expired, please login again.";
 /*请先登录再加入课程Log in before you enroll in this course.*/
 "LOGIN_BEFORE_ENROLL" = "Log in before you enroll in this course.";
+
+/*1.00元报课*/
+"COUPON_FOR_COURSE" = "￥{count} For 1 Course";
+/*企业优惠券*/
+"COUPON_ENTERPRISE" = "Enterprise Coupon";
+/*折扣券*/
+"COUPON_DISCOUNT" = "Discount";
+/*满减券*/
+"COUPON_DEDUCTION" = "Deduction";
+/*有效期*/
+"COUPON_PERIOD" = "Period of Validity: {startDate} to {endDate}";
+/*账号不存在*/
+"ACOUNT_NO_EXIST" = "Account does not exis.";
+/*密码错误*/
+"PASSWORD_MISS" = "Password incorrect.";
