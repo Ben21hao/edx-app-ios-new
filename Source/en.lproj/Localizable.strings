@@ -1121,13 +1121,13 @@
 /*请输入小于30位的密码*/
 "LESS_PASSWORD" = "Password should be no more than 30 characters";
 /*使用邮箱或手机号码注册*/
-"PHONE_OR_EMAIL_REGISTER" = "Sign up with email or mobile";
+"PHONE_OR_EMAIL_REGISTER" = "Sign up with mobile or email";
 /*请输入邮箱或手机号码。并按操作提示完成密码重置。*/
 "PHONE_OR_EMAIL_RESET_PASSWORD" = "Please enter your email address or mobile number, and follow the instruction to reset password.";
 /*服务条款*/
 "SERVICE_ITEM" = "Stipulation";
 /*邮箱或手机号码*/
-"PHONE_OR_EMAIL" = "Email or mobile";
+"PHONE_OR_EMAIL" = "Mobile or email";
 /*我们给您发送了一封重置密码邮件，请进入邮箱查收并按提示设置新密码。*/
 "HAD_SEND_EMAIL" = "An activation mail has been sent. Please log in {count} and follow the instruction to activate.";
 /*已经激活？马上登录*/

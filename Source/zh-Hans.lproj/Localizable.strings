@@ -339,7 +339,7 @@
 /* Prompt indicating user needs to enter an email address */
 "ENTER_EMAIL"="请输入手机号码或邮箱地址后重试。";
 /* Prompt indicating user needs to enter a password */
-"ENTER_PASSWORD"="请输入密码后重试。";
+"ENTER_PASSWORD"="请输入密码后重试";
 /* Text used when the post is visible to everyone */
 "EVERYONE"="everyone";
 /* Message when user attempts to register an account using an external service like Facebook or Google, but they already have an account linked to that service */
@@ -876,7 +876,7 @@
 /*手机格式错误*/
 "PHONE_FORMAT_ERROR" = "手机号码格式错误";
 /*手机绑定*/
-"PHONE_DINDING" = "绑定手机";
+"PHONE_DINDING" = "绑定手机号码";
 /*手机号码已存在*/
 "PHONE_IS_REGISTERED" = "手机号码已存在";
 /*绑定成功*/

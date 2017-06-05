@@ -54,6 +54,7 @@ OEXNSDataTaskRequestHandler OEXWrapURLCompletion(OEXURLRequestHandler completion
 
 //This method gets called when user try to login with username password
 + (void)requestTokenWithUser:(NSString* )username password:(NSString* )password completionHandler:(OEXURLRequestHandler)completionBlock {
+    
     NSString* body = [self plainTextAuthorizationHeaderForUserName:username password:password];
     
     NSURLSessionConfiguration* sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -74,8 +75,10 @@ OEXNSDataTaskRequestHandler OEXWrapURLCompletion(OEXURLRequestHandler completion
                 NSDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
                 OEXAccessToken* token = [[OEXAccessToken alloc] initWithTokenDetails:dictionary];
                 
-                NSLog(@"url -- %@ , dictionary--%@",url,dictionary);
                 NSInteger code = [dictionary[@"code"] integerValue];
+                
+                NSLog(@"url -->> %@ ,--->>%ld,  dictionary-->> %@",url,(long)code,dictionary);
+                
                 if (code == 402) { //账号未激活
                     dispatch_async(dispatch_get_main_queue(), ^{
                         completionBlock(nil, nil, nil);//暂时这样处理

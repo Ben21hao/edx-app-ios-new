@@ -23,7 +23,7 @@ class RevealViewController: SWRevealViewController, SWRevealViewControllerDelega
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.rearViewRevealWidth = TDScreenWidth * 5/6
-        self.rightViewRevealWidth = self.rearViewRevealWidth
+         self.rightViewRevealWidth = self.rearViewRevealWidth
     }
     
     func loadStoryboardControllers() {
