@@ -57,10 +57,10 @@ class PostsViewController: TDSwiftBaseViewController, UITableViewDataSource, UIT
         
         var noResultsMessage : String {
             switch self {
-            case Topic(_): return Strings.noResultsFound
-            case AllPosts: return Strings.noCourseResults
-            case Following: return Strings.noFollowingResults
-            case let .Search(string) : return Strings.emptyResultset(queryString: string)
+            case Topic(_): return Strings.noResultsFound //此讨论内容暂未有帖子。
+            case AllPosts: return Strings.noCourseResults //课程讨论暂未有内容。
+            case Following: return Strings.noFollowingResults //您没有关注任何帖子。
+            case let .Search(string) : return Strings.emptyResultset(queryString: string) //未找到{}的结果
             }
         }
         
@@ -79,19 +79,20 @@ class PostsViewController: TDSwiftBaseViewController, UITableViewDataSource, UIT
     
     private lazy var tableView = UITableView(frame: CGRectZero, style: .Plain)
 
-    private let viewSeparator = UIView()
-    private let loadController = LoadStateViewController()
-    private let refreshController = PullRefreshController()
-    private let insetsController = ContentInsetsController()
+    private let viewSeparator = UIView() //分隔线
+    private let loadController = LoadStateViewController() //加载页面
+    private let refreshController = PullRefreshController() //下拉刷新转圈页
+    private let insetsController = ContentInsetsController() //内容页
     
-    private let refineLabel = UILabel()
-    private let headerButtonHolderView = UIView()
-    private let headerView = UIView()
-    private var searchBar : UISearchBar?
-    private let filterButton = PressableCustomButton()
-    private let sortButton = PressableCustomButton()
-    private let newPostButton = UIButton(type: .System)
-    private let courseID: String
+    private let refineLabel = UILabel() //筛选
+    private let headerButtonHolderView = UIView()//筛选按钮页面
+    private let headerView = UIView() //搜索框页面
+    private var searchBar = UISearchBar() //搜索框
+    private let filterButton = PressableCustomButton() //所有讨论
+    private let sortButton = PressableCustomButton() //近期活动
+    private let newPostButton = UIButton(type: .System) //创建新帖
+    private let contentView = UIView() //内容视图
+    
     private var isDiscussionBlackedOut: Bool = true {
         didSet {
             updateNewPostButtonStyle()
@@ -99,8 +100,7 @@ class PostsViewController: TDSwiftBaseViewController, UITableViewDataSource, UIT
     }
     private var stream: Stream<(DiscussionInfo)>?
     
-    private let contentView = UIView()
-    
+    private let courseID: String
     private var context : Context?
     private let topicID: String?
     
@@ -111,6 +111,7 @@ class PostsViewController: TDSwiftBaseViewController, UITableViewDataSource, UIT
     var searchBarDelegate : DiscussionSearchBarDelegate?
     
     private var queryString : String?
+    
     private var refineTextStyle : OEXTextStyle {
         return OEXTextStyle(weight: .Normal, size: .Small, color: OEXStyles.sharedStyles().neutralDark())
     }
@@ -169,15 +170,17 @@ class PostsViewController: TDSwiftBaseViewController, UITableViewDataSource, UIT
             tableView.cellLayoutMarginsFollowReadableWidth = false
         }
         
-        filterButton.oex_addAction(
+        filterButton.oex_addAction(//所有讨论
             {[weak self] _ in
                 self?.showFilterPicker()
             }, forEvents: .TouchUpInside)
-        sortButton.oex_addAction(
+        
+        sortButton.oex_addAction(//近期活动
             {[weak self] _ in
                 self?.showSortPicker()
             }, forEvents: .TouchUpInside)
-        newPostButton.oex_addAction(
+        
+        newPostButton.oex_addAction( //创建新帖
             {[weak self] _ in
                 if let owner = self {
                     owner.environment.router?.showDiscussionNewPostFromController(owner, courseID: owner.courseID, selectedTopic : owner.context?.selectedTopic)
@@ -185,26 +188,27 @@ class PostsViewController: TDSwiftBaseViewController, UITableViewDataSource, UIT
             }, forEvents: .TouchUpInside)
 
         loadController.setupInController(self, contentView: contentView)
-        insetsController.setupInController(self, scrollView: tableView)
-        refreshController.setupInScrollView(tableView)
-        insetsController.addSource(refreshController)
+        
         refreshController.delegate = self
+        refreshController.setupInScrollView(tableView)
+        
+        insetsController.addSource(refreshController)
+        insetsController.setupInController(self, scrollView: tableView)
         
         //set visibility of header view
         updateHeaderViewVisibility()
-        
         loadContent()
         
         setAccessibility()
     }
     
     private func setAccessibility() {
-        if let searchBar = searchBar {
+//        if let searchBar = searchBar {
             view.accessibilityElements = [searchBar, tableView]
-        }
-        else {
-            view.accessibilityElements = [refineLabel, filterButton, sortButton, tableView, newPostButton]
-        }
+//        }
+//        else {
+//            view.accessibilityElements = [refineLabel, filterButton, sortButton, tableView, newPostButton]
+//        }
         
         updateAccessibility()
     }
@@ -222,23 +226,25 @@ class PostsViewController: TDSwiftBaseViewController, UITableViewDataSource, UIT
             return
         }
         
-        searchBar = UISearchBar()
-        searchBar?.applyStandardStyles(withPlaceholder: Strings.searchAllPosts)
-        searchBar?.text = context.queryString
+//        searchBar = UISearchBar()
+        searchBar.applyStandardStyles(withPlaceholder: Strings.searchAllPosts)
+        searchBar.text = context.queryString
+        
         searchBarDelegate = DiscussionSearchBarDelegate() { [weak self] text in
             self?.context = Context.Search(text)
             self?.loadController.state = .Initial
             self?.searchThreads(text)
-            self?.searchBar?.delegate = self?.searchBarDelegate
+            self?.searchBar.delegate = self?.searchBarDelegate
         }
+        searchBar.delegate = self.searchBarDelegate
     }
 
     private func addSubviews() {
         view.addSubview(contentView)
         view.addSubview(headerView)
-        if let searchBar = searchBar {
+//        if let searchBar = searchBar {
             view.addSubview(searchBar)
-        }
+//        }
         contentView.addSubview(tableView)
         headerView.addSubview(refineLabel)
         headerView.addSubview(headerButtonHolderView)
@@ -266,7 +272,7 @@ class PostsViewController: TDSwiftBaseViewController, UITableViewDataSource, UIT
             make.height.equalTo(context?.allowsPosting ?? false ? 40 : 0)
         }
         
-        searchBar?.snp_remakeConstraints(closure: { (make) -> Void in
+        searchBar.snp_remakeConstraints(closure: { (make) -> Void in
             make.top.equalTo(view)
             make.trailing.equalTo(contentView)
             make.leading.equalTo(contentView)

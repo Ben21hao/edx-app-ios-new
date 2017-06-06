@@ -43,8 +43,8 @@
 #define TableViewBGColor [UIColor colorWithRed:245/255.0 green:247/255.0 blue:250/255.0 alpha:1.0]
 
 //#define ELITEU_URL @"http://192.168.0.101"
-//#define ELITEU_URL @"http://www.eliteu.cn"
 //#define ELITEU_URL @"http://beta.eliteu.cn"
+//#define ELITEU_URL @"http://www.eliteu.cn"
 
 #define ELITEU_URL [OEXConfig sharedConfig].apiHostURL//统一在配置文件拿域名，不用分配在
 

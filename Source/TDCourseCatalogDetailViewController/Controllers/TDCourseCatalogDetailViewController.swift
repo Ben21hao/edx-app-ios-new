@@ -128,11 +128,11 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
                         introduceStr = self.courseModel.short_description!
                     }
                 }
-                let size = getSizeForString(introduceStr)
-                return size.height + 48
+//                let size = getSizeForString(introduceStr)
+//                return size.height + 48
                 
-//                let size =  getLabelHeightByWidth(TDScreenWidth - 36, title: introduceStr, font: 14)
-//                return size + 48
+                let size =  getLabelHeightByWidth(TDScreenWidth - 36, title: introduceStr, font: 14)
+                return size + 48
                 
             } else if indexPath.row == 1 {
                 
