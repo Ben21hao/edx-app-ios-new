@@ -529,6 +529,7 @@
 		B50DF9B21EAAF6B9001F38BD /* TDTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B50DF9AA1EAAF6B9001F38BD /* TDTextView.m */; };
 		B5148C161ED2D33200F6DACD /* TDRequestBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5148C151ED2D33200F6DACD /* TDRequestBaseModel.m */; };
 		B5148C191ED2D35A00F6DACD /* TDFreeAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5148C181ED2D35A00F6DACD /* TDFreeAlertView.m */; };
+		B514D4251EE6480900E42A88 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B514D4271EE6480900E42A88 /* InfoPlist.strings */; };
 		B5168B6D1EB826B300C80436 /* aliData.m in Sources */ = {isa = PBXBuildFile; fileRef = B5168B6C1EB826B300C80436 /* aliData.m */; };
 		B5168B701EB8274400C80436 /* dataUrlItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B5168B6F1EB8274400C80436 /* dataUrlItem.m */; };
 		B5168B731EB8294800C80436 /* TDSubmitCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5168B721EB8294800C80436 /* TDSubmitCourseViewController.m */; };
@@ -1460,6 +1461,8 @@
 		B5148C151ED2D33200F6DACD /* TDRequestBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDRequestBaseModel.m; sourceTree = "<group>"; };
 		B5148C171ED2D35A00F6DACD /* TDFreeAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDFreeAlertView.h; sourceTree = "<group>"; };
 		B5148C181ED2D35A00F6DACD /* TDFreeAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDFreeAlertView.m; sourceTree = "<group>"; };
+		B514D4261EE6480900E42A88 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B514D4281EE6480B00E42A88 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B5168B6B1EB826B300C80436 /* aliData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aliData.h; sourceTree = "<group>"; };
 		B5168B6C1EB826B300C80436 /* aliData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = aliData.m; sourceTree = "<group>"; };
 		B5168B6E1EB8274400C80436 /* dataUrlItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dataUrlItem.h; sourceTree = "<group>"; };
@@ -4298,6 +4301,7 @@
 				773A04691AF289650076532C /* edX-Bridging-Header.h */,
 				B47780581AADA95400436DB4 /* Terms-and-Services.htm */,
 				BECB7B161924C0C3009C77F1 /* edX-Info.plist */,
+				B514D4271EE6480900E42A88 /* InfoPlist.strings */,
 				BECB7B1A1924C0C3009C77F1 /* main.m */,
 				BECB7B1C1924C0C3009C77F1 /* edX-Prefix.pch */,
 				B50211F31EA8558D001DE1E2 /* swiftPch.swift */,
@@ -4710,6 +4714,7 @@
 				69ECC6081D50D1170030CF87 /* Icon-29.png in Resources */,
 				69ECC6041D50D1170030CF87 /* OpenSans-LightItalic.ttf in Resources */,
 				69ECC64F1D50D1170030CF87 /* Default-Landscape@3x.png in Resources */,
+				B514D4251EE6480900E42A88 /* InfoPlist.strings in Resources */,
 				69ECC6331D50D1170030CF87 /* ic_lms_blue.png in Resources */,
 				69ECC6511D50D1170030CF87 /* handouts-announcements.css in Resources */,
 				69ECC6431D50D1170030CF87 /* logo@3x.png in Resources */,
@@ -5484,6 +5489,15 @@
 				B518BE651EA9B9CD0027569D /* zh-Hans */,
 			);
 			name = languages.json;
+			sourceTree = "<group>";
+		};
+		B514D4271EE6480900E42A88 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B514D4261EE6480900E42A88 /* en */,
+				B514D4281EE6480B00E42A88 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		B518BE611EA9B91B0027569D /* Localizable.strings */ = {
