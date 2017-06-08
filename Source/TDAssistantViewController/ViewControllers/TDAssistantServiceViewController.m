@@ -62,6 +62,7 @@
 
     self.contentView = [[TDBaseScrollView alloc] init];
     self.contentView.pagingEnabled = YES;
+    self.contentView.bounces = NO;
     self.contentView.frame = CGRectMake(0, TITLEVIEW_HEIGHT, TDWidth, TDHeight - TITLEVIEW_HEIGHT - 60);
     self.contentView.delegate = self;
     self.contentView.backgroundColor = [UIColor colorWithHexString:colorHexStr5];

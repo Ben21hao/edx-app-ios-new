@@ -82,6 +82,7 @@
 #import "UIColor+JHHexColor.h"
 #import "TDAssistantServiceViewController.h"
 #import "UserYouViewController.h"
+#import "TDCouponViewController.h"
 #import "UserFirstViewController.h"
 #import "TDBindEmailViewController.h"
 #import "TDBindPhoneViewController.h"

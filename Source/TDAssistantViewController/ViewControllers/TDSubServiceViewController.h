@@ -20,6 +20,4 @@ typedef NS_ENUM(NSInteger,TDAssistantFrom) {
 @property (nonatomic,strong) NSString *username;
 @property (nonatomic,assign) NSInteger whereFrom;
 
-@property (nonatomic,copy) void(^cancelOrderHandle)();
-
 @end

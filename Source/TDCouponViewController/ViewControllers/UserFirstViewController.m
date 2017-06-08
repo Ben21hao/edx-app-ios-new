@@ -85,7 +85,7 @@
 }
 
 #pragma mark - 加载更多数据
-- (void)loadMoreData{
+- (void)loadMoreData {
     
     [_manager.tasks makeObjectsPerformSelector:@selector(cancel)];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
