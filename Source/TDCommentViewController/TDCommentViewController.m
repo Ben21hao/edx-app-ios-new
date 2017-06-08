@@ -162,7 +162,7 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setValue:self.courseID forKey:@"course_id"];
     [params setValue:self.userName forKey:@"username"];
-    [params setValue:@"18" forKey:@"pagesize"];
+    [params setValue:@"8" forKey:@"pagesize"];
     [params setValue:@(self.page) forKey:@"pageindex"];
     
     if (self.selectId.length > 0 ) {
@@ -227,7 +227,7 @@
             }
         } else {
             [self.tableView.mj_header endRefreshing];
-            if (self.commentArray.count <= 18) {
+            if (self.commentArray.count < 8) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
                 self.tableView.mj_footer.hidden = YES;
             }

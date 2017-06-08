@@ -21,7 +21,6 @@
 @property (nonatomic,strong) NSMutableArray *couponArray;
 
 @property (nonatomic,strong) TDBaseToolModel *toolModel;
-@property (nonatomic,assign) NSInteger couponCount;
 
 @property (nonatomic,strong) TDBaseView *loadingView;
 @property (nonatomic,assign) BOOL isForgound;
@@ -113,6 +112,7 @@
     [manager GET:url parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [self.tableView.mj_header endRefreshing];//结束刷新
+        [self.tableView.mj_footer endRefreshing];
         [self.loadingView removeFromSuperview];
         
         if (self.page == 1) {
@@ -124,7 +124,6 @@
         
         if (code == 200) {
             NSDictionary *dataDic = responseDic[@"data"];
-            self.couponCount = [responseDic[@"count"] integerValue];
             
             NSArray *couponListArray = dataDic[@"coupons_list"];
             if (couponListArray.count > 0) {
@@ -152,6 +151,8 @@
                 }
             }
         } else if (code == 204) { //没有更多数据
+            
+            self.page --;
             [self hideTableFooterView];
             
             [self.view makeToast:NSLocalizedString(@"NO_MORE_DATA", nil) duration:1.08 position:CSToastPositionCenter];
@@ -261,7 +262,7 @@
     [self setUpRefreshView];
 }
 
-- (void)setUpRefreshView{
+- (void)setUpRefreshView {
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getNewData)];
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     self.tableView.mj_footer.automaticallyHidden = YES;

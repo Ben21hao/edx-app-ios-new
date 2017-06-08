@@ -760,7 +760,7 @@
 /*密码长度少于6位数*/
 "PASSWORD_LENGTH_IS_LESS_THAN_SIX" = "密码至少6位字符";
 /*验证码错误*/
-"VERIFICATION_CODE_ERROR" = "请输入手机验证码";
+"VERIFICATION_CODE_ERROR" = "验证码错误";
 /*跳过*/
 "JUMP_OVER" = "跳过";
 /*注册*/
