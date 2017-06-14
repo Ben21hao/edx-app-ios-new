@@ -14,10 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OEXCourseVideosTableViewCell : UITableViewCell
 
-@property (weak, nonatomic, nullable) IBOutlet UIImageView* img_VideoWatchState;
-@property (weak, nonatomic, nullable) IBOutlet UILabel* lbl_Title;
-@property (weak, nonatomic, nullable) IBOutlet UILabel* lbl_Time;
-@property (weak, nonatomic, nullable) IBOutlet UILabel* lbl_Size;
+@property (weak, nonatomic, nullable) IBOutlet UIImageView* img_VideoWatchState; //图片
+@property (weak, nonatomic, nullable) IBOutlet UILabel* lbl_Title; //课程名字
+@property (weak, nonatomic, nullable) IBOutlet UILabel* lbl_Time; //时间
+@property (weak, nonatomic, nullable) IBOutlet UILabel* lbl_Size; //大小
 @property (weak, nonatomic, nullable) IBOutlet DACircularProgressView* customProgressView;
 @property (weak, nonatomic, nullable) IBOutlet UIButton* btn_Download;
 @property (weak, nonatomic, nullable) IBOutlet NSLayoutConstraint *courseVideoStateLeadingConstraint;

@@ -536,6 +536,7 @@ static const NSTimeInterval RewindTimeInterval = 30;
     self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
     self.messageLabel.text = NSLocalizedString(@"ROTATE_DEVICE", nil);
     self.messageLabel.numberOfLines = 0;
+    self.messageLabel.textAlignment = NSTextAlignmentCenter;
     [self.bottomView addSubview:self.messageLabel];
     
     [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {

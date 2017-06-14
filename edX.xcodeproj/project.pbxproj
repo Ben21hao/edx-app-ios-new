@@ -503,6 +503,10 @@
 		B50211FF1EA85818001DE1E2 /* UIImage+Crop.m in Sources */ = {isa = PBXBuildFile; fileRef = B50211FD1EA85818001DE1E2 /* UIImage+Crop.m */; };
 		B50212041EA85ACD001DE1E2 /* OEXFlowErrorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50212021EA85ACD001DE1E2 /* OEXFlowErrorViewController.m */; };
 		B50212051EA85ACD001DE1E2 /* OEXFlowErrorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50212031EA85ACD001DE1E2 /* OEXFlowErrorViewController.xib */; };
+		B502F5A61EEE3B28003FC0F4 /* TDDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B502F5A51EEE3B28003FC0F4 /* TDDownloadViewController.m */; };
+		B502F5A91EEE4560003FC0F4 /* TDSubDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B502F5A81EEE4560003FC0F4 /* TDSubDownloadViewController.m */; };
+		B502F5AC1EEE4984003FC0F4 /* TDVidoDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B502F5AB1EEE4984003FC0F4 /* TDVidoDownloadViewController.m */; };
+		B502F5AF1EEE8BF6003FC0F4 /* TDDownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B502F5AE1EEE8BF6003FC0F4 /* TDDownloadCell.m */; };
 		B50DF9821EAAF15B001F38BD /* UserFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50DF96D1EAAF15B001F38BD /* UserFirstViewController.m */; };
 		B50DF9831EAAF15B001F38BD /* UserFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50DF96E1EAAF15B001F38BD /* UserFirstViewController.xib */; };
 		B50DF9841EAAF15B001F38BD /* UserSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50DF9701EAAF15B001F38BD /* UserSecondViewController.m */; };
@@ -583,6 +587,8 @@
 		B518C1721EA9FF1C0027569D /* TDCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B518C16E1EA9FF1C0027569D /* TDCaptionView.m */; };
 		B518C1731EA9FF1C0027569D /* TDVideoBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = B518C1701EA9FF1C0027569D /* TDVideoBarView.m */; };
 		B52310ED1ED411DF00D9433C /* TDVideoUrlPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52310EC1ED411DF00D9433C /* TDVideoUrlPlayController.m */; };
+		B5250EF11EEF894900D9BAC4 /* TDDownloadSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5250EF01EEF894900D9BAC4 /* TDDownloadSubCell.m */; };
+		B5250EF41EEF9F9900D9BAC4 /* TDEditeBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5250EF31EEF9F9900D9BAC4 /* TDEditeBottomView.m */; };
 		B52590E01EB2E16B003A950D /* CourseOutlineModeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52590DF1EB2E16B003A950D /* CourseOutlineModeController.swift */; };
 		B52590E21EB2E222003A950D /* OpenOnWebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52590E11EB2E222003A950D /* OpenOnWebController.swift */; };
 		B52590E91EB32852003A950D /* PurchaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B52590E61EB32852003A950D /* PurchaseManager.m */; };
@@ -1420,6 +1426,14 @@
 		B50212011EA85ACD001DE1E2 /* OEXFlowErrorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OEXFlowErrorViewController.h; sourceTree = "<group>"; };
 		B50212021EA85ACD001DE1E2 /* OEXFlowErrorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OEXFlowErrorViewController.m; sourceTree = "<group>"; };
 		B50212031EA85ACD001DE1E2 /* OEXFlowErrorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OEXFlowErrorViewController.xib; sourceTree = "<group>"; };
+		B502F5A41EEE3B28003FC0F4 /* TDDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDDownloadViewController.h; sourceTree = "<group>"; };
+		B502F5A51EEE3B28003FC0F4 /* TDDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDDownloadViewController.m; sourceTree = "<group>"; };
+		B502F5A71EEE4560003FC0F4 /* TDSubDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSubDownloadViewController.h; sourceTree = "<group>"; };
+		B502F5A81EEE4560003FC0F4 /* TDSubDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSubDownloadViewController.m; sourceTree = "<group>"; };
+		B502F5AA1EEE4984003FC0F4 /* TDVidoDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDVidoDownloadViewController.h; sourceTree = "<group>"; };
+		B502F5AB1EEE4984003FC0F4 /* TDVidoDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDVidoDownloadViewController.m; sourceTree = "<group>"; };
+		B502F5AD1EEE8BF6003FC0F4 /* TDDownloadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDDownloadCell.h; sourceTree = "<group>"; };
+		B502F5AE1EEE8BF6003FC0F4 /* TDDownloadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDDownloadCell.m; sourceTree = "<group>"; };
 		B50DF96C1EAAF15B001F38BD /* UserFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFirstViewController.h; sourceTree = "<group>"; };
 		B50DF96D1EAAF15B001F38BD /* UserFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFirstViewController.m; sourceTree = "<group>"; };
 		B50DF96E1EAAF15B001F38BD /* UserFirstViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserFirstViewController.xib; sourceTree = "<group>"; };
@@ -1565,6 +1579,10 @@
 		B518C1701EA9FF1C0027569D /* TDVideoBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDVideoBarView.m; sourceTree = "<group>"; };
 		B52310EB1ED411DF00D9433C /* TDVideoUrlPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDVideoUrlPlayController.h; sourceTree = "<group>"; };
 		B52310EC1ED411DF00D9433C /* TDVideoUrlPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDVideoUrlPlayController.m; sourceTree = "<group>"; };
+		B5250EEF1EEF894900D9BAC4 /* TDDownloadSubCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDDownloadSubCell.h; sourceTree = "<group>"; };
+		B5250EF01EEF894900D9BAC4 /* TDDownloadSubCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDDownloadSubCell.m; sourceTree = "<group>"; };
+		B5250EF21EEF9F9900D9BAC4 /* TDEditeBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDEditeBottomView.h; sourceTree = "<group>"; };
+		B5250EF31EEF9F9900D9BAC4 /* TDEditeBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDEditeBottomView.m; sourceTree = "<group>"; };
 		B52590DF1EB2E16B003A950D /* CourseOutlineModeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseOutlineModeController.swift; sourceTree = "<group>"; };
 		B52590E11EB2E222003A950D /* OpenOnWebController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenOnWebController.swift; sourceTree = "<group>"; };
 		B52590E51EB32852003A950D /* PurchaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseManager.h; sourceTree = "<group>"; };
@@ -2098,6 +2116,7 @@
 		199B9B6419349DE800081A09 /* Videos */ = {
 			isa = PBXGroup;
 			children = (
+				B502F59E1EEE3AD6003FC0F4 /* TDDowloadViewController */,
 				B518C1671EA9FF1C0027569D /* TDVideoPlayerViewController */,
 				77FDF4101AFBF0C300E8C639 /* VideoBlockViewController.swift */,
 				BECB7B4C1924C9EA009C77F1 /* Video Player */,
@@ -3184,6 +3203,49 @@
 				B50212031EA85ACD001DE1E2 /* OEXFlowErrorViewController.xib */,
 			);
 			path = TDErrorViewControler;
+			sourceTree = "<group>";
+		};
+		B502F59E1EEE3AD6003FC0F4 /* TDDowloadViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B502F59F1EEE3AD6003FC0F4 /* Controllers */,
+				B502F5A01EEE3AD6003FC0F4 /* Models */,
+				B502F5A11EEE3AD6003FC0F4 /* Views */,
+			);
+			path = TDDowloadViewController;
+			sourceTree = "<group>";
+		};
+		B502F59F1EEE3AD6003FC0F4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B502F5A41EEE3B28003FC0F4 /* TDDownloadViewController.h */,
+				B502F5A51EEE3B28003FC0F4 /* TDDownloadViewController.m */,
+				B502F5A71EEE4560003FC0F4 /* TDSubDownloadViewController.h */,
+				B502F5A81EEE4560003FC0F4 /* TDSubDownloadViewController.m */,
+				B502F5AA1EEE4984003FC0F4 /* TDVidoDownloadViewController.h */,
+				B502F5AB1EEE4984003FC0F4 /* TDVidoDownloadViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B502F5A01EEE3AD6003FC0F4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B502F5A11EEE3AD6003FC0F4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B502F5AD1EEE8BF6003FC0F4 /* TDDownloadCell.h */,
+				B502F5AE1EEE8BF6003FC0F4 /* TDDownloadCell.m */,
+				B5250EEF1EEF894900D9BAC4 /* TDDownloadSubCell.h */,
+				B5250EF01EEF894900D9BAC4 /* TDDownloadSubCell.m */,
+				B5250EF21EEF9F9900D9BAC4 /* TDEditeBottomView.h */,
+				B5250EF31EEF9F9900D9BAC4 /* TDEditeBottomView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		B50DF9471EAAEF1F001F38BD /* TDCouponViewController */ = {
@@ -5002,7 +5064,9 @@
 				B4B6D6041A949EFC000F44E8 /* OEXRegistrationRestriction.m in Sources */,
 				77BFD86A1BB9E15B001D7BE5 /* Strings.swift in Sources */,
 				773B1D441B1F77D400B861DF /* ViewController+SnapKit.swift in Sources */,
+				B5250EF11EEF894900D9BAC4 /* TDDownloadSubCell.m in Sources */,
 				B4B285E81A9A662600DD603A /* OEXZeroRatingConfig.m in Sources */,
+				B502F5A91EEE4560003FC0F4 /* TDSubDownloadViewController.m in Sources */,
 				E0AF4E8E1BFB19CC0083753C /* PassthroughView.swift in Sources */,
 				BD7C6C3E1DCA32370004D135 /* OEXFonts.swift in Sources */,
 				E00523431CF81D9800B7F5C3 /* DiscussionBlockViewController.swift in Sources */,
@@ -5167,6 +5231,7 @@
 				69F5FACB1E28B0AD00F6ACC6 /* VideoTranscriptTableViewCell.swift in Sources */,
 				699FF8501E559E6B00AD98A5 /* OEXInterface+AppReview.swift in Sources */,
 				773A04781AF2D5DE0076532C /* CourseOutlineViewController.swift in Sources */,
+				B502F5AC1EEE4984003FC0F4 /* TDVidoDownloadViewController.m in Sources */,
 				B5FAF76D1EB0563E000C2169 /* TDUserInformationView.m in Sources */,
 				B50DF9B01EAAF6B9001F38BD /* TDBaseTableview.m in Sources */,
 				B4D5C7EB1A6FBAA300427D1D /* OEXAccessToken.m in Sources */,
@@ -5201,6 +5266,7 @@
 				1A8AC0C01BB49EC5009D8F5E /* UserProfile.swift in Sources */,
 				1AC147371BCEB14900E0A230 /* CGRect+OEXHelpers.swift in Sources */,
 				B5FAF7421EB045C8000C2169 /* SubmitCourseViewController.m in Sources */,
+				B502F5AF1EEE8BF6003FC0F4 /* TDDownloadCell.m in Sources */,
 				B518BECE1EA9E6F00027569D /* TDTalkOrderViewController.m in Sources */,
 				B59238B01EADB6D100C686D8 /* OutlineViewController.m in Sources */,
 				B50211F21EA85490001DE1E2 /* UIView+Toast.m in Sources */,
@@ -5367,6 +5433,7 @@
 				B5FAF75C1EB04ABF000C2169 /* CouponsNameTableViewCell.m in Sources */,
 				9E0CC1031BA9574E00A1CFDB /* SpinnerButton.swift in Sources */,
 				191A002419405B91004F7902 /* OEXUserDetails.m in Sources */,
+				B5250EF41EEF9F9900D9BAC4 /* TDEditeBottomView.m in Sources */,
 				B59238BB1EADB70C00C686D8 /* TDCommentCell.m in Sources */,
 				B52310ED1ED411DF00D9433C /* TDVideoUrlPlayController.m in Sources */,
 				77BECB0D1B0A8BBD00894276 /* UIEdgeInsets+Geometry.swift in Sources */,
@@ -5422,6 +5489,7 @@
 				B5FAF6FF1EB03AB1000C2169 /* WechatPayView.m in Sources */,
 				B518BE8D1EA9E6AB0027569D /* TDSubServiceViewController.m in Sources */,
 				B4B6D6291A949F1B000F44E8 /* OEXRegistrationFieldEmailController.m in Sources */,
+				B502F5A61EEE3B28003FC0F4 /* TDDownloadViewController.m in Sources */,
 				E0ED96E71D6EED1C00B48B64 /* OEXCourseInfoViewController+Swift.swift in Sources */,
 				B518BE941EA9E6AB0027569D /* TDSuTitleCell.m in Sources */,
 				773B1D421B1F48F100B861DF /* CourseOutlineHeaderView.swift in Sources */,

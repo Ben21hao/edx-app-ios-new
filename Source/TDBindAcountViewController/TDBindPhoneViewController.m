@@ -148,7 +148,7 @@
         [self.view makeToast:NSLocalizedString(@"PHONE_IS_EMPTY", nil) duration:1.08 position:CSToastPositionCenter];
         
     } else if (self.codeTextField.text.length == 0) {
-        [self.view makeToast:NSLocalizedString(@"PLEASE_ENTER_VERI", nil) duration:1.08 position:CSToastPositionCenter];
+        [self.view makeToast:NSLocalizedString(@"VERIFICATION_CODE_IS_EMPTY", nil) duration:1.08 position:CSToastPositionCenter];
         
     } else if (![self.codeTextField.text isEqualToString:self.randomNumber]) {
         [self.view makeToast:NSLocalizedString(@"VERIFICATION_CODE_ERROR", nil) duration:1.08 position:CSToastPositionCenter];
@@ -213,7 +213,7 @@
 #pragma mark - UI
 - (void)configView {
     
-    self.phoneTextField = [self setTextFieldWithTitle:NSLocalizedString(@"PHONE_IS_EMPTY", nil)];
+    self.phoneTextField = [self setTextFieldWithTitle:NSLocalizedString(@"PLEASE_ENTER_PHONE_NUMBER", nil)];
     [self.view addSubview:self.phoneTextField];
     
     self.codeTextField = [self setTextFieldWithTitle:NSLocalizedString(@"PLEASE_ENTER_VERI", nil)];

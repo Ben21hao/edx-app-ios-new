@@ -7,7 +7,7 @@
 //
 
 #import "TDUserInformationViewController.h"
-//#import "TDMessageShowViewController.h"
+#import "TDInformationDetailViewController.h"
 
 #import "TDUserInformationView.h"
 #import "TDUserInformationCell.h"
@@ -44,19 +44,28 @@
     self.titleViewLabel.text = NSLocalizedString(@"AUTHENTICATION_MESSAGE", nil);
 }
 
+- (void)backButtonAction:(UIButton *)sender {
+    if (self.isHandin == YES) {
+        [self.view makeToast:NSLocalizedString(@"SUBMIT_ING", nil) duration:0.8 position:CSToastPositionCenter];
+        return;
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - 提交
 - (void)handinButtonAciton:(UIButton *)sender {
-    NSLog(@" == -=-=-==-=-=-= ");
+    NSLog(@" 提交 == -=-=-==-=-=-= ");
     
     [self resignFirstResponderAction];
     
     [self.messageView.activityView startAnimating];
+    [self.messageView.handinButton setTitle:NSLocalizedString(@"SUBMIT_ING", nil) forState:UIControlStateNormal];
     
     if (self.isHandin == YES) {
         return;
     }
     if (![self judgeMessageTrue]) {
-        [self.messageView.activityView stopAnimating];
+        [self stopHandingHandle];
         return;
     }
     self.isHandin = YES;
@@ -78,17 +87,17 @@
     
     [manager POST:url parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        [self.messageView.activityView stopAnimating];
+        [self stopHandingHandle];
         self.isHandin = NO;
         
         NSDictionary *responseDic = (NSDictionary *)responseObject;
         id code = responseDic[@"code"];
         if ([code intValue] == 200 || [code intValue] == 401) { //200 提交成功 ；401 重复提交
             
-//            TDMessageShowViewController *messageVC = [[TDMessageShowViewController alloc] init];
-//            messageVC.username = self.username;
-//            messageVC.whereFrom = TDAuthenMessageFromAuthen;
-//            [self.navigationController pushViewController:messageVC animated:YES];
+            TDInformationDetailViewController *messageVC = [[TDInformationDetailViewController alloc] init];
+            messageVC.username = self.username;
+            messageVC.whereFrom = TDAuthenMessageFromAuthen;
+            [self.navigationController pushViewController:messageVC animated:YES];
             
         } else { // 300 提交失败
             [self.view makeToast:NSLocalizedString(@"FALILED_SUBMIT", nil) duration:1.08 position:CSToastPositionCenter];
@@ -96,10 +105,16 @@
         NSLog(@"msg---- %@ +++ responseDic ==== %@",responseDic[@"msg"],responseDic);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.messageView.activityView stopAnimating];
+        [self stopHandingHandle];
         self.isHandin = NO;
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"认证出错 ---- %ld",(long)error.code);
     }];
+}
+
+- (void)stopHandingHandle {
+    [self.messageView.activityView stopAnimating];
+    [self.messageView.handinButton setTitle:NSLocalizedString(@"SUBMIT", nil) forState:UIControlStateNormal];
 }
 
 - (BOOL)judgeMessageTrue {
@@ -140,7 +155,8 @@
 
 - (NSString *)base64Code:(UIImage *)image {
     
-    NSData *faceData = UIImagePNGRepresentation(image);
+//    NSData *faceData = UIImagePNGRepresentation(image);
+    NSData *faceData = UIImageJPEGRepresentation(image, 1.0);
     NSString *faceStr = [faceData base64EncodedStringWithOptions:0];
     return faceStr;
 }

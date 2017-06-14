@@ -822,9 +822,9 @@
 "PLEASE_SET_PASSWORD" = "Please enter the password";
 /*秒*/
 "SECOND" = "s";
-/*手机号码为空*/
-"PHONE_IS_EMPTY" = "Please enter your mobile number";
-/*验证码为空*/
+/*请输入手机号码*/
+"PHONE_IS_EMPTY" = "Please enter your mobile number.";
+/*请输入手机验证码*/
 "VERIFICATION_CODE_IS_EMPTY" = "Please enter verification code.";
 /*密码为空*/
 "PASSWORD_IS_EMPTY" = "Please enter your password and try again.";
@@ -875,7 +875,7 @@
 /*手机绑定*/
 "PHONE_DINDING" = "Mobile binding";
 /*手机号码已存在*/
-"PHONE_IS_REGISTERED" = "Mobile has been used";
+"PHONE_IS_REGISTERED" = "Mobile has been used.";
 /*绑定成功*/
 "PHONE_BIND_SUCCESS" = "Bind success";
 /*绑定失败*/
@@ -1421,7 +1421,7 @@
 /*助教服务 TA Service */
 "TA_SERVICE" = "Tutor Service";
 /*评价 Rate TA */
-"RETE_TA" = "Rate Tutor";
+"RETE_TA" = "Rate";
 /*进入教室 Enter classroom */
 "ENTER_CLASSROOM" = "Enter classroom";
 /*待服务 Pending*/
@@ -1570,7 +1570,7 @@
 "LOGIN_BEFORE_ENROLL" = "Log in before you enroll in this course.";
 
 /*1.00元报课*/
-"COUPON_FOR_COURSE" = "￥{count} For 1 Course";
+"COUPON_FOR_COURSE" = "￥{count} to Enroll";
 /*企业优惠券*/
 "COUPON_ENTERPRISE" = "Enterprise Coupon";
 /*折扣券*/

@@ -172,7 +172,7 @@
         return;
         
     } else if (self.phoneStr.length == 0) {
-        [self remarkAlerViewAfterRequest:NSLocalizedString(@"PHONE_IS_EMPTY", nil)];
+        [self remarkAlerViewAfterRequest:NSLocalizedString(@"PLEASE_ENTER_PHONE_NUMBER", nil)];
         
     } else if (![self.toolModel isValidateMobile:self.phoneStr]) {
         [self remarkAlerViewAfterRequest:NSLocalizedString(@"ENTER_CORRECT_NUMBER", nil)];
@@ -249,7 +249,7 @@
         if (![self.toolModel networkingState]) { //无网络
             return;
         } else if (self.phoneTextField.text.length == 0) {
-            [self remarkAlerViewAfterRequest:NSLocalizedString(@"PHONE_IS_EMPTY", nil)];
+            [self remarkAlerViewAfterRequest:NSLocalizedString(@"PLEASE_ENTER_PHONE_NUMBER", nil)];
             
         } else if (self.codeTextFiled.text.length == 0) {
             [self remarkAlerViewAfterRequest:NSLocalizedString(@"PLEASE_ENTER_VERI", nil)];

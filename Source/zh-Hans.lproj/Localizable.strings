@@ -431,7 +431,7 @@
 /* Message shown when user attempts to download a video over cellular data, but has chosen to only allow video downloads over wifi */
 "NO_WIFI_MESSAGE" = "您当前的下载设置只允许通过Wi-Fi下载。\n请连接到Wi-Fi网络或更改下载设置。";
 /* Message shown on videos screen when user has not downloaded any videos */
-"NO_VIDEOS_DOWNLOADED" = "您还没有下载任何视频。";
+"NO_VIDEOS_DOWNLOADED" = "您还没有下载任何视频";
 /* Text shown when examining part of a course in video only mode, but that part of the course has no videos. {mode_switcher} will be replaced with a name or icon for the mode switch button */
 "NO_VIDEOS_TRY_MODE_SWITCHER" = "这章节没有课程视频。请选择上面的{mode_switcher} 并切换到完整课程，查看其它章节。 ";
 /* Text displayed when no results are found for following*/
@@ -825,9 +825,9 @@
 "PLEASE_SET_PASSWORD" = "请输入密码";
 /*秒*/
 "SECOND" = "秒";
-/*手机号码为空*/
+/*请输入手机号码*/
 "PHONE_IS_EMPTY" = "请输入手机号码";
-/*验证码为空*/
+/*请输入手机验证码*/
 "VERIFICATION_CODE_IS_EMPTY" = "请输入手机验证码";
 /*密码为空*/
 "PASSWORD_IS_EMPTY" = "请输入密码后重试";

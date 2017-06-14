@@ -67,7 +67,7 @@
               "name" : "nickname",
               "label" : "Nickname",
               "type" : "textarea",
-              "placeholder" : "Please enter a nickname."
+              "placeholder" : "Nickname"
               },
               {
               "name" : "email",
