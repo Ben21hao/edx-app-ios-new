@@ -383,7 +383,7 @@
     [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *endDate =[dateFormat dateFromString:timeStr];
     
-    //统一用东八区时间
+    //统一用0时区时间
     NSDate *end = [self getChinaTime:endDate];
     NSDate *now = [self getChinaTime:[NSDate date]];
     
@@ -393,7 +393,7 @@
 }
 
 - (NSDate *)getChinaTime:(NSDate *)date {//计算东八区的时间
-    NSTimeZone* localTimeZone = [NSTimeZone localTimeZone];//获取本地时区(中国时区)
+    NSTimeZone* localTimeZone = [NSTimeZone localTimeZone];//统一用0时区时间
     NSInteger offset = [localTimeZone secondsFromGMTForDate:date];//计算世界时间与本地时区的时间偏差值
     NSDate *localDate = [date dateByAddingTimeInterval:offset];//世界时间＋偏差值 得出中国区时间
     return localDate;
@@ -414,7 +414,7 @@
 
 //当前时间加上秒数
 - (NSString *)addSecondsForNow:(NSNumber *)second {
-    NSDate *now = [NSDate date];
+    NSDate *now = [NSDate date];//比当前少8小时
     NSDate *triaDate = [now dateByAddingTimeInterval:second.integerValue];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];

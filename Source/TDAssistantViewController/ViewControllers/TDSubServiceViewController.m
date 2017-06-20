@@ -431,7 +431,7 @@
             TDAssistantCell *assistantCell = [[TDAssistantCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"assistantCell"];
             assistantCell.selectionStyle = UITableViewCellSelectionStyleNone;
             assistantCell.nameLabel.text = model.assistant_name;
-            assistantCell.quetionLabel.text = model.question;
+            assistantCell.quetionLabel.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"QUETION_DESCRIPTION", nil),model.question];
             assistantCell.whereFrom = self.whereFrom;
             [assistantCell.headerImage sd_setImageWithURL:[NSURL URLWithString:model.avatar_url.large] placeholderImage:[UIImage imageNamed:@"people"]];
             return assistantCell;
@@ -445,7 +445,8 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
             cell.textLabel.textColor = [UIColor colorWithHexString:colorHexStr9];
-            cell.textLabel.text = [NSString stringWithFormat:@"%@：%@",NSLocalizedString(@"RESERCED_PERIOD",nil),model.service_time];
+            NSString *describeStr = [model.order_type intValue] == 1 ? NSLocalizedString(@"RESERCED_PERIOD",nil) : NSLocalizedString(@"INSTANT_SERVICE",nil);
+            cell.textLabel.text = [NSString stringWithFormat:@"%@：%@",describeStr,model.service_time];
             
             return cell;
         }
@@ -453,9 +454,12 @@
             TDAssistantFootCell *assistantFootCell = [[TDAssistantFootCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"assistantFootCell"];
             assistantFootCell.selectionStyle = UITableViewCellSelectionStyleNone;
             assistantFootCell.whereFrom = self.whereFrom;
-            assistantFootCell.startTime = model.service_begin_at;
-            assistantFootCell.isComment = [model.is_comment intValue];
-            assistantFootCell.score = [model.comment_infomation.score intValue];
+            
+//            assistantFootCell.startTime = model.service_begin_at;
+//            assistantFootCell.isComment = [model.is_comment intValue];
+//            assistantFootCell.score = [model.comment_infomation.score intValue];
+            
+            assistantFootCell.model = model;
             
             WS(weakSelf);
             assistantFootCell.endterButtonHandle = ^(){//进入教室
@@ -475,12 +479,28 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (indexPath.row == 1) {
+        TDAssistantServiceModel *model = self.dataArray[indexPath.section];
+        CGFloat height = [self heightForCell:[NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"QUETION_DESCRIPTION", nil),model.question]];
+        if (height > 88) {
+            return height;
+        }
         return 88;
     } else if (indexPath.row == 3) {
         return 48;
     }
     return 42;
+}
+
+- (CGFloat)heightForCell:(NSString *)title {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, TDWidth - 88, 0)];
+    label.font = [UIFont fontWithName:@"OpenSans" size:14];
+    label.numberOfLines = 0;
+    label.text = title;
+    [label sizeToFit];
+    CGSize size = label.frame.size;
+    return size.height;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

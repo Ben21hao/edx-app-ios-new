@@ -97,7 +97,19 @@ class ProfileBanner: UIView {
     
     func showProfile(profile: UserProfile, networkManager: NetworkManager) {
         shortProfView.remoteImage = profile.image(networkManager)
-        usernameLabel.attributedText = usernameStyle.attributedStringWithText(profile.nickname)
+        let nickname : String?
+        if profile.nickname != nil {
+            nickname = profile.nickname
+            
+        } else {
+            if profile.name != profile.username {
+                nickname = profile.name
+            } else {
+                nickname = Strings.noName
+            }
+        }
+        usernameLabel.attributedText = usernameStyle.attributedStringWithText(nickname)
+//        usernameLabel.attributedText = usernameStyle.attributedStringWithText(profile.nickname)
     }
 
     var usernameStyle : OEXTextStyle {

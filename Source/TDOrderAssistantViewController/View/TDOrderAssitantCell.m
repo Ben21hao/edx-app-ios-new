@@ -103,7 +103,7 @@
     self.quetionLabel.numberOfLines = 0;
     [self.bgView addSubview:self.quetionLabel];
 
-    self.orderButton = [self setButtonWithTitle:NSLocalizedString(@"APPOINTMENT", nil) withColor:colorHexStr3];
+    self.orderButton = [self setButtonWithTitle:NSLocalizedString(@"APPOINTMENT", nil) withColor:colorHexStr4];
     [self.orderButton addTarget:self action:@selector(orderButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.orderButton];
     

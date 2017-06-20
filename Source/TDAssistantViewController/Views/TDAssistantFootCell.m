@@ -50,10 +50,45 @@
     }
 }
 
-- (void)setStartTime:(NSString *)startTime {
-    _startTime = startTime;
-    [self dealWithTimeStr];
+- (void)setModel:(TDAssistantServiceModel *)model {
+    _model = model;
+    
+    [self dealWithData];
 }
+
+- (void)dealWithData {
+    
+    if (self.whereFrom == 0) {//待完成
+        
+        if ([self.model.order_type intValue] == 1) {
+            self.startTime = self.model.service_begin_at;
+            [self dealWithTimeStr];
+            
+        } else {
+            self.enterButton.hidden = NO;
+            [self.enterButton setTitle:NSLocalizedString(@"ENTER_CLASSROOM", nil) forState:UIControlStateNormal];
+        }
+        
+    } else if (self.whereFrom == 1) {//已完成
+        self.isComment = [self.model.is_comment intValue];
+        
+        if (self.isComment) {
+            self.startView.hidden = NO;
+            self.commentButton.hidden = YES;
+            
+            self.score = [self.model.comment_infomation.score intValue];;
+            [self setStarView:self.score];
+        } else {
+            self.startView.hidden = YES;
+            self.commentButton.hidden = NO;
+        }
+    }
+}
+
+//- (void)setStartTime:(NSString *)startTime {
+//    _startTime = startTime;
+//    [self dealWithTimeStr];
+//}
 
 /*
  时间处理规则
@@ -67,37 +102,50 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *startDate = [formatter dateFromString:timeStr];//预约开始时间
-    NSDate *now = [NSDate date];//当前时间
     
-    NSTimeInterval interval = [now timeIntervalSinceDate:startDate];//时间间隔
-    self.timeNum = -interval;
-    NSDate *date = [now earlierDate:startDate];//较早的时间
+    NSDate *nowDate = [NSDate date];//当前时间
     
-    if (self.whereFrom == 0) {//待完成
+    //统一用东八区时间
+    NSDate *now = [self getChinaTime:nowDate];
+    
+    NSTimeInterval nowInterval = [now timeIntervalSince1970]*1;//手机系统时间
+    NSTimeInterval startInterval = [startDate timeIntervalSince1970]*1;//课程结束时间
+    
+//    NSTimeInterval interval = [nowDate timeIntervalSinceDate:startDate];//时间间隔
+//    self.timeNum = -interval;
+    self.timeNum = startInterval - nowInterval;
+    
+    NSDate *date = [nowDate earlierDate:startDate];//较早的时间
+
+    if ([date isEqualToDate:nowDate]) {//当前时间为较早时间
         
-        if ([date isEqualToDate:now]) {//当前时间为较早时间
+        if (self.timeNum > 24 * 60 *60) {
+            self.cancelButton.hidden = NO;
             
-            if (self.timeNum > 24 * 60 *60) {
-                self.cancelButton.hidden = NO;
-                
-            } else {
-                
-                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(waitForTime) userInfo:nil repeats:YES];
-                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-                
-                self.enterButton.hidden = NO;
-                self.isCanClick = NO;
-                
-                [self timeResultShow];
-            }
+        } else {
             
-        } else {//当前时间已过开始时间
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(waitForTime) userInfo:nil repeats:YES];
+            [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+            
             self.enterButton.hidden = NO;
-            [self.enterButton setTitle:NSLocalizedString(@"ENTER_CLASSROOM", nil) forState:UIControlStateNormal];
+            self.isCanClick = NO;
+            
+            [self timeResultShow];
         }
         
-        NSLog(@"---==== >>>> %@ == %@ --> %f",startDate,now,interval);
+    } else {//当前时间已过开始时间
+        self.enterButton.hidden = NO;
+        [self.enterButton setTitle:NSLocalizedString(@"ENTER_CLASSROOM", nil) forState:UIControlStateNormal];
     }
+    
+//    NSLog(@"---==== >>>> %@ == %@ --> %f",startDate,now,interval);
+}
+
+- (NSDate *)getChinaTime:(NSDate *)date {//计算东八区的时间
+    NSTimeZone* localTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT+0800"];//获取本地时区(中国时区)
+    NSInteger offset = [localTimeZone secondsFromGMTForDate:date];//计算世界时间与本地时区的时间偏差值
+    NSDate *localDate = [date dateByAddingTimeInterval:offset];//世界时间＋偏差值 得出中国区时间
+    return localDate;
 }
 
 - (void)waitForTime {
@@ -131,25 +179,25 @@
 }
 
 /* 是否已有评论 */
-- (void)setIsComment:(BOOL)isComment {
-    _isComment = isComment;
-    
-    if (self.whereFrom == 1) {//已完成
-        if (isComment) {
-            self.startView.hidden = NO;
-            self.commentButton.hidden = YES;
-        } else {
-            self.startView.hidden = YES;
-            self.commentButton.hidden = NO;
-        }
-    }
-}
+//- (void)setIsComment:(BOOL)isComment {
+//    _isComment = isComment;
+//    
+//    if (self.whereFrom == 1) {//已完成
+//        if (isComment) {
+//            self.startView.hidden = NO;
+//            self.commentButton.hidden = YES;
+//        } else {
+//            self.startView.hidden = YES;
+//            self.commentButton.hidden = NO;
+//        }
+//    }
+//}
 
 /* 评分 */
-- (void)setScore:(int)score {
-    _score = score;
-    [self setStarView:score];
-}
+//- (void)setScore:(int)score {
+//    _score = score;
+//    [self setStarView:score];
+//}
 
 #pragma mark - 设置星星
 - (void)setStarView:(int)fen {

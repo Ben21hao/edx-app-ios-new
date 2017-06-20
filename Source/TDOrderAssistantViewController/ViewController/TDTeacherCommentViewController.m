@@ -433,7 +433,7 @@
         UIImageView *starImage = [[UIImageView alloc] init];
         starImage.contentMode = UIViewContentModeCenter;
         
-        if (i > [self.scoreStr intValue]) {
+        if (i + 1 > [self.scoreStr intValue]) {
             starImage.image = [UIImage imageNamed:@"star11"];
         } else {
             starImage.image = [UIImage imageNamed:@"star1"];

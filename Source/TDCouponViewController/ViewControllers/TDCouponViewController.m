@@ -43,7 +43,8 @@
     
     self.titleViewLabel.text = NSLocalizedString(@"COUPON_PAPER", nil);
     [self.rightButton setTitle:NSLocalizedString(@"EXCHANGE_TITLE", nil) forState:UIControlStateNormal];
-    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    
+    
     
     self.toolModel = [[TDBaseToolModel alloc] init];
     
@@ -160,6 +161,12 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TD_User_Coupon_Exchange_Sucess" object:nil];
     
+    [self srollToFirstView];
+}
+
+- (void)srollToFirstView {
+    UIButton *selButton = self.titleButtons[0];
+    [self btnClick:selButton];
 }
 
 //2.您已经领用了优惠券
