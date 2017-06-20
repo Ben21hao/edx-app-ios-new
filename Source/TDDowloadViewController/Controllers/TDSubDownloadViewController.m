@@ -38,9 +38,9 @@
 
 #pragma mark - tableview Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.arr_CourseData.count == 0) {
-        self.noDataLabel.hidden = NO;
-    }
+    
+    self.noDataLabel.hidden = self.arr_CourseData.count == 0 ? NO : YES;
+    
     return self.arr_CourseData.count;
 }
 
@@ -108,10 +108,13 @@
     self.noDataLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
     self.noDataLabel.text = [Strings noVideosDownloaded];
     self.noDataLabel.hidden = YES;
+    self.noDataLabel.numberOfLines = 0;
+    self.noDataLabel.textAlignment = NSTextAlignmentCenter;
     [self.tableView addSubview:self.noDataLabel];
     
     [self.noDataLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self.tableView);
+        make.width.mas_equalTo(TDWidth - 18);
     }];
 }
 

@@ -47,7 +47,7 @@ class TDUserCenterViewController: OfflineSupportViewController,UITableViewDelega
         super.viewDidLoad()
 
         setUpViewConstraint()
-//        tsetRightNavigationBar()
+//        setRightNavigationBar()
         
         addProfileListener()//数据请求
     }
@@ -94,7 +94,7 @@ class TDUserCenterViewController: OfflineSupportViewController,UITableViewDelega
         }
     }
     
-    func tsetRightNavigationBar() {
+    func setRightNavigationBar() {
         
         let rightButton = UIButton.init(frame: CGRectMake(0, 0, 68, 48))
         rightButton.contentEdgeInsets = UIEdgeInsetsMake(0, 16, 0, -16)
@@ -168,7 +168,6 @@ class TDUserCenterViewController: OfflineSupportViewController,UITableViewDelega
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return section == 0 ? 0 : 8;
         return section == 1 ? 8 : 0;
     }
     

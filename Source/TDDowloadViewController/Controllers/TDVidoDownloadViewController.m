@@ -26,7 +26,6 @@ typedef  enum OEXAlertType
 #define RECENT_HEADER_HEIGHT 30.0
 
 @interface TDVidoDownloadViewController () <OEXVideoPlayerInterfaceDelegate,UITableViewDelegate,UITableViewDataSource> {
-    NSInteger cellSelectedIndex;
     NSIndexPath* clickedIndexpath;
 }
 
@@ -77,6 +76,17 @@ typedef  enum OEXAlertType
     
     [self addPlayerObserver];
     
+    [self addActionObserverTarge];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.view.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
+}
+
+- (void)addActionObserverTarge {
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectAllChanged:) name:@"Navigation_SelectAll_Handle" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subDownloadAppear:) name:@"TD_SubDowload_Appear" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadViewDisapear:) name:@"TD_Download_Disapear" object:nil];
@@ -85,15 +95,7 @@ typedef  enum OEXAlertType
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieDidEnterFullScreen:) name:MPMoviePlayerDidEnterFullscreenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieWillExitFullScreen:) name:MPMoviePlayerWillExitFullscreenNotification object:nil];
-    
 }
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    self.view.backgroundColor = [UIColor redColor];
-}
-
 
 - (void)playVideoForIndexPath:(NSIndexPath*)indexPath {
     
@@ -216,8 +218,7 @@ typedef  enum OEXAlertType
                 //Buffering view
                 OEXLogInfo(@"VIDEO", @"Playing unwatched video");
                 if(_currentTappedVideo.watchedState != OEXPlayedStatePartiallyWatched) {
-                    [self.dataInterface markVideoState:OEXPlayedStatePartiallyWatched
-                                              forVideo:_currentTappedVideo];
+                    [self.dataInterface markVideoState:OEXPlayedStatePartiallyWatched forVideo:_currentTappedVideo];
                 }
                 _currentTappedVideo.watchedState = OEXPlayedStatePartiallyWatched;
             }
@@ -253,11 +254,9 @@ typedef  enum OEXAlertType
             
             self.videoPlayerInterface.moviePlayerController.currentPlaybackTime = 0.0;
             
-            if(cellSelectedIndex != 0) {
-                _currentTappedVideo.watchedState = OEXPlayedStateWatched;
-                [self.dataInterface markVideoState:OEXPlayedStateWatched
-                                          forVideo:_currentTappedVideo];
-            }
+            _currentTappedVideo.watchedState = OEXPlayedStateWatched;
+            [self.dataInterface markVideoState:OEXPlayedStateWatched forVideo:_currentTappedVideo];
+            
             [self.tableView reloadData];
         }
     }
@@ -319,9 +318,7 @@ typedef  enum OEXAlertType
 - (void)navigationChangedToState:(OEXSideNavigationState)state {
     switch(state) {
         case OEXSideNavigationStateVisible:
-            if(cellSelectedIndex == 1) {
-                [self addPlayerObserver];
-            }
+            [self addPlayerObserver];
             [_videoPlayerInterface setShouldRotate:YES];
             break;
         case OEXSideNavigationStateHidden:
@@ -336,11 +333,26 @@ typedef  enum OEXAlertType
 - (void)downloadViewDisapear:(NSNotification *)info {
     
     [self removePlayerObserver];
+    [self removeOtherObserver];
+}
+
+- (void)removeOtherObserver {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Navigation_SelectAll_Handle" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TD_SubDowload_Appear" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:OEXSideNavigationChangedStateKey object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerDidEnterFullscreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerWillExitFullscreenNotification object:nil];
 }
 
 - (void)subDownloadAppear:(NSNotification *)info {
     
+    self.currentTappedVideo = nil;
+    
     [self resetPlayer];
+    [_videoPlayerInterface resetPlayer];
+    _videoPlayerInterface = nil;
+    
     [self cancelTableClicked:nil];
     [self showVideoViewHeight:NO showEditeView:YES];
 }
@@ -457,9 +469,8 @@ typedef  enum OEXAlertType
 
 #pragma mark - tableView Delegate 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.arr_CourseData.count == 0) {
-        self.noDataLabel.hidden = NO;
-    }
+
+    self.noDataLabel.hidden = self.arr_CourseData.count == 0 ? NO : YES;
     return [self.arr_CourseData count];
 }
 
@@ -490,13 +501,11 @@ typedef  enum OEXAlertType
     }
     
     //Played state
-    NSString *imageStr;
+    NSString *imageStr = @"ic_unwatched.png";
     if(obj_video.watchedState == OEXPlayedStateWatched) {
         imageStr = @"ic_watched.png";
     } else if(obj_video.watchedState == OEXPlayedStatePartiallyWatched) {
         imageStr = @"ic_partiallywatched.png";
-    } else {
-        imageStr = @"ic_unwatched.png";
     }
     cell.img_VideoWatchState.image = [UIImage imageNamed:imageStr];
     
@@ -553,10 +562,10 @@ typedef  enum OEXAlertType
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // To avoid showing selected cell index of old video when new video is played
     
-        self.dataInterface.selectedCCIndex = -1;
-        self.dataInterface.selectedVideoSpeedIndex = -1;
+    // To avoid showing selected cell index of old video when new video is played
+    self.dataInterface.selectedCCIndex = -1;
+    self.dataInterface.selectedVideoSpeedIndex = -1;
     
     clickedIndexpath = indexPath;
     
@@ -988,14 +997,13 @@ typedef  enum OEXAlertType
 #pragma mark - UI
 - (void)setViewContraint {
     
-    self.view.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
-    
     self.tableView = [[UITableView alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    self.tableView.separatorColor = [UIColor colorWithHexString:colorHexStr6];
+    self.tableView.separatorColor = [UIColor colorWithHexString:colorHexStr7];
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
     self.tableView.exclusiveTouch = YES;
     [self.view addSubview:self.tableView];
     
@@ -1014,6 +1022,8 @@ typedef  enum OEXAlertType
     self.noDataLabel.textColor = [UIColor colorWithHexString:colorHexStr8];
     self.noDataLabel.text = [Strings noVideosDownloaded];
     self.noDataLabel.hidden = YES;
+    self.noDataLabel.numberOfLines = 0;
+    self.noDataLabel.textAlignment = NSTextAlignmentCenter;
     [self.tableView addSubview:self.noDataLabel];
     
     [self.video_containerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1039,6 +1049,7 @@ typedef  enum OEXAlertType
     
     [self.noDataLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.mas_equalTo(self.tableView);
+        make.width.mas_equalTo(TDWidth - 18);
     }];
 }
 

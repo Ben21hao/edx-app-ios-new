@@ -55,6 +55,11 @@ class TDUserMessageCell: UITableViewCell {
         statusLabel.layer.cornerRadius = 10.0
         statusLabel.layer.borderWidth = 0.5
         statusLabel.layer.borderColor = UIColor.whiteColor().CGColor
+        if #available(iOS 10.0, *) {
+            statusLabel.adjustsFontForContentSizeCategory = true
+        } else {
+            // Fallback on earlier versions
+        }
         bgView.addSubview(statusLabel)
         
         headerImageView.image = UIImage.init(named: "people")
@@ -85,7 +90,7 @@ class TDUserMessageCell: UITableViewCell {
         statusLabel.snp_makeConstraints { (make) in
             make.centerX.equalTo(headerImageView.snp_centerX)
             make.bottom.equalTo(headerImageView.snp_bottom).offset(5)
-            make.size.equalTo(CGSizeMake(58, 20))
+            make.size.equalTo(CGSizeMake(68, 20))
         }
     }
 }

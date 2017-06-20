@@ -72,6 +72,8 @@
     
     self.dataInterface = [OEXInterface sharedInterface];
     [self.dataInterface setNumberOfRecentDownloads:0];
+    
+    self.btn_SelectAllEditing.tintColor = [[OEXStyles sharedStyles] navigationItemTintColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -82,6 +84,20 @@
     
     [self showLoadingView];
     [self getMyVideosTableData];
+    
+    [self performSelector:@selector(reloadTable) withObject:self afterDelay:8.0];
+}
+
+- (void)reloadTable {
+    
+    [self.loadingView removeFromSuperview];
+        
+    [self getMyVideosTableData];
+}
+
+- (void)downloadDataAppear:(NSNotification *)info {
+    
+    [self reloadTable];
 }
 
 - (void)showLoadingView {
@@ -96,15 +112,20 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"TD_Download_Disapear" object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:OEXDownloadProgressChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:OEXDownloadEndedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:OEXDownloadProgressChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_DOWNLOAD_DATA object:nil];
 }
 
 - (void)addObservers {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadCompleteNotification:) name:OEXDownloadEndedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTotalDownloadProgress:) name:OEXDownloadProgressChangedNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadDataAppear:) name:NOTIFICATION_DOWNLOAD_DATA object:nil];
 }
 
-#pragma update total download progress
+#pragma mark - update total download progress
 
 - (void)downloadCompleteNotification:(NSNotification*)notification {
     NSDictionary* dict = notification.userInfo;
@@ -178,6 +199,10 @@
     }
     
     [self reloadDownloadData];
+    
+    if (self.arr_CourseData.count > 0) {
+        [self.loadingView removeFromSuperview];
+    }
 }
 
 - (NSString*)calculateVideosSizeInCourse:(NSArray*)arrvideo {
@@ -195,8 +220,6 @@
 }
 
 - (void)reloadDownloadData { //刷新数据
-    
-    [self.loadingView removeFromSuperview];
     
     self.courseVC.arr_CourseData = self.arr_CourseData;
     [self.courseVC.tableView reloadData];
@@ -262,6 +285,8 @@
     for (int i = 0; i < count; i ++) {
         UIButton *titleButton = [[UIButton alloc] initWithFrame:CGRectMake(i * width, 0, width, height)];
         titleButton.tag = i;
+        titleButton.showsTouchWhenHighlighted = YES;
+        titleButton.exclusiveTouch = YES;
         titleButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:16];
         [titleButton setTitleColor:[UIColor colorWithHexString:colorHexStr9] forState:UIControlStateNormal];
         [titleButton addTarget:self action:@selector(titleButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -314,6 +339,7 @@
 }
 
 #pragma mark - UIViewDelegate
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     
     NSInteger page = scrollView.contentOffset.x / TDWidth;

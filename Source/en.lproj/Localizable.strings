@@ -335,7 +335,7 @@
 /* Prompt shown to users on the course list encouraging them to find new courses */
 "ENROLLMENT_LIST.FIND_COURSES_PROMPT" = "Looking for a new challenge?";
 /* Button title opening course catalog */
-"ENROLLMENT_LIST.FIND_COURSES" = "Find a course";
+"ENROLLMENT_LIST.FIND_COURSES" = "Find a mobile-friendly course";
 /* Error message when user is not enrolled to any course and course discovery is also disabled.*/
 "ENROLLMENT_LIST.NO_ENROLLMENT" = "It looks like you are not enrolled in any courses yet.";
 /* Prompt indicating user needs to enter an email address */
@@ -505,7 +505,7 @@
 /* Option to allow for nil setting of a particular field */
 "PROFILE.NO_FIELD" = "No {field_name}";
 /* Text in the picture taker alert to delete the existing image */
-"PROFILE.REMOVE_IMAGE" = "Remove";
+"PROFILE.REMOVE_IMAGE" = "Remove photo";
 /* Profile screen text indicating that the user is currently only displaying a limited profile */
 "PROFILE.SHOWING_LIMITED" = "You are currently sharing a limited profile";
 /* Text for take picture for user profile photo alert */
@@ -733,9 +733,9 @@
 /*已发送*/
 "SENT" = "Already sent";
 /*密码重置验证码已发送*/
-"PASSWORD_RESET_AUTHENTICATION_SENT" = "Password reset authentication code has been sent.";
+"PASSWORD_RESET_AUTHENTICATION_SENT" = "Verification code for password reset has been sent.";
 /*验证码已发送*/
-"AUTHENTICATION_CODE_SENT" = "Authentication code has been sent.";
+"AUTHENTICATION_CODE_SENT" = "Verification code has been sent.";
 /*发送失败*/
 "SEND_FAILED" = "Send failed";
 /*该手机未注册*/
@@ -762,6 +762,8 @@
 "JUMP_OVER" = "Skip";
 /*注册*/
 "REGISTER" = "Sign Up";
+/*注册 - 按钮*/
+"REGISTER_TEXT" = "Sign up";
 /*版本*/
 "APPVERSION" = "Version";
 /*我的课程*/
@@ -1124,11 +1126,11 @@
 "PHONE_OR_EMAIL_REGISTER" = "Sign up with mobile or email";
 /*请输入邮箱或手机号码。并按操作提示完成密码重置。*/
 "PHONE_OR_EMAIL_RESET_PASSWORD" = "Please enter your email address or mobile number, and follow the instruction to reset password.";
-/*服务条款*/
+/*条款说明*/
 "SERVICE_ITEM" = "Stipulation";
 /*邮箱或手机号码*/
 "PHONE_OR_EMAIL" = "Mobile or email";
-/*我们给您发送了一封重置密码邮件，请进入邮箱查收并按提示设置新密码。*/
+/*我们给您发送了一封重置密码邮件，请进入邮箱查收并按提示激活账号。*/
 "HAD_SEND_EMAIL" = "An activation mail has been sent. Please log in {count} and follow the instruction to activate.";
 /*已经激活？马上登录*/
 "ACTIVITY_LOGIN" = "Already activated? Log in now";

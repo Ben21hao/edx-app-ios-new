@@ -94,6 +94,8 @@ typedef NS_ENUM(NSUInteger, OEXVideoSpeed) {
 
 #define NOTIFICATION_APP_ENTER_FOREGROUND @"EnterForeground"
 
+#define NOTIFICATION_DOWNLOAD_DATA @"Download_Data_Apear"
+
 //Post method for API calls
 #define OEXHTTPMethodPOST @"POST"
 

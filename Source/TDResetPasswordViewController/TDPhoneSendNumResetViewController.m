@@ -112,11 +112,6 @@
             
             [self cutDownTime];
             
-            [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"SENT", nil)
-                                                                    message:NSLocalizedString(@"PASSWORD_RESET_AUTHENTICATION_SENT", nil)
-                                                           onViewController:self.navigationController.view
-                                                                 shouldHide:YES];
-            
         }else if ([code intValue] == 403){//手机没注册
             [self handleResendButton:YES];
             
@@ -155,6 +150,11 @@
 
 #pragma mark -- 倒计时
 - (void)cutDownTime {
+    
+    [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"SENT", nil)
+                                                            message:NSLocalizedString(@"PASSWORD_RESET_AUTHENTICATION_SENT", nil)
+                                                   onViewController:self.navigationController.view
+                                                         shouldHide:YES];
     
     self.resendButton.userInteractionEnabled = NO;
     

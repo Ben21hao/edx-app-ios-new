@@ -863,10 +863,12 @@ static OEXInterface* _sharedInterface = nil;
             break;
         }
     }
-
+    
     [_courseVideos safeSetObject:videos forKey:URLString];
     
     [self makeRecordsForVideos:videos inCourse:course];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_DOWNLOAD_DATA object:nil];
 }
 
 - (NSMutableArray*)videosForChapterID:(NSString*)chapter

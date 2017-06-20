@@ -257,8 +257,8 @@
     self.img_SeparatorEULA.hidden = hide;
 }
 
-- (NSString*)signInButtonText {
-    return [Strings signInText];
+- (NSString *)signInButtonText {
+    return NSLocalizedString(@"SIGN_IN", nil);//[Strings signInText]
 }
 
 - (void)handleActivationDuringLogin {
@@ -337,7 +337,7 @@
     self.btn_Login.layer.cornerRadius = 4;
     self.btn_Login.backgroundColor = [UIColor colorWithHexString:colorHexStr1];
     self.registerButton.showsTouchWhenHighlighted = YES;
-    [self.registerButton setTitle:NSLocalizedString(@"REGISTER", nil) forState:UIControlStateNormal];
+    [self.registerButton setTitle:NSLocalizedString(@"REGISTER_TEXT", nil) forState:UIControlStateNormal];
     [self.registerButton setTitleColor:[UIColor colorWithHexString:colorHexStr1] forState:UIControlStateNormal];
     
     [self textField:self.tf_Password backgroundWithView:self.passwordBgView];

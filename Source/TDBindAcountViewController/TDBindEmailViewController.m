@@ -72,8 +72,8 @@
             TDBindSuccessViewController *successVC = [[TDBindSuccessViewController alloc] init];
             [self.navigationController pushViewController:successVC animated:YES];
             
-        } else if ([code intValue] == 402) {
-            [self.view makeToast:NSLocalizedString(@"EMAIL_AREADY_SEND", nil) duration:1.08 position:CSToastPositionCenter];
+//        } else if ([code intValue] == 402) {
+//            [self.view makeToast:NSLocalizedString(@"EMAIL_AREADY_SEND", nil) duration:1.08 position:CSToastPositionCenter];
             
         }  else if ([code intValue] == 500) {
             [self.view makeToast:NSLocalizedString(@"UNKNOWN_ERROR", nil) duration:1.08 position:CSToastPositionCenter];
