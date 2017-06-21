@@ -11,6 +11,7 @@
 @interface TDAssistantTopCell : UITableViewCell
 
 @property (nonatomic,strong) UIButton *videoButton;
+@property (nonatomic,strong) UIButton *cancelButton;
 @property (nonatomic,strong) UILabel *titleLabel;
 
 @end

@@ -417,12 +417,22 @@
             
             assistantTopCell.videoButton.tag = indexPath.section;
             [assistantTopCell.videoButton addTarget:self action:@selector(videoButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+            
+            assistantTopCell.cancelButton.tag = indexPath.section;
+            [assistantTopCell.cancelButton addTarget:self action:@selector(cancelButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+            
             assistantTopCell.videoButton.hidden = YES;
             if (self.whereFrom == TDAssistantFromTwo) {
                 if ([model.mp4_url.status intValue] == 2 && model.mp4_url.url.length > 0) {
                     assistantTopCell.videoButton.hidden = NO;
                 }
             }
+            
+            assistantTopCell.cancelButton.hidden = YES;
+            if (self.whereFrom == TDAssistantFromOne && [model.order_type intValue] == 1) {
+                assistantTopCell.cancelButton.hidden = [self dealWithTimeStr:model.service_begin_at];
+            }
+            
             assistantTopCell.titleLabel.text = [NSString stringWithFormat:@"%@",model.course_display_name];
             return assistantTopCell;
         }
@@ -481,11 +491,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == 1) {
-        TDAssistantServiceModel *model = self.dataArray[indexPath.section];
-        CGFloat height = [self heightForCell:[NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"QUETION_DESCRIPTION", nil),model.question]];
-        if (height > 88) {
-            return height;
-        }
+        //        TDAssistantServiceModel *model = self.dataArray[indexPath.section];
+        //        CGFloat height = [self.toolModel heightForString:model.question font:14 width:TDWidth - 100];
+        //        if (height > 88) {
+        //            return height + 55;
+        //        }
         return 88;
     } else if (indexPath.row == 3) {
         return 48;
@@ -542,8 +552,13 @@
     [self.navigationController pushViewController:videoViewcontroller animated:YES];
 }
 
-
 #pragma mark - 取消
+- (void)cancelButtonAction:(UIButton *)sender {
+    
+    TDAssistantServiceModel *model = self.dataArray[sender.tag];
+    [self cancelActionOrderId:model];
+}
+
 - (void)cancelActionOrderId:(TDAssistantServiceModel *)model {
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
@@ -578,6 +593,39 @@
         [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"取消订单出错 -- %ld",(long)error.code);
     }];
+}
+
+- (BOOL)dealWithTimeStr:(NSString *)startTime { //startTime 为东八区时间
+    
+    NSString *str1 = [startTime substringToIndex:19];
+    NSString *timeStr = [str1 stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *startDate = [formatter dateFromString:timeStr];//预约开始时间
+    
+    NSDate *nowDate = [NSDate date];//当前时间
+    
+    //统一用东八区时间
+    NSDate *now = [self getChinaTime:nowDate];
+    
+    NSTimeInterval nowInterval = [now timeIntervalSince1970]*1;//手机系统时间
+    NSTimeInterval startInterval = [startDate timeIntervalSince1970]*1;//课程结束时间
+    NSInteger timeNum = startInterval - nowInterval;
+    
+    NSDate *date = [nowDate earlierDate:startDate];//较早的时间
+    
+    if ([date isEqualToDate:nowDate] && timeNum > 24 * 60 *60) { //当前时间为较早时间
+        return  NO;
+    }
+    return YES;
+}
+
+- (NSDate *)getChinaTime:(NSDate *)date {//计算东八区的时间
+    NSTimeZone* localTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT+0800"];//获取本地时区(中国时区)
+    NSInteger offset = [localTimeZone secondsFromGMTForDate:date];//计算世界时间与本地时区的时间偏差值
+    NSDate *localDate = [date dateByAddingTimeInterval:offset];//世界时间＋偏差值 得出中国区时间
+    return localDate;
 }
 
 #pragma mark - 进入教室

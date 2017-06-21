@@ -115,10 +115,9 @@ class OEXRearTableViewController : UITableViewController {
         profileFeed?.output.listen(self,  success: { profile in
             self.userProfilePicture.remoteImage = profile.image(self.environment.networkManager)
             
-            if (profile.nickname != nil) == true {//如果昵称不为空,显示昵称
+            if profile.nickname != nil && profile.nickname?.characters.count != 0 {//如果昵称不为空,显示昵称
                 self.userNameLabel.text = profile.nickname
-            }
-            if (profile.nickname == nil) == true {//如果昵称为空,显示用户名
+            } else {
                 if profile.name != profile.username {
                     self.userNameLabel.text = profile.name
                 } else {

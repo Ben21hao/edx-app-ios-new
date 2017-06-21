@@ -145,9 +145,10 @@ class TDUserCenterViewController: OfflineSupportViewController,UITableViewDelega
     }
     
     func gotoRechargeCoinVc() { //充值宝典
-        let userCouponVC1 = TDRechargeViewController()
-        userCouponVC1.username = session.currentUser?.username //传当前用户名
-        self.navigationController?.pushViewController(userCouponVC1, animated: true)
+        let rechargeVc = TDRechargeViewController()
+        rechargeVc.username = session.currentUser?.username //传当前用户名
+        rechargeVc.whereFrom = 0
+        self.navigationController?.pushViewController(rechargeVc, animated: true)
     }
     
     func gotoWaiForPayVc() { //待支付订单

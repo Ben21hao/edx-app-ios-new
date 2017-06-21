@@ -252,7 +252,7 @@
 - (void)submitCoursesButtonAction {//提交课表
 
     if (![self judgeHasCourseSelect]) {
-        [self.view makeToast:@"请选择课程" duration:1.08 position:CSToastPositionCenter];
+        [self.view makeToast:NSLocalizedString(@"SELECT_COURSE", nil) duration:1.08 position:CSToastPositionCenter];
         return;
     }
     TDSubmitCourseViewController *submitVC = [[TDSubmitCourseViewController alloc] init];

@@ -119,19 +119,27 @@
 
     if ([date isEqualToDate:nowDate]) {//当前时间为较早时间
         
-        if (self.timeNum > 24 * 60 *60) {
-            self.cancelButton.hidden = NO;
-            
-        } else {
-            
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(waitForTime) userInfo:nil repeats:YES];
-            [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-            
-            self.enterButton.hidden = NO;
-            self.isCanClick = NO;
-            
-            [self timeResultShow];
-        }
+//        if (self.timeNum > 24 * 60 *60) {
+//            self.cancelButton.hidden = NO;
+//            
+//        } else {
+//            
+//            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(waitForTime) userInfo:nil repeats:YES];
+//            [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+//            
+//            self.enterButton.hidden = NO;
+//            self.isCanClick = NO;
+//            
+//            [self timeResultShow];
+//        }
+        
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(waitForTime) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+        
+        self.enterButton.hidden = NO;
+        self.isCanClick = NO;
+        
+        [self timeResultShow];
         
     } else {//当前时间已过开始时间
         self.enterButton.hidden = NO;

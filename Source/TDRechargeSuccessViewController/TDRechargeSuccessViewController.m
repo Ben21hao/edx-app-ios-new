@@ -31,6 +31,11 @@
     [self requerestData];
     [self setViewConstraint];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     self.timeNum = 0;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(repeatAction) userInfo:nil repeats:YES];
 }
@@ -74,8 +79,13 @@
 - (void)backButtonAction:(UIButton *)sender {
     if (self.successModel == nil) {
         [self.navigationController popToRootViewControllerAnimated:YES];
+        
     } else {
-        [self.navigationController popViewControllerAnimated:YES];
+        if (self.whereFrom == 0) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self.navigationController popToViewController:self.navigationController.childViewControllers[1] animated:YES];
+        }
     }
 }
 

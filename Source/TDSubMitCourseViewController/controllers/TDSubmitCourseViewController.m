@@ -271,6 +271,7 @@
     TDRechargeViewController *couViewController = [[TDRechargeViewController alloc] init];
     couViewController.currentCanons = [self.remain_score doubleValue];
     couViewController.username = self.username;
+    couViewController.whereFrom = 1;
     
     WS(weakSelf);
     couViewController.rechargeSuccessHandle = ^(){

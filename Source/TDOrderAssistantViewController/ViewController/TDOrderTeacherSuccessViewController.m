@@ -104,6 +104,7 @@
     } else {//充值
         TDRechargeViewController *rechargeVC = [[TDRechargeViewController alloc] init];
         rechargeVC.username = self.username;
+        rechargeVC.whereFrom = 1;
         [self.navigationController pushViewController:rechargeVC animated:YES];
     }
 }

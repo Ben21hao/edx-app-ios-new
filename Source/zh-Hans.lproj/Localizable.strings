@@ -235,7 +235,7 @@
 /* Label indicating when a course ends. */
 "COURSE_DETAIL.END_DATE"="截止日期:";
 /* Button title allowing user to enroll in a course */
-"COURSE_DETAIL.ENROLL_NOW" = "马上加入";
+"COURSE_DETAIL.ENROLL_NOW" = "加入课程";
 /* Button title allowing user to view a course from the course's catalog detail page */
 "COURSE_DETAIL.VIEW_COURSE" = "查看课程";
 /* Title of tab showing course content */
@@ -602,7 +602,7 @@
 /* Button initiating login process after user enters credentials like username and password */
 "SIGN_IN_BUTTON_TEXT"="登录";
 /* Message shown while user waits for response to a sign in request */
-"SIGN_IN_BUTTON_TEXT_ON_SIGN_IN"="登录中...";
+"SIGN_IN_BUTTON_TEXT_ON_SIGN_IN"="正在登录";
 /*Sign up screen title and button initiating sign up process on the main screen */
 "REGISTER_TEXT"="注册";
 /* Indicates a date in the near future */
@@ -801,7 +801,7 @@
 "USE_PHONE_REGISTER" = "使用手机注册";
 /*请输入手机号码*/
 "PLEASE_ENTER_PHONE_NUMBER" = "请输入手机号码";
-/*请输入验证码*/
+/*请输入手机验证码*/
 "PLEASE_ENTER_VERI" = "请输入手机验证码";
 /*请输入密码*/
 "PLEASE_ENTER_PASSWORD" = "请输入新密码";
@@ -1127,8 +1127,8 @@
 "PASSWORD_NUM" = "6-30位密码";
 /*密码至少6位字符*/
 "MORE_PASSWORD" = "密码至少6位字符";
-/*请输入小于30位的密码*/
-"LESS_PASSWORD" = "请输入小于30位的密码";
+/*密码不超过30位字符*/
+"LESS_PASSWORD" = "密码不超过30位字符";
 /*使用手机号码或邮箱注册*/
 "PHONE_OR_EMAIL_REGISTER" = "请输入手机号码或邮箱。并按操作提示完成密码重置。";
 /*请输入手机号码或邮箱。并按操作提示完成密码重置。*/

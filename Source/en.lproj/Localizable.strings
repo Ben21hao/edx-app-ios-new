@@ -798,7 +798,7 @@
 "USE_PHONE_REGISTER" = "Sign up with mobile";
 /*请输入手机号*/
 "PLEASE_ENTER_PHONE_NUMBER" = "Mobile";
-/*请输入验证码*/
+/*请输入手机验证码*/
 "PLEASE_ENTER_VERI" = "Verification code";
 /*请输入密码*/
 "PLEASE_ENTER_PASSWORD" = "Please enter the new password";
@@ -1119,8 +1119,8 @@
 /*6-30位密码*/
 "PASSWORD_NUM" = "6-30 characters";
 /*密码至少6位字符*/
-"MORE_PASSWORD" = "No more than 6 characters";
-/*请输入小于30位的密码*/
+"MORE_PASSWORD" = "Password should be at least 6 characters.";
+/*密码不超过30位字符*/
 "LESS_PASSWORD" = "Password should be no more than 30 characters";
 /*使用邮箱或手机号码注册*/
 "PHONE_OR_EMAIL_REGISTER" = "Sign up with mobile or email";

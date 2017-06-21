@@ -11,6 +11,7 @@
 @interface TDRechargeSuccessViewController : TDBaseViewController
 
 @property (nonatomic,strong) NSString *orderId;
+@property (nonatomic,assign) NSInteger whereFrom;
 
 @property (nonatomic,copy) void(^updateTotalCoinHandle)(NSString *totalStr);
 

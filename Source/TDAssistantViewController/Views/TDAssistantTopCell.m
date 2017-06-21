@@ -43,7 +43,24 @@
     [self.videoButton setTitle:NSLocalizedString(@"VIDEO_REPLAY", nil) forState:UIControlStateNormal];
     [self.videoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.bgView addSubview:self.videoButton];
+
+    
+    self.cancelButton = [self setButtonConstraint:NSLocalizedString(@"CANCEL", nil) backGroundColor:colorHexStr1 titleColor:colorHexStr13];
+    [self.bgView addSubview:self.cancelButton];
 }
+
+- (UIButton *)setButtonConstraint:(NSString *)title backGroundColor:(NSString *)color1 titleColor:(NSString *)color2 {
+    
+    UIButton *button   = [[UIButton alloc] init];
+    button.backgroundColor = [UIColor colorWithHexString:color1];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor colorWithHexString:color2] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:16];
+    button.layer.cornerRadius = 4.0;
+    button.showsTouchWhenHighlighted = YES;
+    return button;
+}
+
 
 - (void)setViewConstraint {
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -59,6 +76,12 @@
         make.centerY.mas_equalTo(self.bgView.mas_centerY);
         make.right.mas_equalTo(self.bgView.mas_right).offset(-8);
         make.size.mas_equalTo(CGSizeMake(88, 25));
+    }];
+    
+    [self.cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.bgView.mas_centerY);
+        make.right.mas_equalTo(self.bgView.mas_right).offset(-8);
+        make.size.mas_equalTo(CGSizeMake(68, 28));
     }];
 }
 
