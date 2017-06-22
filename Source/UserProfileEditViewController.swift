@@ -375,16 +375,28 @@ class UserProfileEditViewController: UITableViewController,UIGestureRecognizerDe
         
         let alertView = TDAlertView.init()
         alertView.frame = CGRectMake(0, 0, TDScreenWidth,TDScreenHeight - 60)
+        
         alertView.sureHandle = { (AnyObject) -> () in
             
-            alertView.removeFromSuperview()
             if AnyObject.characters.count == 0 {
-                self.view.makeToast(Strings.loginPassword, duration: 1.08, position: CSToastPositionCenter)
+                alertView.errorLabel.text = Strings.loginPassword
+                alertView.vertifiFailed = true
+                
             } else {
                 let baseTool = TDBaseToolModel.init()
                 baseTool.vertifiteLoginPassword(AnyObject, andName: self.profile.username, onView: self.view)
-                baseTool.vertifitePasswordHandle = { () in
-                    self.jumpToController(type)
+                
+                baseTool.vertifitePasswordHandle = { (code: Int) in
+                    
+                    if code == 200 {
+                        
+                        alertView.removeFromSuperview()
+                        self.jumpToController(type)
+                        
+                    } else {
+                        alertView.errorLabel.text = Strings.passwordError
+                        alertView.vertifiFailed = true
+                    }
                 }
             }
         }

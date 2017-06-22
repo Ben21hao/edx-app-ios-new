@@ -242,10 +242,10 @@
                 self.page > 1 ? self.page = 1 : self.page --;
             }
             
-            if ([responseDic objectForKey:@"pages"]) {
-                self.maxPage = [responseDic[@"pages"] intValue];
-            }
-           
+            [self.tableView.mj_footer endRefreshing];
+            
+            [self.tableView reloadData];
+            
         } else if ([code intValue] == 201) { //没有更多数据了
             if (type == 2) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
@@ -260,24 +260,6 @@
         }
         
         NSLog(@"评论 --- %@ = %@",code,responseObject[@"msg"]);
-        
-        if (type == 2) {
-            if (self.page >= self.maxPage) {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                self.tableView.mj_footer.hidden = YES;
-            }else{
-                [self.tableView.mj_footer endRefreshing];
-            }
-        } else {
-            if (self.commentArray.count <= 6) {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                self.tableView.mj_footer.hidden = YES;
-            } else {
-                [self.tableView.mj_footer resetNoMoreData];
-                self.tableView.mj_footer.hidden = NO;
-            }
-        }
-        [self.tableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         self.loadingView.hidden = YES;
@@ -306,6 +288,8 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NoCommentCell"];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         self.nullLabel = [[UILabel alloc] init];
         self.nullLabel.font = [UIFont fontWithName:@"OpenSans" size:16];
         self.nullLabel.textColor = [UIColor colorWithHexString:colorHexStr8];

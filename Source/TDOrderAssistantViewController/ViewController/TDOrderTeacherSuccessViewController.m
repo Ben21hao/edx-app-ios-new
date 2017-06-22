@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
-    self.title = self.isSuccess ? NSLocalizedString(@"APPOINTMENT_STATUS", nil) : NSLocalizedString(@"APPOINTMENT_STATUS", nil);
+    self.title = self.isSuccess ? NSLocalizedString(@"APPOINTMENT_STATUS", nil) : NSLocalizedString(@"APPOINTMENT_STATUS_FAIL", nil);
     self.view.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
     self.toolModel = [[TDBaseToolModel alloc] init];
     [self setLeftNavigationBar];
@@ -104,7 +104,7 @@
     } else {//充值
         TDRechargeViewController *rechargeVC = [[TDRechargeViewController alloc] init];
         rechargeVC.username = self.username;
-        rechargeVC.whereFrom = 1;
+        rechargeVC.whereFrom = 2;
         [self.navigationController pushViewController:rechargeVC animated:YES];
     }
 }

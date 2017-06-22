@@ -142,6 +142,7 @@
     isEnable ? [self.codeActivitView stopAnimating] : [self.codeActivitView startAnimating];
     self.resendButton.userInteractionEnabled = isEnable;
     [self.resendButton setTitle:isEnable ? NSLocalizedString(@"RESEND", nil) : @"" forState:UIControlStateNormal];
+    self.resendButton.alpha = 1;
 }
 
 - (void)appEnterForeground {
@@ -169,11 +170,13 @@
 
 - (void)timeChange {
     
-    self.resendButton.userInteractionEnabled = NO;
     self.timeNum -= 1;
     
     [self.codeActivitView stopAnimating];
+    
+    self.resendButton.userInteractionEnabled = NO;
     [self.resendButton setTitle:[NSString stringWithFormat:@"%d%@",self.timeNum,NSLocalizedString(@"SECOND", nil)] forState:UIControlStateNormal];
+    self.resendButton.alpha = 0.8;
     
     if (self.timeNum <= 0) {
         [self.timer invalidate];

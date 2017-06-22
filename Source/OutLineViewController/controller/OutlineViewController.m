@@ -208,7 +208,11 @@ static NSString *ID = @"outline";
     [table reloadSections:indeSet withRowAnimation:UITableViewRowAnimationFade];
 
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:Int];
-    if (isBOOL[Int]) {
+    
+    OutlineFirstItem *item1 = [OutlineFirstItem mj_objectWithKeyValues:_dataArr[Int]];
+    NSArray *subArr = item1.sections;
+    
+    if (isBOOL[Int] && subArr.count > 0) {
         [table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }

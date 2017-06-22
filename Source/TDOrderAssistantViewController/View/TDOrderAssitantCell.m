@@ -38,21 +38,35 @@
     //设置头像
     [self.headerImage sd_setImageWithURL:model.avatar_url[@"large"] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
-
     self.nameLabel.text = model.name;
     self.quetionLabel.text = model.slogan;
     
-    self.talkButton.hidden = YES;
+    
     NSString *imageStr = @"offline";
     
-    if ([model.realtime_status intValue] == 1) { //离线(0)，空闲(1)，忙碌(2)
-        self.talkButton.hidden = NO;
+    if ([model.realtime_status intValue] == 0) {
+        [self remarkTalkButton:YES];
+        imageStr = @"offline";
+        
+    } else if ([model.realtime_status intValue] == 1) { //离线(0)，空闲(1)，忙碌(2)
+        [self remarkTalkButton:NO];
         imageStr = @"online";
     } else if ([model.realtime_status intValue] == 2) {
+        [self remarkTalkButton:YES];
         imageStr = @"busy";
-    } 
+    }
     self.statusImage.image = [UIImage imageNamed:imageStr];
+}
+
+- (void)remarkTalkButton:(BOOL)isHidden {
     
+    self.talkButton.hidden = isHidden;
+    
+    [self.talkButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self.orderButton.mas_left).offset(-8);
+        make.top.mas_equalTo(self.bgView.mas_top).offset(11);
+        make.size.mas_equalTo(CGSizeMake(isHidden ? 0 : 68, 26));
+    }];
 }
 
 #pragma mark - 按钮
@@ -102,12 +116,12 @@
     self.quetionLabel.textColor = [UIColor colorWithHexString:colorHexStr9];
     self.quetionLabel.numberOfLines = 0;
     [self.bgView addSubview:self.quetionLabel];
-
+    
     self.orderButton = [self setButtonWithTitle:NSLocalizedString(@"APPOINTMENT", nil) withColor:colorHexStr4];
     [self.orderButton addTarget:self action:@selector(orderButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.orderButton];
     
-    self.talkButton = [self setButtonWithTitle:NSLocalizedString(@"INSTANT_SERVICE", nil) withColor:colorHexStr1];
+    self.talkButton = [self setButtonWithTitle:NSLocalizedString(@"INSTANT_SERVICE_BUTTON", nil) withColor:colorHexStr1];
     [self.talkButton addTarget:self action:@selector(talkButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.bgView addSubview:self.talkButton];
     
@@ -121,7 +135,7 @@
     UIButton *customButton = [[UIButton alloc] init];
     customButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:12];
     customButton.backgroundColor = [UIColor colorWithHexString:colorStr];
-    customButton.layer.cornerRadius = 12.0;
+    customButton.layer.cornerRadius = 13.0;
     customButton.showsTouchWhenHighlighted = YES;
     [customButton setTitle:title forState:UIControlStateNormal];
     [customButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -133,6 +147,18 @@
         make.left.right.bottom.top.mas_equalTo(self);
     }];
     
+    [self.orderButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self.bgView.mas_right).offset(-8);
+        make.top.mas_equalTo(self.bgView.mas_top).offset(11);
+        make.size.mas_equalTo(CGSizeMake(83, 26));
+    }];
+    
+    [self.talkButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(self.orderButton.mas_left).offset(-8);
+        make.top.mas_equalTo(self.bgView.mas_top).offset(11);
+        make.size.mas_equalTo(CGSizeMake(68, 26));
+    }];
+    
     [self.headerImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.bgView.mas_centerY);
         make.left.mas_equalTo(self.bgView.mas_left).offset(11);
@@ -142,6 +168,7 @@
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.bgView.mas_top).offset(11);
         make.left.mas_equalTo(self.headerImage.mas_right).offset(8);
+        make.right.mas_equalTo(self.talkButton.mas_left).offset(-3);
         make.height.mas_equalTo(26);
     }];
     
@@ -158,17 +185,6 @@
         make.size.mas_equalTo(CGSizeMake(16, 16));
     }];
     
-    [self.orderButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.bgView.mas_right).offset(-8);
-        make.centerY.mas_equalTo(self.nameLabel.mas_centerY);
-        make.size.mas_equalTo(CGSizeMake(83, 24));
-    }];
-    
-    [self.talkButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(self.orderButton.mas_left).offset(-8);
-        make.centerY.mas_equalTo(self.nameLabel.mas_centerY);
-        make.size.mas_equalTo(CGSizeMake(89, 24));
-    }];
 }
 
 @end

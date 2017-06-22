@@ -41,7 +41,7 @@
 #import "Encryption.h"//md5加密
 #import "WeChatPay.h"
 
-@interface WaitForPayViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
+@interface WaitForPayViewController ()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,UIAlertViewDelegate>
 
 @property (nonatomic,strong) NSMutableArray *ordersArr;//所有的订单数组
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -418,8 +418,45 @@ static NSString *cellID = @"WaitForPayTableViewCell";
         [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             //【callback处理支付结果】
             NSLog(@"A--reslut = %@",resultDic);
+            
+            NSString *resultStatus = resultDic[@"resultStatus"];
+            
+            NSString *strTitle = NSLocalizedString(@"PAY_RESULT", nil);
+            NSString *str;
+            switch ([resultStatus integerValue]) {
+                case 6001:
+                    str = NSLocalizedString(@"PAY_CANCEL", nil);
+                    break;
+                case 9000:
+                    str = NSLocalizedString(@"PAY_SUCCESS", nil);
+                    break;
+                case 8000:
+                    str = NSLocalizedString(@"IS_HANDLE", nil);
+                    break;
+                case 4000:
+                    str = NSLocalizedString(@"PAY_FAIL", nil);
+                    break;
+                case 6002:
+                    str = NSLocalizedString(@"NETWORK_CONNET_FAIL", nil);
+                    break;
+                    
+                default:
+                    break;
+            }
+            if ([resultStatus isEqualToString:@"9000"]) {
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"aliPaySuccess" object:nil]];
+                
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:str delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+                alert.tag = 9000;
+                [alert show];
+            }
         }];
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"aliPayFail" object:nil];
 }
 
 #pragma mark - 选择支付方式

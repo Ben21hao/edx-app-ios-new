@@ -11,7 +11,7 @@
 @interface TDRechargeSuccessViewController : TDBaseViewController
 
 @property (nonatomic,strong) NSString *orderId;
-@property (nonatomic,assign) NSInteger whereFrom;
+@property (nonatomic,assign) NSInteger whereFrom;//0 个人中心， 1 课程结算，2 预约助教
 
 @property (nonatomic,copy) void(^updateTotalCoinHandle)(NSString *totalStr);
 

@@ -10,6 +10,10 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "Order.h"
 
+@interface TDAlipay () <UIAlertViewDelegate>
+
+@end
+
 @implementation TDAlipay
 
 - (void)submitPostAliPay:(TDAliPayModel *)aliPayModel {
@@ -47,12 +51,45 @@
         
         [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
             NSLog(@"A--reslut = %@",resultDic); //【callback处理支付结果】
+            
+            NSString *resultStatus = resultDic[@"resultStatus"];
+            
+            NSString *strTitle = NSLocalizedString(@"PAY_RESULT", nil);
+            NSString *str;
+            switch ([resultStatus integerValue]) {
+                case 6001:
+                    str = NSLocalizedString(@"PAY_CANCEL", nil);
+                    break;
+                case 9000:
+                    str = NSLocalizedString(@"PAY_SUCCESS", nil);
+                    break;
+                case 8000:
+                    str = NSLocalizedString(@"IS_HANDLE", nil);
+                    break;
+                case 4000:
+                    str = NSLocalizedString(@"PAY_FAIL", nil);
+                    break;
+                case 6002:
+                    str = NSLocalizedString(@"NETWORK_CONNET_FAIL", nil);
+                    break;
+                    
+                default:
+                    break;
+            }
+            if ([resultStatus isEqualToString:@"9000"]) {
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"aliPaySuccess" object:nil]];
+                
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:str delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+                alert.delegate = self;
+                [alert show];
+            }
         }];
-        NSLog(@"orderString = %@",orderString);
     }
-    
-    NSLog(@"orderSpec = %@",orderSpec);
-    NSLog(@"order.outTradeNO--%@",order.outTradeNO);
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"aliPayFail" object:nil];
 }
 
 #pragma mark - 加密

@@ -13,4 +13,8 @@
 @property (nonatomic,copy) void(^cancelHandle)();
 @property (nonatomic,copy) void(^sureHandle)(NSString *password);
 
+@property (nonatomic,assign) BOOL vertifiFailed;
+
+@property (nonatomic,strong) UILabel *errorLabel;
+
 @end

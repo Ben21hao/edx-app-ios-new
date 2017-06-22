@@ -901,7 +901,7 @@
 /*复制微信号*/
 "COPY_WECHAT_NUMBER" = "Copy Wechat ID";
 /*宝典充值*/
-"RECHARGE_Coins" = "Recharge coins";
+"RECHARGE_Coins" = "Recharge Coins";
 /*微信支付*/
 "WECHAT_PAY" = "Wechat Pay";
 /*支付宝支付*/
@@ -1391,7 +1391,7 @@
 /* 超出10分钟按12.50宝典/分钟计费  12.50 coins per minute afterwards.*/
 "PAYMENT_NOTE_LAST" = " 12.50 coins per minute afterwards.";
 /*预约失败 Appointment Status */
-"APPOINTMENT_STATUS" = "Appointment Status";
+"APPOINTMENT_STATUS_FAIL" = "Appointment Status";
 /*预约失败！Unable to make this appointment. */
 "UNABLE_APPOINTMENT" = "Unable to make this appointment.";
 /*重新预约 Reschedule */
@@ -1434,6 +1434,8 @@
 "TA_CANCELLED" = "Cancelled";
 /*即时服务 : Instant service */
 "INSTANT_SERVICE" = "Instant service";
+/*即时服务 : Ask now" */
+"INSTANT_SERVICE_BUTTON" = "Ask now";
 /*问题描述 Question description */
 "QUETION_DESCRIPTION" = "Question description";
 /*暂无待服务记录 No pending service yet */

@@ -10,7 +10,7 @@
 
 @interface TDRechargeViewController : TDBaseViewController
 
-@property (nonatomic,assign) NSInteger whereFrom; //0 个人中心，1 其他
+@property (nonatomic,assign) NSInteger whereFrom; //0 个人中心， 1 课程结算，2 预约助教
 @property (nonatomic,assign) double currentCanons; //当前宝典数量
 @property (nonatomic,copy) NSString *username; //用户名
 @property (nonatomic,copy) void(^rechargeSuccessHandle)();

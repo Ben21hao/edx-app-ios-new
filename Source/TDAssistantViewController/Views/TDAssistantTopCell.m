@@ -67,15 +67,16 @@
         make.left.right.top.bottom.mas_equalTo(self);
     }];
     
-    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(self.bgView.mas_centerY);
-        make.left.mas_equalTo(self.bgView.mas_left).offset(8);
-    }];
-    
     [self.videoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.mas_equalTo(self.bgView.mas_centerY);
         make.right.mas_equalTo(self.bgView.mas_right).offset(-8);
         make.size.mas_equalTo(CGSizeMake(88, 25));
+    }];
+    
+    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.bgView.mas_centerY);
+        make.left.mas_equalTo(self.bgView.mas_left).offset(8);
+        make.right.mas_equalTo(self.videoButton.mas_left).offset(-8);
     }];
     
     [self.cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {

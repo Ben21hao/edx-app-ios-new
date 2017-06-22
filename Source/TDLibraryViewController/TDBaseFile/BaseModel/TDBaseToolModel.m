@@ -118,16 +118,12 @@
         NSDictionary *respondDic = (NSDictionary *)responseObject;
         id code = respondDic[@"code"];
         
-        if ([code intValue] == 200) {
-            if (self.vertifitePasswordHandle) {
-                self.vertifitePasswordHandle();
-            }
-            
-        } else if ([code intValue] == 400) {
-            [view makeToast:NSLocalizedString(@"PASSWORD_ERROR", nil) duration:1.08 position:CSToastPositionCenter];
-        } else {
-            NSLog(@"验证登录密码 -- %@",respondDic[@"msg"]);
+        NSLog(@"验证登录密码 -- %@",respondDic[@"msg"]);
+        
+        if (self.vertifitePasswordHandle) {
+            self.vertifitePasswordHandle([code integerValue]);
         }
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"验证登录密码 -- %ld",(long)error.code);
     }];
@@ -171,12 +167,12 @@
             NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:frontStr
                                                                                      attributes:@{
                                                                                                   NSFontAttributeName : [UIFont fontWithName:@"OpenSans" size:font],
-                                                                                                  NSStrikethroughStyleAttributeName : @(NSUnderlineStyleSingle)
+                                                                                                  NSStrikethroughStyleAttributeName : @(NSUnderlineStyleSingle),NSBaselineOffsetAttributeName: @(0)
                                                                                                   }];
             NSMutableAttributedString *str2 = [[NSMutableAttributedString alloc] initWithString:behindStr
                                                                                      attributes:@{
                                                                                                   NSFontAttributeName : [UIFont fontWithName:@"OpenSans" size:smallFont],
-                                                                                                  NSStrikethroughStyleAttributeName : @(NSUnderlineStyleSingle)
+                                                                                                  NSStrikethroughStyleAttributeName : @(NSUnderlineStyleSingle),NSBaselineOffsetAttributeName: @(0)
                                                                                                   }];
             
             [str1 appendAttributedString:str2];

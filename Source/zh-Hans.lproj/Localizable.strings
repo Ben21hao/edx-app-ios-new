@@ -1113,8 +1113,8 @@
 "NEED_ACTIVITY" = "您的账号尚未激活";
 /*确定发送激活邮件到登录邮箱？*/
 "SEND_EMAIL_ACTIVITY" = "确定发送激活邮件？";
-/*昵称不能为空*/
-"NICKNAME_NULL" = "昵称不能为空";
+/*请输入昵称*/
+"NICKNAME_NULL" = "请输入昵称";
 /*昵称最多填写六个字*/
 "NICKNAME_NUMBER" = "昵称最多填写六个字";
 /*下一步*/
@@ -1130,7 +1130,7 @@
 /*密码不超过30位字符*/
 "LESS_PASSWORD" = "密码不超过30位字符";
 /*使用手机号码或邮箱注册*/
-"PHONE_OR_EMAIL_REGISTER" = "请输入手机号码或邮箱。并按操作提示完成密码重置。";
+"PHONE_OR_EMAIL_REGISTER" = "请输入手机号码或邮箱。并按操作提示完成密码设置。";
 /*请输入手机号码或邮箱。并按操作提示完成密码重置。*/
 "PHONE_OR_EMAIL_RESET_PASSWORD" = "请输入手机号码或邮箱。并按操作提示完成密码重置。";
 /*条款说明*/
@@ -1394,7 +1394,7 @@
 /* 超出10分钟按12.50宝典/分钟计费  12.50 coins per minute afterwards.*/
 "PAYMENT_NOTE_LAST" = " 超出10分钟按12.50宝典/分钟计费";
 /*预约失败 Appointment Status */
-"APPOINTMENT_STATUS" = "预约失败";
+"APPOINTMENT_STATUS_FAIL" = "预约失败";
 /*预约失败！Unable to make this appointment. */
 "UNABLE_APPOINTMENT" = "预约失败！";
 /*重新预约 Reschedule */
@@ -1437,6 +1437,8 @@
 "TA_CANCELLED" = "已取消";
 /*即时服务 : Instant service */
 "INSTANT_SERVICE" = "即时服务";
+/*即时服务 : Ask now" */
+"INSTANT_SERVICE_BUTTON" = "即时服务";
 /*问题描述 Question description */
 "QUETION_DESCRIPTION" = "问题描述";
 /*暂无待服务记录 No pending service yet */

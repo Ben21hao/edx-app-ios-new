@@ -77,6 +77,7 @@
 }
 
 - (void)backButtonAction:(UIButton *)sender {
+    
     if (self.successModel == nil) {
         [self.navigationController popToRootViewControllerAnimated:YES];
         
@@ -84,7 +85,11 @@
         if (self.whereFrom == 0) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
-            [self.navigationController popToViewController:self.navigationController.childViewControllers[1] animated:YES];
+            NSInteger index = 1;
+            if (self.whereFrom == 2) {
+                index = 3;
+            }
+            [self.navigationController popToViewController:self.navigationController.childViewControllers[index] animated:YES];
         }
     }
 }

@@ -80,6 +80,10 @@ class JSONFormTableViewController<T>: UITableViewController,UIGestureRecognizerD
             tableView.cellLayoutMarginsFollowReadableWidth = false
         }
         makeAndInstallHeader()
+        
+        dataSource?.callBackFunction({
+            self.navigationController?.popViewControllerAnimated(true)
+        })
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -129,16 +133,23 @@ struct ChooserDatum<T> {
     let attributedTitle: NSAttributedString?
 }
 
+typealias funcBlock = () -> Void
+
 class ChooserDataSource<T> : NSObject, UITableViewDataSource, UITableViewDelegate {
     let data: [ChooserDatum<T>]
     var selectedIndex: Int = -1
     var selectedItem: T? {
         return selectedIndex < data.count && selectedIndex >= 0 ? data[selectedIndex].value : nil
     }
+    var callBackBlock = funcBlock?()
     
     init(data: [ChooserDatum<T>]) {
         self.data = data
         super.init()
+    }
+    
+    func callBackFunction(block:() -> Void) {
+        callBackBlock = block
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -173,6 +184,10 @@ class ChooserDataSource<T> : NSObject, UITableViewDataSource, UITableViewDelegat
         }
         
         tableView.reloadRowsAtIndexPaths(rowsToRefresh, withRowAnimation: .Automatic)
+        
+        if callBackBlock != nil {
+            callBackBlock!()
+        }
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         cell.accessoryType = indexPath.row == selectedIndex ? .Checkmark : .None

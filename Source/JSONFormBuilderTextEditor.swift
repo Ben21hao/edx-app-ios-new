@@ -79,8 +79,7 @@ class JSONFormBuilderTextEditorViewController: TDSwiftBaseViewController {
         self.textView.resignFirstResponder()
         
         if textView.text.characters.count == 0 { //昵称不能为空
-            let alertView = UIAlertView.init(title: Strings.reminder, message: Strings.nicknameNull, delegate: self, cancelButtonTitle: Strings.ok)
-            alertView.show()
+            self.view.makeToast(Strings.nicknameNull, duration: 1.08, position: CSToastPositionCenter)
             
         } else if textView.text.characters.count == 1 {
             self.view.makeToast( Strings.aleastTeoCharacter, duration: 1.08, position: CSToastPositionCenter)
@@ -100,8 +99,7 @@ class JSONFormBuilderTextEditorViewController: TDSwiftBaseViewController {
             }
             
         } else { //不能超过六个字
-            let alertView = UIAlertView.init(title: Strings.reminder, message: Strings.nicknameNumber, delegate: self, cancelButtonTitle: Strings.ok)
-            alertView.show()
+            self.view.makeToast(Strings.nicknameNumber, duration: 1.08, position: CSToastPositionCenter)
         }
     }
     

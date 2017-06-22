@@ -39,7 +39,7 @@
 /*
  验证登录密码是否正确
  */
-@property (nonatomic,copy) void(^vertifitePasswordHandle)();
+@property (nonatomic,copy) void(^vertifitePasswordHandle)(NSInteger code);
 - (void)vertifiteLoginPassword:(NSString *)password andName:(NSString *)username onView:(UIView *)view;
 
 /*

@@ -37,6 +37,20 @@
     return self;
 }
 
+- (void)setVertifiFailed:(BOOL)vertifiFailed {
+    _vertifiFailed = vertifiFailed;
+    
+    self.errorLabel.hidden = !vertifiFailed;
+    
+    [self.alertView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.mas_centerY).offset(-29);
+        make.left.mas_equalTo(self.mas_left).offset(29);
+        make.right.mas_equalTo(self.mas_right).offset(-29);
+        make.height.mas_equalTo(vertifiFailed ? 183 : 149);
+    }];
+}
+
+#pragma mark - UI
 - (void)configView {
     
     self.bgView = [[UIView alloc] init];
@@ -105,6 +119,14 @@
     [self.eyeButton setTitle:@"\U0000f070" forState:UIControlStateNormal];
     [self.eyeButton addTarget:self action:@selector(eyeButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.inputView addSubview:self.eyeButton];
+    
+    self.errorLabel = [[UILabel alloc] init];
+    self.errorLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
+    self.errorLabel.textAlignment = NSTextAlignmentCenter;
+    self.errorLabel.textColor = [UIColor colorWithHexString:@"#F47676"];
+    [self.alertView addSubview:self.errorLabel];
+    
+    self.errorLabel.hidden = YES;
 }
 
 - (void)setViewConstraint {
@@ -132,8 +154,9 @@
         make.height.mas_equalTo(39);
     }];
     
-    [self.line1  mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.inputView.mas_bottom).offset(15);
+    [self.line1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        //        make.top.mas_equalTo(self.inputView.mas_bottom).offset(15);
+        make.bottom.mas_equalTo(self.alertView.mas_bottom).offset(-48);
         make.left.right.mas_equalTo(self.alertView);
         make.height.mas_equalTo(0.5);
     }];
@@ -170,20 +193,38 @@
         make.right.mas_equalTo(self.inputView.mas_right).offset(-5);
         make.size.mas_equalTo(CGSizeMake(29, 29));
     }];
+    
+    [self.errorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.mas_equalTo(self.alertView);
+        make.top.mas_equalTo(self.inputView.mas_bottom).offset(3);
+        make.bottom.mas_equalTo(self.line1.mas_top).offset(-3);
+    }];
 }
 
 #pragma mark - textField delegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     
+    self.errorLabel.hidden = YES;
+    
+    int topHeight = 29;
     if (self.bounds.size.height / 2 < TDKeybordHeight + 115) {
-        int topHeight = TDKeybordHeight + 115 - self.bounds.size.height / 2;
-        [self.alertView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.mas_equalTo(self.mas_centerY).offset(-topHeight);
-            make.left.mas_equalTo(self.mas_left).offset(29);
-            make.right.mas_equalTo(self.mas_right).offset(-29);
-            make.height.mas_equalTo(149);
-        }];
+        
+        topHeight = TDKeybordHeight + 115 - self.bounds.size.height / 2;
+        
+        //        [self.alertView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        //            make.centerY.mas_equalTo(self.mas_centerY).offset(-topHeight);
+        //            make.left.mas_equalTo(self.mas_left).offset(29);
+        //            make.right.mas_equalTo(self.mas_right).offset(-29);
+        //            make.height.mas_equalTo(149);
+        //        }];
     }
+    [self.alertView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self.mas_centerY).offset(-topHeight);
+        make.left.mas_equalTo(self.mas_left).offset(29);
+        make.right.mas_equalTo(self.mas_right).offset(-29);
+        make.height.mas_equalTo(149);
+    }];
+    
     return YES;
 }
 
@@ -232,7 +273,7 @@
 - (void)tapViewAction {
     [self.textField resignFirstResponder];
 }
-                                        
+
 @end
 
 
