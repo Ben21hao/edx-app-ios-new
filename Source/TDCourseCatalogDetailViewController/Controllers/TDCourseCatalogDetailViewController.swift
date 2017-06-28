@@ -86,6 +86,7 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         if self.gotoStudyView == 0 {
             setNilTimer()
         }
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("Come_From_Course_Detail")
     }
     
     func loadCourseData() {//数据
@@ -221,7 +222,8 @@ class TDCourseCatalogDetailViewController: TDSwiftBaseViewController,UITableView
         
     }
     internal func gotoCourseOutlineVc() { //课程大纲
-        let vc = OutlineViewController()
+//        let vc = OutlineViewController()
+        let vc = TDCourseOutLineViewController()
         vc.courseID = self.courseID
         self.navigationController?.pushViewController(vc, animated: true)
     }

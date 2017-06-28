@@ -39,7 +39,7 @@
  overrideURL 课程大纲url
 */
 - (void)getCourseAnnouncement:(NSString *)courseID;
-@property (nonatomic,copy) void(^getCourseAnounceHandl)(OEXAnnouncement *anouncement);
+@property (nonatomic,copy) void(^getCourseAnounceHandl)(NSArray *anounceArray);
 
 /* 
  课程详情

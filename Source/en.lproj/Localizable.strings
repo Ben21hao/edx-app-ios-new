@@ -251,7 +251,7 @@
 /* Text describing the Announcements section within the course dashboard */
 "COURSE_DASHBOARD_ANNOUNCEMENTS_DETAIL"="Keep up with the latest news";
 /* Title text for the Courseware section of the course dashboard */
-"COURSE_DASHBOARD_COURSEWARE"="Course";
+"COURSE_DASHBOARD_COURSEWARE"="Courseware";
 /* Text describing the Courseware section within the course dashboard */
 "COURSE_DASHBOARD_COURSE_DETAIL"="Access videos and assignments";
 /* Title text for the Discussions section of the course dashboard */
@@ -729,7 +729,7 @@
 /*输入错误*/
 "INPUT_ERROR" = "Input Error";
 /*不可用的邮箱地址或手机号码*/
-"UNUSED_EMAIL_OR_PHONE_NUMBER" = "Not available email address or phone number.";
+"UNUSED_EMAIL_OR_PHONE_NUMBER" = "Not available mobile number or email address.";
 /*已发送*/
 "SENT" = "Already sent";
 /*密码重置验证码已发送*/
@@ -969,7 +969,7 @@
 /*合计*/
 "IN_TOTAL_PRICE" = "Total:";
 /*支付*/
-"PAY_TITLE" = "Pay Now";
+"PAY_TITLE" = "Pay now";
 /*未使用*/
 "NO_USE_COUPON" = "Available";
 /*已使用*/
@@ -1057,7 +1057,7 @@
 /*暂无学员评价*/
 "NO_STUDENT_COMMENT" = "No comments";
 /*选课表*/
-"COURSE_LIST" = "Course list";
+"COURSE_LIST" = "Course List";
 /*提交课表*/
 "HANDIN_COURSE_LIST" = "Submit";
 /*推荐课程*/
@@ -1125,7 +1125,7 @@
 /*使用邮箱或手机号码注册*/
 "PHONE_OR_EMAIL_REGISTER" = "Sign up with mobile or email";
 /*请输入邮箱或手机号码。并按操作提示完成密码重置。*/
-"PHONE_OR_EMAIL_RESET_PASSWORD" = "Please enter your email address or mobile number, and follow the instruction to reset password.";
+"PHONE_OR_EMAIL_RESET_PASSWORD" = "Please enter your emobile number or email address, and follow the instruction to reset password.";
 /*条款说明*/
 "SERVICE_ITEM" = "Stipulation";
 /*邮箱或手机号码*/

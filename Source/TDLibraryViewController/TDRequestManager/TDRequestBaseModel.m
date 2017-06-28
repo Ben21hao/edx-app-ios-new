@@ -109,16 +109,25 @@
         
         NSArray *responseArray = (NSArray *)responseObject;
         if (responseArray.count > 0) {
-            NSDictionary *responseDic = responseArray[0];
-            OEXAnnouncement *anounceModel = [[OEXAnnouncement alloc] initWithDictionary:responseDic];
+            NSMutableArray *array = [[NSMutableArray alloc] init];
             
-            NSString *htmlStr = responseDic[@"content"];
-            if ([htmlStr isEqual:[NSNull null]]) {
-                htmlStr = @"";
-                anounceModel.content = htmlStr;
+            for (int i = 0; i < responseArray.count; i ++) {
+                NSDictionary *responseDic = responseArray[i];
+                OEXAnnouncement *anounceModel = [[OEXAnnouncement alloc] initWithDictionary:responseDic];
+                
+                NSString *htmlStr = responseDic[@"content"];
+                if ([htmlStr isEqual:[NSNull null]]) {
+                    htmlStr = @"";
+                    anounceModel.content = htmlStr;
+                }
+                
+                if (anounceModel) {
+                    [array addObject:anounceModel];
+                }
             }
-            if (self.getCourseAnounceHandl && anounceModel) {
-                self.getCourseAnounceHandl(anounceModel);
+            
+            if (self.getCourseAnounceHandl) {
+                self.getCourseAnounceHandl(array);
             }
             
         } else {

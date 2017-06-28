@@ -127,23 +127,9 @@ class CourseAnnouncementsViewController: OfflineSupportViewController, UIWebView
         let requestModel = TDRequestBaseModel.init()
         requestModel.getCourseAnnouncement(self.courseID)
         
-        requestModel.getCourseAnounceHandl = {(announcement: OEXAnnouncement?)in
-            
-            if announcement!.content!.characters.count == 0 {
-                self.loadController.state = LoadState.empty(icon: nil, message: Strings.announcementUnavailable)
-                self.webView.makeToast("暂无资料", duration: 1.08, position: CSToastPositionCenter)
-                
-            } else {
-                var html:String = String()
-                html += "<div class=\"announcement-header\">\(announcement!.heading!)</div>"//日期
-                html += "<hr class=\"announcement\"/>"
-                html += announcement!.content ?? ""
-                html += "<div class=\"announcement-separator\"/></div>"
-                
-                let displayHTML = OEXStyles.sharedStyles().styleHTMLContent(html, stylesheet: "handouts-announcements") ?? ""
-                let baseURL = self.environment.config.apiHostURL()
-                self.webView.loadHTMLString(displayHTML, baseURL: baseURL)
-            }
+        requestModel.getCourseAnounceHandl = {(announceArray) in
+
+            self.useAnnouncements(announceArray as! [OEXAnnouncement])
         }
         requestModel.requestFailed = { () in
             self.loadController.state = LoadState.empty(icon: nil, message: Strings.announcementUnavailable)

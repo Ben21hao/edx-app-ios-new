@@ -531,6 +531,9 @@
 		B50DF9B01EAAF6B9001F38BD /* TDBaseTableview.m in Sources */ = {isa = PBXBuildFile; fileRef = B50DF9A61EAAF6B9001F38BD /* TDBaseTableview.m */; };
 		B50DF9B11EAAF6B9001F38BD /* TDBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = B50DF9A81EAAF6B9001F38BD /* TDBaseView.m */; };
 		B50DF9B21EAAF6B9001F38BD /* TDTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B50DF9AA1EAAF6B9001F38BD /* TDTextView.m */; };
+		B50DFC811F033AFD006AE41F /* TDCourseOutLineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50DFC801F033AFD006AE41F /* TDCourseOutLineViewController.m */; };
+		B50DFC841F033B1B006AE41F /* TDCourseOutLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B50DFC831F033B1B006AE41F /* TDCourseOutLineModel.m */; };
+		B50DFC871F033B3B006AE41F /* TDCourseOutLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B50DFC861F033B3B006AE41F /* TDCourseOutLineCell.m */; };
 		B5148C161ED2D33200F6DACD /* TDRequestBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5148C151ED2D33200F6DACD /* TDRequestBaseModel.m */; };
 		B5148C191ED2D35A00F6DACD /* TDFreeAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5148C181ED2D35A00F6DACD /* TDFreeAlertView.m */; };
 		B514D4251EE6480900E42A88 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B514D4271EE6480900E42A88 /* InfoPlist.strings */; };
@@ -1475,6 +1478,12 @@
 		B50DF9A81EAAF6B9001F38BD /* TDBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBaseView.m; sourceTree = "<group>"; };
 		B50DF9A91EAAF6B9001F38BD /* TDTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDTextView.h; sourceTree = "<group>"; };
 		B50DF9AA1EAAF6B9001F38BD /* TDTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDTextView.m; sourceTree = "<group>"; };
+		B50DFC7F1F033AFD006AE41F /* TDCourseOutLineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCourseOutLineViewController.h; sourceTree = "<group>"; };
+		B50DFC801F033AFD006AE41F /* TDCourseOutLineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCourseOutLineViewController.m; sourceTree = "<group>"; };
+		B50DFC821F033B1B006AE41F /* TDCourseOutLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCourseOutLineModel.h; sourceTree = "<group>"; };
+		B50DFC831F033B1B006AE41F /* TDCourseOutLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCourseOutLineModel.m; sourceTree = "<group>"; };
+		B50DFC851F033B3B006AE41F /* TDCourseOutLineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCourseOutLineCell.h; sourceTree = "<group>"; };
+		B50DFC861F033B3B006AE41F /* TDCourseOutLineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCourseOutLineCell.m; sourceTree = "<group>"; };
 		B5148C141ED2D33200F6DACD /* TDRequestBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDRequestBaseModel.h; sourceTree = "<group>"; };
 		B5148C151ED2D33200F6DACD /* TDRequestBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDRequestBaseModel.m; sourceTree = "<group>"; };
 		B5148C171ED2D35A00F6DACD /* TDFreeAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDFreeAlertView.h; sourceTree = "<group>"; };
@@ -3839,6 +3848,8 @@
 				B59238A31EADB6D100C686D8 /* OutlineViewController.h */,
 				B59238A41EADB6D100C686D8 /* OutlineViewController.m */,
 				B59238A51EADB6D100C686D8 /* OutlineViewController.xib */,
+				B50DFC7F1F033AFD006AE41F /* TDCourseOutLineViewController.h */,
+				B50DFC801F033AFD006AE41F /* TDCourseOutLineViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -3852,6 +3863,8 @@
 				B59238AA1EADB6D100C686D8 /* OutlineSecondItem.m */,
 				B59238AB1EADB6D100C686D8 /* OutlineThirdItem.h */,
 				B59238AC1EADB6D100C686D8 /* OutlineThirdItem.m */,
+				B50DFC821F033B1B006AE41F /* TDCourseOutLineModel.h */,
+				B50DFC831F033B1B006AE41F /* TDCourseOutLineModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3861,6 +3874,8 @@
 			children = (
 				B59238AE1EADB6D100C686D8 /* TDOutLineCell.h */,
 				B59238AF1EADB6D100C686D8 /* TDOutLineCell.m */,
+				B50DFC851F033B3B006AE41F /* TDCourseOutLineCell.h */,
+				B50DFC861F033B3B006AE41F /* TDCourseOutLineCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -5132,9 +5147,11 @@
 				B5168B701EB8274400C80436 /* dataUrlItem.m in Sources */,
 				77092C751B42E4C1004AA1A1 /* UIStatusBarStyle+Styles.swift in Sources */,
 				B59238E81EADD0BE00C686D8 /* TDActivityViewController.m in Sources */,
+				B50DFC871F033B3B006AE41F /* TDCourseOutLineCell.m in Sources */,
 				191A002E19405E97004F7902 /* OEXLatestUpdates.m in Sources */,
 				B52590FB1EB32D86003A950D /* WeChatPay.m in Sources */,
 				1AFEB1B61BBD5B95004C471D /* ProfilePictureTaker.swift in Sources */,
+				B50DFC811F033AFD006AE41F /* TDCourseOutLineViewController.m in Sources */,
 				B5FAF6F81EB03AB1000C2169 /* OrderItem.m in Sources */,
 				198826F1195D6979005D4D8A /* OEXMyVideosViewController.m in Sources */,
 				77E647CE1C90CAB800B6740D /* NSAttributedString+OEXFormatting.m in Sources */,
@@ -5500,6 +5517,7 @@
 				B5FAF6FC1EB03AB1000C2169 /* TDPayMoneyView.m in Sources */,
 				1904A14D1A1386C2006A5524 /* edXDB.xcdatamodel in Sources */,
 				E03E6A191D38EC7500944AAA /* UIView+UIViewController.swift in Sources */,
+				B50DFC841F033B1B006AE41F /* TDCourseOutLineModel.m in Sources */,
 				B52590E01EB2E16B003A950D /* CourseOutlineModeController.swift in Sources */,
 				77EC889E1AB787630050F9CF /* OEXAnalyticsData.m in Sources */,
 				7772BE961AF9587E0081CA7A /* CourseContentPageViewController.swift in Sources */,

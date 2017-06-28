@@ -181,8 +181,11 @@
     int munite = muniteNum / 60;
     int second = self.timeNum % 60;
     
-    NSString *str = [Strings timeCountNumWithDay:[NSString stringWithFormat:@"%d",day] hour:[NSString stringWithFormat:@"%d",hour] min:[NSString stringWithFormat:@"%d",munite] second:[NSString stringWithFormat:@"%d",second]];
-//    NSString *str = [NSString stringWithFormat:@"%d天%d时%d分%d秒",day,hour,munite,second];
+    NSString *dayStr = day == 0 ? @"00" : [NSString stringWithFormat:@"%d",day];
+    NSString *hourStr = hour == 0?  @"00": [NSString stringWithFormat:@"%d",hour];
+    NSString *muniteStr = munite == 0?  @"00": [NSString stringWithFormat:@"%d",munite];
+    
+    NSString *str = [Strings timeCountNumWithDay:dayStr hour:hourStr min:muniteStr second:[NSString stringWithFormat:@"%d",second]];
     [self.enterButton setTitle:str forState:UIControlStateNormal];
 }
 

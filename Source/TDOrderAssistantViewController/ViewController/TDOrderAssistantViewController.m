@@ -68,6 +68,7 @@
 
 #pragma mark - 上拉加载
 - (void)topPullLoading {
+    self.page ++;
     [self requestData:2];
 }
 
@@ -79,6 +80,7 @@
  */
 - (void)requestData:(NSInteger)type {
     
+    
     if (![self.baseTool networkingState]) {
         self.loadingView.hidden = YES;
         if (self.teacherArray.count == 0) {
@@ -88,17 +90,22 @@
     }
     
     if (self.page == 1) {
+        self.tableView.mj_footer.hidden = NO;
         [self.tableView.mj_footer resetNoMoreData];
     }
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.courseId forKey:@"course_id"];
     [dic setValue:@(self.page) forKey:@"pageindex"];
-    [dic setValue:@"10" forKey:@"pagesize"];
+    [dic setValue:@"8" forKey:@"pagesize"];
     
     NSString *url = [NSString stringWithFormat:@"%@/api/mobile/enterprise/v0.5/assistants/",ELITEU_URL];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:url parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        self.loadingView.hidden = YES;
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
         
         if (self.page == 1 && self.teacherArray.count != 0) {
             [self.teacherArray removeAllObjects];
@@ -119,26 +126,19 @@
                 }
                 if (self.teacherArray.count > 0) {
                     [self.tableView reloadData];
-                    self.page++;
                 } else {
                     self.nullLabel.hidden = NO;
                 }
             }
             
-            if (type == 2) {
-                [self.tableView.mj_footer endRefreshing];
-            } else {
-                [self.tableView.mj_header endRefreshing];
-                if (self.teacherArray.count < 8) {
-                    [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                } else {
-                    [self.tableView.mj_footer resetNoMoreData];
-                }
+            if (dataArray.count < 8) {
+                [self hiddenFooterView];
             }
+            
         } else if ([code intValue] == 201) { //没有更多数据了
-            if (type == 2) {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            }
+            
+            self.page --;
+            [self hiddenFooterView];
             [self.view makeToast:NSLocalizedString(@"NO_MORE_DATA", nil) duration:1.08 position:CSToastPositionCenter];
             
         } else if ([code intValue] == 404) { //该课程暂无助教
@@ -153,6 +153,11 @@
         [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"获取助教列表出错 -- %ld",(long)error.code);
     }];
+}
+
+- (void)hiddenFooterView {
+    self.tableView.mj_footer.hidden = YES;
+    [self.tableView.mj_footer endRefreshingWithNoMoreData];
 }
 
 - (void)setNullData {
