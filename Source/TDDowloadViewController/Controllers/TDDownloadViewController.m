@@ -91,7 +91,7 @@
 - (void)reloadTable {
     
     [self.loadingView removeFromSuperview];
-        
+    
     [self getMyVideosTableData];
 }
 
@@ -164,9 +164,9 @@
     if(![self.progressController progressView].hidden){
         [barButtons addObject:[self.progressController navigationItem]];
     }
-//    if(barButtons.count != self.navigationItem.rightBarButtonItems.count) {
-        self.navigationItem.rightBarButtonItems = barButtons;
-//    }
+    //    if(barButtons.count != self.navigationItem.rightBarButtonItems.count) {
+    self.navigationItem.rightBarButtonItems = barButtons;
+    //    }
 }
 
 - (void)selectAllChanged:(UIButton *)sender { //全选
@@ -235,10 +235,11 @@
     self.titleView.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
     [self.view addSubview:self.titleView];
     
-    self.contentView = [[TDBaseScrollView alloc] initWithFrame:CGRectMake(0, TitleView_Height, TDWidth, TDHeight - TitleView_Height - 60)];
+    self.contentView = [[TDBaseScrollView alloc] init];
     self.contentView.pagingEnabled = YES;
     self.contentView.delegate = self;
     self.contentView.bounces = NO;
+    self.contentView.frame = CGRectMake(0, TitleView_Height, TDWidth, TDHeight - TitleView_Height - 60);
     self.contentView.backgroundColor = [UIColor colorWithHexString:colorHexStr5];
     [self.view addSubview:self.contentView];
     
@@ -277,7 +278,7 @@
 }
 
 - (void)addTopTitlebutton {
-
+    
     NSInteger count = self.childViewControllers.count;
     CGFloat height = TitleView_Height - 2;
     CGFloat width = TDWidth / count;
@@ -332,7 +333,7 @@
         UIButton *button = self.titleButtons[i];
         NSString *colorStr = i == sender.tag ? colorHexStr1 : colorHexStr9;
         [button setTitleColor:[UIColor colorWithHexString:colorStr] forState:UIControlStateNormal];
-
+        
         UIView *sliView = self.lineArray[i];
         sliView.hidden = i == sender.tag ? NO : YES;
     }

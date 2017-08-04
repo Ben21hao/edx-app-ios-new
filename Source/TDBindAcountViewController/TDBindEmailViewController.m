@@ -76,7 +76,7 @@
 //            [self.view makeToast:NSLocalizedString(@"EMAIL_AREADY_SEND", nil) duration:1.08 position:CSToastPositionCenter];
             
         }  else if ([code intValue] == 500) {
-            [self.view makeToast:NSLocalizedString(@"UNKNOWN_ERROR", nil) duration:1.08 position:CSToastPositionCenter];
+            [self.view makeToast:NSLocalizedString(@"EMAIL_UNKNOWN_ERROR", nil) duration:1.08 position:CSToastPositionCenter];
             
         } else if ([code  intValue] == 403) {
             [self.view makeToast:NSLocalizedString(@"EMAIL_IS_REGISTERED", nil) duration:1.08 position:CSToastPositionCenter];

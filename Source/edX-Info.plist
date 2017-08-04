@@ -48,7 +48,7 @@
 			<string>org.eliteu.mobile-p</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>org.eliteu.mobile-person</string>
+				<string>org.eliteu.mobile</string>
 			</array>
 		</dict>
 		<dict>

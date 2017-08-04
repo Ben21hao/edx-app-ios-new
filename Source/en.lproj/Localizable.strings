@@ -869,7 +869,7 @@
 /*已发送验证邮件，请前往邮箱查看。*/
 "EMAIL_AREADY_SEND" = "Email send successfully, please check your mailbox.";
 /*未知错误*/
-"UNKNOWN_ERROR" = "unknown error";
+"EMAIL_UNKNOWN_ERROR" = "unknown error";
 /*确定绑定*/
 "SURE_BIND" = "Confirm";
 /*手机格式错误*/

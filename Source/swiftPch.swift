@@ -12,7 +12,7 @@ import UIKit
 
 //let ELITEU_URL = "http://192.168.0.108:8000"
 //let ELITEU_URL = "http://beta.eliteu.cn"
-let ELITEU_URL = "http://demo.eliteu.cn"
+let ELITEU_URL = "http://demo.e-ducation.cn"
 //let ELITEU_URL = "http://www.eliteu.cn"
 
 

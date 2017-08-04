@@ -231,7 +231,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     TDCouponModel *model = self.couponArray[indexPath.row];
-    return model.isSelected ? 198 : 158;
+    return model.isSelected ? 198 : 168;
 }
 
 #pragma mark - UI

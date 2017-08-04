@@ -400,7 +400,7 @@ static NSString *cellID = @"WaitForPayTableViewCell";
     
     //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
     //    NSString *appScheme = @"alisdkdemo";
-    NSString *appScheme = @"org.eliteu.mobile-person";
+    NSString *appScheme = @"org.eliteu.mobile";
     //将商品信息拼接成字符串
     NSString *orderSpec = [order description];
     NSLog(@"orderSpec = %@",orderSpec);
@@ -689,8 +689,8 @@ static NSString *cellID = @"WaitForPayTableViewCell";
 #pragma mark - 支付页面
 - (void)paySheetView:(OrderItem *)order {
     
-//    BOOL hasWechat = [WXApi isWXAppInstalled];
-    BOOL hasWechat = YES;
+    BOOL hasWechat = [WXApi isWXAppInstalled];
+//    BOOL hasWechat = YES;
     //布局子控件
     CGFloat alertHeight = 228;
     

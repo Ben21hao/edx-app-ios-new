@@ -381,7 +381,7 @@
     
     //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
     //    NSString *appScheme = @"alisdkdemo";
-    NSString *appScheme = @"org.eliteu.mobile-person";
+    NSString *appScheme = @"org.eliteu.mobile";
     //将商品信息拼接成字符串
     NSString *orderSpec = [order description];
     NSLog(@"orderSpec = %@",orderSpec);
@@ -786,7 +786,7 @@
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.mas_equalTo(self.view);
-        make.bottom.mas_equalTo(self.view.mas_bottom).offset(height);
+        make.bottom.mas_equalTo(self.view.mas_bottom).offset(-height);
     }];
     
     UIView *bottomView = [[UIView alloc] init];

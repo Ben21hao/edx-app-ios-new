@@ -34,7 +34,7 @@
     
     
     //    NSString *appScheme = @"alisdkdemo";
-    NSString *appScheme = @"org.eliteu.mobile-person"; //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
+    NSString *appScheme = @"org.eliteu.mobile"; //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
     NSString *orderSpec = [order description]; //将商品信息拼接成字符串
     
     /* 获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode */
