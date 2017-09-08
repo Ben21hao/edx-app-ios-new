@@ -94,6 +94,7 @@
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         [self.activityView stopAnimating];
         NSLog(@"重发邮件 -- %ld",(long)error.code);
     }];

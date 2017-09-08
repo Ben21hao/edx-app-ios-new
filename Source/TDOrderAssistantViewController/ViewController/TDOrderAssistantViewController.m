@@ -273,6 +273,7 @@
         NSLog(@"查询助教状态 --- %@%@",code ,responseDic[@"msg"]);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"查询助教状态出错 -- %ld",(long)error.code);
     }];
 }

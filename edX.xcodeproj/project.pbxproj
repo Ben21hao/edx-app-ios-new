@@ -5745,7 +5745,7 @@
 					"\"${PODS_ROOT}/Headers/Public/SVProgressHUD\"",
 					"\"${PODS_ROOT}/Headers/Public/Segment-GoogleAnalytics\"",
 					"\"${PODS_ROOT}/Headers/Public/Smartling.i18n\"",
-					"/Users/Ben/Documents/EliteU/edx-app-ios-enterprise-new/Source/TDPaymentTool/TDAlipayManager/aliPay",
+					"\"/Users/Eliteu/Eliteu/edx-new/edx-app-ios-new/Source/TDPaymentTool/TDAlipayManager/aliPay\"",
 				);
 				INFOPLIST_FILE = "Source/edX-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -6154,7 +6154,7 @@
 					"\"${PODS_ROOT}/Headers/Public/SVProgressHUD\"",
 					"\"${PODS_ROOT}/Headers/Public/Segment-GoogleAnalytics\"",
 					"\"${PODS_ROOT}/Headers/Public/Smartling.i18n\"",
-					"/Users/Ben/Documents/EliteU/edx-app-ios-enterprise-new/Source/TDPaymentTool/TDAlipayManager/aliPay",
+					"\"/Users/Eliteu/Eliteu/edx-new/edx-app-ios-new/Source/TDPaymentTool/TDAlipayManager/aliPay\"",
 				);
 				INFOPLIST_FILE = "Source/edX-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -6245,7 +6245,7 @@
 					"\"${PODS_ROOT}/Headers/Public/SVProgressHUD\"",
 					"\"${PODS_ROOT}/Headers/Public/Segment-GoogleAnalytics\"",
 					"\"${PODS_ROOT}/Headers/Public/Smartling.i18n\"",
-					"/Users/Ben/Documents/EliteU/edx-app-ios-enterprise-new/Source/TDPaymentTool/TDAlipayManager/aliPay",
+					"\"/Users/Eliteu/Eliteu/edx-new/edx-app-ios-new/Source/TDPaymentTool/TDAlipayManager/aliPay\"",
 				);
 				INFOPLIST_FILE = "Source/edX-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

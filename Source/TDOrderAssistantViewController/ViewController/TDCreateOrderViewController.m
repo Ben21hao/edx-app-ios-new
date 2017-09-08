@@ -114,6 +114,7 @@
         [self.tableView reloadData];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"获取个人信息出错 -- %ld, %@",(long)error.code, error.userInfo[@"com.alamofire.serialization.response.error.data"]);
     }];
 }
@@ -160,7 +161,7 @@
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
-        [self.view makeToast:@"" duration:1.08 position:CSToastPositionCenter];
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"预约助教出错 --- %ld",(long)error.code);
     }];
 }

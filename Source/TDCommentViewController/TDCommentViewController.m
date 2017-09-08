@@ -101,6 +101,7 @@
         [self requestCommentData:1];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"评论头部标签 error--%@",error);
     }];
 }
@@ -234,7 +235,7 @@
         }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         [self.loadIngView removeFromSuperview];
         NSLog(@"获取评论数据 error--%@",error);
     }];

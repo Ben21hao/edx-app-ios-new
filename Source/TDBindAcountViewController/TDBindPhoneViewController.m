@@ -105,6 +105,7 @@
             NSLog(@"验证登录密码 -- %@",respondDic[@"msg"]);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         [self.timer invalidate];
         self.codeButton.userInteractionEnabled = YES;
         NSLog(@"验证登录密码 -- %ld",(long)error.code);
@@ -197,6 +198,7 @@
             NSLog(@"更新失败 -- %ld",(long)respondDic[@"msg"]);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         NSLog(@"绑定出错 -- %ld, %@",(long)error.code, error.userInfo[@"com.alamofire.serialization.response.error.data"]);
     }];
 }

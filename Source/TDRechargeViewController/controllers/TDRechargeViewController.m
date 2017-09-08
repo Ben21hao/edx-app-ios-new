@@ -191,6 +191,7 @@
         [self.loadIngView removeFromSuperview];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         [self.loadIngView removeFromSuperview];
         NSLog(@"error -- %@",error);
     }];
@@ -344,6 +345,7 @@
         
         [self.rechargeView.activityView stopAnimating];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
         [self.rechargeView.activityView stopAnimating];
         NSLog(@"error--%@",error);
     }];
