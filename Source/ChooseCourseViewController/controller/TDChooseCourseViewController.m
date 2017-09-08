@@ -8,7 +8,6 @@
 
 #import "TDChooseCourseViewController.h"
 #import "TDActivityViewController.h"
-#import "SubmitCourseViewController.h"
 #import "TDSubmitCourseViewController.h"
 
 #import "ActivityListItem.h"//活动

@@ -131,12 +131,6 @@ class TDUserCenterViewController: OfflineSupportViewController,UITableViewDelega
     }
     
     func gotoCouponVc() { //优惠券
-//        let userCouponVC = UserYouViewController()
-//        let firstVC = UserFirstViewController()
-//        let currentUser = session.currentUser?.username  //传当前用户名
-//        firstVC.username = currentUser
-//        userCouponVC.username = currentUser
-//        self.navigationController?.pushViewController(userCouponVC, animated: true)
         
         let userCouponVC = TDCouponViewController()
         userCouponVC.username = session.currentUser?.username //传当前用户名

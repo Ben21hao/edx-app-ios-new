@@ -14,7 +14,6 @@
 #import "UIColor+JHHexColor.h"
 #import "Reachability.h"
 #import "OEXAppDelegate.h"
-#import "CouponsNameTableViewCell.h"
 
 @interface CouponsViewController ()<UITableViewDelegate,UITableViewDataSource>
 

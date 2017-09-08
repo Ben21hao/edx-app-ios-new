@@ -298,17 +298,6 @@ class CourseCatalogDetailViewController: UIViewController,UIScrollViewDelegate,U
         dataTask.resume()
     }
     
-    
-    func jump() {
-        let userCouponVC = UserYouViewController()
-        let firstVC = UserFirstViewController()
-        
-        let currentUser = session.currentUser?.username//传当前用户名
-        firstVC.username = currentUser
-        userCouponVC.username = currentUser
-        self.navigationController?.pushViewController(userCouponVC, animated: true)
-    }
-    
     private func loadCourseMessage() { //获取课程信息
         
         let request = CourseCatalogAPI.getCourse(courseID)
