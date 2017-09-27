@@ -79,7 +79,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.1</string>
+	<string>1.0.2</string>
 	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
 	<false/>
 	<key>FacebookDisplayName</key>
