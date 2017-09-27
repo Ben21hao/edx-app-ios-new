@@ -19,6 +19,8 @@
 @property (nonatomic,strong) UIButton *orderButton;
 @property (nonatomic,strong) UIButton *talkButton;
 
+@property (nonatomic,strong) TDBaseToolModel *toolModel;
+
 @end
 
 @implementation TDOrderAssitantCell
@@ -26,6 +28,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.toolModel = [[TDBaseToolModel alloc] init];
         [self configView];
         [self setViewConstraint];
     }
@@ -36,8 +39,10 @@
     _model = model;
     
     //设置头像
-    [self.headerImage sd_setImageWithURL:model.avatar_url[@"large"] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    NSString *url = [self.toolModel dealwithImageStr:model.avatar_url[@"large"]];
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
+    
     self.nameLabel.text = model.name;
     self.quetionLabel.text = model.slogan;
     
@@ -147,10 +152,13 @@
         make.left.right.bottom.top.mas_equalTo(self);
     }];
     
+    CGFloat width = [self sizeForButtonTitle:self.orderButton.titleLabel.text];
+    
     [self.orderButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(self.bgView.mas_right).offset(-8);
         make.top.mas_equalTo(self.bgView.mas_top).offset(11);
-        make.size.mas_equalTo(CGSizeMake(83, 26));
+        make.height.mas_equalTo(26);
+        make.width.mas_equalTo(width > 68 ? width : 68);
     }];
     
     [self.talkButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -185,6 +193,10 @@
         make.size.mas_equalTo(CGSizeMake(16, 16));
     }];
     
+}
+
+- (CGFloat)sizeForButtonTitle:(NSString *)title {
+    return [self.toolModel widthForString:title font:14];
 }
 
 @end

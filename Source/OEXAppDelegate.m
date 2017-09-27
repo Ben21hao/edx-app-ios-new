@@ -53,8 +53,10 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     
-    //1.向微信注册
-    [WXApi registerApp:APPID_Weixin];
+    
+    [WXApi registerApp:APPID_Weixin]; //1.向微信注册
+    
+    [self judgeAppVersion];//判断版本是否更新
     
 #if DEBUG
     // Skip all this initialization if we're running the unit tests
@@ -101,6 +103,52 @@
     return [WXApi handleOpenURL:url delegate:(id)self];
 }
 
+- (void)judgeAppVersion {
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *url = @"https://beta.eliteu.cn/api/mobile/v0.5/get_last_version";
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:@"iOS" forKey:@"platform"];
+    
+    [manager GET:url parameters:dic progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSDictionary *responseDic = (NSDictionary *)responseObject;
+        id code = responseDic[@"code"];
+        if ([code intValue] == 200) {
+            
+            NSString *serviceStr = responseDic[@"data"][@"last_version"][@"version"];
+            
+            NSString *loacalStr = [[NSUserDefaults standardUserDefaults] valueForKey:@"APP_Version_Service"]; //存储安装后，第一次提示更新的版本
+            
+            if ([loacalStr isEqualToString:serviceStr]) { //远程版本没有再次更新，即已提醒过一次
+                return;
+            }
+            [[NSUserDefaults standardUserDefaults] setValue:serviceStr forKey:@"APP_Version_Service"];
+            
+            NSString *infoFile = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+            NSMutableDictionary *infodic = [[NSMutableDictionary alloc] initWithContentsOfFile:infoFile];
+            NSString *appVersionStr = infodic[@"CFBundleShortVersionString"];//app版本号
+            
+            if ([serviceStr compare:appVersionStr options:NSNumericSearch] == NSOrderedDescending) {//降序 : 后台的版本 > app的版本
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SYSTEM_WARING", nil)
+                                                                    message:NSLocalizedString(@"NEW_VERSION_UPDATE", nil)
+                                                                   delegate:self
+                                                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                                          otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
+                alertView.tag = 100;
+                [alertView show];
+            }
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+    
+}
+
+
 - (void)onResp:(BaseResp *)resp {
     
     if([resp isKindOfClass:[PayResp class]]){
@@ -129,7 +177,11 @@
             }
             
             NSString *strTitle = NSLocalizedString(@"PAY_RESULT", nil);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle
+                                                            message:strMsg
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                  otherButtonTitles:nil, nil];
             alert.delegate = self;
             [alert show];
         }
@@ -170,7 +222,11 @@
                 [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"aliPaySuccess" object:nil]];
                 
             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:str delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle
+                                                                message:str
+                                                               delegate:self
+                                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                      otherButtonTitles:nil, nil];
                 alert.delegate = self;
                 [alert show];
             }
@@ -184,7 +240,14 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"aliPayFail" object:nil];
+    
+    if (alertView.tag == 100) {
+        if (buttonIndex == 1) { //跳转appstore
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/%E8%8B%B1%E8%8D%94%E6%95%99%E8%82%B2-%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86%E5%9C%A8%E7%BA%BF%E8%AF%BE%E5%A0%82/id1179609181?mt=8"]];
+        }
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"aliPayFail" object:nil];
+    }
 }
 
 

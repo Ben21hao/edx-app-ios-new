@@ -165,7 +165,10 @@ const CGFloat contentLabelFontSize = 14;
 - (void)setDetailItem:(CommentDetailItem *)detailItem {
     _detailItem = detailItem;
     
-    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",ELITEU_URL,_detailItem.avatar_url]] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    TDBaseToolModel *model = [[TDBaseToolModel alloc] init];
+    NSString *imageStr = [NSString stringWithFormat:@"%@%@",ELITEU_URL,_detailItem.avatar_url];
+    NSString *url = [model dealwithImageStr:imageStr];
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
     
     [self starviewSetData:_detailItem.score];

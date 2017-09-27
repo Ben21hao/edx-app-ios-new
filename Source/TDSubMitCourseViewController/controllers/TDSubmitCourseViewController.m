@@ -543,6 +543,7 @@
     [self backKeyBoards];
     
     if (btnTag == 1) {
+        
         float coin = [alertView.textF2.text floatValue];//输入的宝典数
         float currentM = self.payMoney;//合计金额
         
@@ -555,7 +556,7 @@
             
         } else {
             
-            self.usedcoin = alertView.textF2.text;
+            self.usedcoin = coin > 0.0 ? alertView.textF2.text : @"0";
             currentM -= 0.1 * coin;
             //            self.moneyLabel.text = [NSString stringWithFormat:@"¥%.2f",currentM];
             self.moneyLabel.attributedText = [self.baseTool setString:[NSString stringWithFormat:@"¥%.2f",currentM] withFont:16 type:1];
@@ -849,7 +850,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

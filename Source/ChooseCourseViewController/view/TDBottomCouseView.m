@@ -47,7 +47,7 @@
     self.titelLabel = [[UILabel alloc] init];
     self.titelLabel.textColor = [UIColor colorWithHexString:colorHexStr9];
     self.titelLabel.font = [UIFont systemFontOfSize:14];
-    self.titelLabel.text = @"课程名称";
+    self.titelLabel.text = NSLocalizedString(@"COURSE_TITLE", nil);
     [self.bgView addSubview:self.titelLabel];
     
     self.moneyLabel = [[UILabel alloc] init];
@@ -113,11 +113,13 @@
 - (void)setCourseViewData:(ChooseCourseItem *)courseItem {
     if (courseItem) {
         self.titelLabel.text = courseItem.course_display_name;
-        NSString *string1 = [NSString stringWithFormat:@"%@%@",ELITEU_URL,courseItem.course_pic];
-        NSString* string2 = [string1 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        [self.courseImage sd_setImageWithURL:[NSURL URLWithString:string2] placeholderImage:[UIImage imageNamed:@"Shape"]];
         
         TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
+        
+        NSString *string1 = [NSString stringWithFormat:@"%@%@",ELITEU_URL,courseItem.course_pic];
+        NSString* string2 = [baseTool dealwithImageStr:string1];
+        [self.courseImage sd_setImageWithURL:[NSURL URLWithString:string2] placeholderImage:[UIImage imageNamed:@"Shape"]];
+        
         self.moneyLabel.attributedText = [baseTool setString:[NSString stringWithFormat:@"￥%.2f",[courseItem.min_price floatValue]] withFont:16  type:1];
         self.originalLabel.attributedText = [baseTool setString:[NSString stringWithFormat:@"￥%.2f",[courseItem.suggest_price floatValue]] withFont:12  type:2];
     }

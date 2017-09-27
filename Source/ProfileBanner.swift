@@ -102,7 +102,7 @@ class ProfileBanner: UIView {
             nickname = profile.nickname
             
         } else {
-            if profile.name != profile.username {
+            if profile.name != profile.username && profile.name?.characters.count != 0 {
                 nickname = profile.name
             } else {
                 nickname = Strings.noName

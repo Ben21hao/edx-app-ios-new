@@ -77,7 +77,7 @@ extern NSString* OEXSideNavigationChangedStateKey;
 @property (readonly, strong, nonatomic) RouterEnvironment* environment;
 @property (strong, nonatomic, nullable) RevealViewController* revealController;
 
-- (UINavigationController *) loginViewController;
+- (UINavigationController *) loginViewController1;
 - (void)removeCurrentContentController;
 - (void)makeContentControllerCurrent:(UIViewController*)controller;
 

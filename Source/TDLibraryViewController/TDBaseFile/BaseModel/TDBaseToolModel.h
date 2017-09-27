@@ -119,6 +119,8 @@
  获取字符串size
  */
 - (CGSize)getSringSize:(NSString *)str withFont:(NSInteger)font;
+- (CGFloat)heightForString:(NSString *)title font:(NSInteger)font width:(CGFloat)width; //这个比较准确
+- (CGFloat)widthForString:(NSString *)title font:(NSInteger)font; //字符串的宽度
 
 /*
  屏幕横竖屏
@@ -141,6 +143,14 @@
  1  版本
  */
 - (NSString *)getAppVersionNum:(NSInteger)type;
+
+/* 对图片链接中的 中文 和 空格进行处理，要不就显示不出来 */
+- (NSString *)dealwithImageStr:(NSString *)imageStr;
+
+/* 相机权限设置提示
+ type ：0 相册，1 相机
+ */
+- (BOOL)judgeCameraOrAlbumUserAllow:(NSInteger)type;
 
 @end
 

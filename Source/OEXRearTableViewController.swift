@@ -118,7 +118,7 @@ class OEXRearTableViewController : UITableViewController {
             if profile.nickname != nil && profile.nickname?.characters.count != 0 {//如果昵称不为空,显示昵称
                 self.userNameLabel.text = profile.nickname
             } else {
-                if profile.name != profile.username {
+                if profile.name != profile.username && profile.name?.characters.count != 0 {
                     self.userNameLabel.text = profile.name
                 } else {
                     self.userNameLabel.text = Strings.noName

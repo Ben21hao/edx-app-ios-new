@@ -585,7 +585,7 @@
             } else if ([code intValue] == 404){
                 errorStr = [Strings acountNoExist];
             }
-            
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"User_Login_Failed_Code"];
             [self loginFailedWithErrorMessage:errorStr title:nil];
         }
         else {

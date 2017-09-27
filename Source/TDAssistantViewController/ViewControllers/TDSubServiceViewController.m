@@ -441,9 +441,15 @@
             TDAssistantCell *assistantCell = [[TDAssistantCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"assistantCell"];
             assistantCell.selectionStyle = UITableViewCellSelectionStyleNone;
             assistantCell.nameLabel.text = model.assistant_name;
-            assistantCell.quetionLabel.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"QUETION_DESCRIPTION", nil),model.question];
+            
             assistantCell.whereFrom = self.whereFrom;
-            [assistantCell.headerImage sd_setImageWithURL:[NSURL URLWithString:model.avatar_url.large] placeholderImage:[UIImage imageNamed:@"people"]];
+            
+            NSString *imageStr = [self.toolModel dealwithImageStr:model.avatar_url.large];
+            [assistantCell.headerImage sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"people"]];
+            
+            if (model.question.length > 0) {
+                assistantCell.quetionLabel.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"QUETION_DESCRIPTION", nil),model.question];
+            }
             return assistantCell;
         }
             break;

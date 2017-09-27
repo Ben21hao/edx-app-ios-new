@@ -127,9 +127,9 @@
 }
 
 - (void)appEnterForeground:(NSNotification *)info {
-    if (self.isRecharge) {
-        [self gotoSuccessViewController];
-    }
+//    if (self.isRecharge) {
+//        [self gotoSuccessViewController];
+//    }
 }
 
 #pragma mark - 充值成功

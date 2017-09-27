@@ -1137,14 +1137,20 @@
 "SERVICE_ITEM" = "条款说明";
 /*手机号码或邮箱*/
 "PHONE_OR_EMAIL" = "手机号码或邮箱";
-/*我们给您发送了一封重置密码邮件，请进入邮箱查收并按提示激活账号。*/
-"HAD_SEND_EMAIL" = "我们给您发送了一封重置密码邮件，请进入邮箱{count}查收并按提示激活账号。";
+/*我们给您发送了一封账号激活邮件，请进入邮箱查收并按提示激活账号。*/
+"HAD_SEND_EMAIL" = "我们给您发送了一封账号激活邮件，请进入邮箱{count}查收并按提示激活账号。";
+/*我们给您发送了一封重置密码邮件，请进入邮箱查收并按提示设置新密码。*/
+"HAD_SEND_RESET_EMAIL" = "我们给您发送了一封重置密码邮件，请进入邮箱{count}查收并按提示设置新密码。";
 /*已经激活？马上登录*/
 "ACTIVITY_LOGIN" = "已经激活？马上登录";
+/*重置成功？马上登录*/
+"RESETED_LOGIN" = "重置成功？马上登录";
 /*没有收到邮件？*/
 "NO_RECEIVE_EMAIL" = "没有收到邮件？";
 /*点此重发*/
 "CLICK_RESEND" = "点此重发";
+/*重发邮件成功*/
+"CLICK_RESEND_SUCCESS" = "重发邮件成功";
 /*您不能使用这个昵称，请重新输入*/
 "CONNOT_USE_NICKNAME" = "该昵称含有禁用词，请重新输入";
 /*我们给您发送了一条验证短信*/
@@ -1274,8 +1280,8 @@
 "M_DEGREE" = "硕士";
 /*学士*/
 "B_DEGREE" = "学士";
-/*肆业证书*/
-"A_DEGREE" = "肆业证书";
+/*大专*/
+"A_DEGREE" = "大专";
 /*高中*/
 "HS_DEGREE" = "高中";
 /*初中*/
@@ -1590,3 +1596,9 @@
 "ACOUNT_NO_EXIST" = "账号不存在";
 /*密码错误*/
 "PASSWORD_MISS" = "密码错误";
+/*检测到有版本更新，是否更新？ New version detected. Update now?*/
+"NEW_VERSION_UPDATE" = "检测到有版本更新，是否更新？";
+/*暂未允许{name}访问您的相机，请前往设置 Not allow app to access your camera, please go to settings.*/
+"ALLOW_USE_CAMERA_TEXT" = "暂未允许{name}访问您的相机，请前往设置";
+/*暂未允许{name}访问您的相机，请前往设置 Not allow app to access your album, please go to settings.*/
+"ALLOW_USE_ALBUM_TEXT" = "暂未允许{name}访问您的相册，请前往设置";

@@ -74,6 +74,8 @@ class CourseVideoTableViewCell: UITableViewCell, CourseBlockContainerCell {
         let fromDetailView = NSUserDefaults.standardUserDefaults().valueForKey("Come_From_Course_Detail")
         if fromDetailView != nil {
             downloadView.hidden = true
+        } else {
+            downloadView.hidden = false
         }
     }
 

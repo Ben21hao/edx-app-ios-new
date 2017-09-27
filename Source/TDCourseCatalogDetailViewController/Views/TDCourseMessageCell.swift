@@ -70,7 +70,7 @@ class TDCourseMessageCell: UITableViewCell {
         bgView.addSubview(line2)
         
         //学习期限
-        setIconLabelType("\u{f133}", label: dateLabel)
+        setIconLabelType("\u{f274}", label: dateLabel)
         bgView.addSubview(dateLabel)
         
         setTitleLabelType(Strings.dateLimit, label: limitLabel)

@@ -10,6 +10,8 @@
 #import "OEXAppDelegate.h"
 #import "edX-Swift.h"
 #import "OEXFlowErrorViewController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AVFoundation/AVFoundation.h>
 
 @implementation TDBaseToolModel
 
@@ -444,6 +446,28 @@
     return size;
 }
 
+- (CGFloat)heightForString:(NSString *)title font:(NSInteger)font width:(CGFloat)width {
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, 0)];
+    label.font = [UIFont fontWithName:@"OpenSans" size:font];
+    label.numberOfLines = 0;
+    label.text = title;
+    [label sizeToFit];
+    CGSize size = label.frame.size;
+    return size.height;
+}
+
+- (CGFloat)widthForString:(NSString *)title font:(NSInteger)font {
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 28)];
+    label.font = [UIFont fontWithName:@"OpenSans" size:font];
+    label.numberOfLines = 0;
+    label.text = title;
+    [label sizeToFit];
+    CGSize size = label.frame.size;
+    return size.width;
+}
+
 #pragma mark - 屏幕横竖屏
 - (void)interfaceOrientation:(UIInterfaceOrientation)orientation {
     
@@ -497,6 +521,38 @@
         versionStr = [Strings versionDisplayWithNumber:version];
     }
     return versionStr;
+}
+
+/* 对图片链接中的 中文 和 空格进行处理，要不就显示不出来 */
+- (NSString *)dealwithImageStr:(NSString *)imageStr{
+    
+    //    NSString *str = [imageStr stringByAddingPercentEncodingWithAllowedCharacters:[[NSCharacterSet characterSetWithCharactersInString:@"`#%^{}\"[]|\\<> "] invertedSet]]; //对url中的空格，中文等进行处理
+    NSString *str = [imageStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]; //直接编码
+    return str;
+}
+
+
+/*
+ 相机权限设置提示
+ */
+- (BOOL)judgeCameraOrAlbumUserAllow:(NSInteger)type {
+    
+    if (type == 0) {
+        ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];//相册
+        if (status == ALAuthorizationStatusRestricted || status == ALAuthorizationStatusDenied) { // 无权限
+            return NO;
+        } else {
+            return YES;
+        }
+        
+    } else {
+        AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo]; //相机
+        if (status == AVAuthorizationStatusRestricted || status == AVAuthorizationStatusDenied) {// 无权限
+            return NO;
+        } else {
+            return YES;
+        }
+    }
 }
 
 

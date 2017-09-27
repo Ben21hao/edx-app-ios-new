@@ -692,19 +692,17 @@ static OEXInterface* _sharedInterface = nil;
     //Check if data type needs parsing
     if([OEXInterface isURLForVideo:URLString]) {
         return;
-    }
-    else if([OEXInterface isURLForImage:URLString]) {
-    }
-    else {
-        //Get object
-        id object = [self parsedObjectWithData:data forURLString:URLString];
+    } else if([OEXInterface isURLForImage:URLString]) {
+        
+    } else {
+        id object = [self parsedObjectWithData:data forURLString:URLString]; //Get object
         if(!object) {
             return;
-        }
-
-        //download any additional data if required
-        else if([URLString isEqualToString:[self URLStringForType:URL_COURSE_ENROLLMENTS]]) {
-            self.courses = (NSArray*)object;
+            
+        } else if([URLString isEqualToString:[self URLStringForType:URL_COURSE_ENROLLMENTS]]) { //download any additional data if required
+            
+//            self.courses = (NSArray*)object; //object数组里面的课程比已加入的课程数组数量少 --- 有免费课程的时候
+            
             for(UserCourseEnrollment* courseEnrollment in _courses) {
                 OEXCourse* course = courseEnrollment.course;
 
@@ -723,18 +721,17 @@ static OEXInterface* _sharedInterface = nil;
                 NSString* courseVideoDetails = course.video_outline;
                 [self downloadWithRequestString:courseVideoDetails forceUpdate:force];
             }
-        }
-        //video outlines populate videos
-        else if([OEXInterface isURLForVideoOutline:URLString]) {
+        } else if([OEXInterface isURLForVideoOutline:URLString]) { //video outlines populate videos
+            
             NSArray* array = [self videosOfCourseWithURLString:URLString];
             [self setVideos:array forURL:URLString];
         }
 
-        //If not using common download mode
-        if(_commonDownloadProgress == -1) {
+        
+        if(_commonDownloadProgress == -1) { //If not using common download mode
             //Delegate call back
-        }
-        else {
+            
+        } else {
             _commonDownloadProgress++;
             [self downloadNextItem];
         }
@@ -834,15 +831,15 @@ static OEXInterface* _sharedInterface = nil;
             return helper;
         }
         else {
-            OEXHelperVideoDownload* helper = [videosMap objectForKey:summary.videoID];
+//            OEXHelperVideoDownload* helper = [videosMap objectForKey:summary.videoID];
             // Hack
             // Duration doesn't always come through the old API for some reason, so make here we make sure
             // it's set from the new content.
             // But we don't actually need to make a record for it so don't return it
             // TODO: Short term: Update the video summary in the new API to get all its properties from block
             // TODO: Long term: Get the video module to take a block as its input
-            helper.summary.duration = summary.duration;
-            helper.summary.encodings = summary.encodings;
+//            helper.summary.duration = summary.duration;
+//            helper.summary.encodings = summary.encodings;
             
             return nil;
         }

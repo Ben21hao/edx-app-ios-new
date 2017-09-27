@@ -16,6 +16,7 @@ protocol ProfilePictureTakerDelegate : class {
     func imagePicked(image: UIImage, picker: UIImagePickerController)
     func cancelPicker(picker: UIImagePickerController)
     func deleteImage()
+    func gotoSystemSettins(type: NSInteger)
 }
 
 
@@ -28,6 +29,7 @@ class ProfilePictureTaker : NSObject {
     }
     
     var imagePicker = UIImagePickerController()
+    let baseTool = TDBaseToolModel()
     
     func start(alreadyHasImage: Bool) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
@@ -55,6 +57,12 @@ class ProfilePictureTaker : NSObject {
     
  
     private func showImagePicker(sourceType : UIImagePickerControllerSourceType) {
+        
+        let isAuthen : Bool = self.baseTool.judgeCameraOrAlbumUserAllow(sourceType == .PhotoLibrary ? 0 :1)
+        if isAuthen != true {
+            self.delegate?.gotoSystemSettins(sourceType == .PhotoLibrary ? 0 :1)
+            return
+        }
         
         let mediaType: String = kUTTypeImage as String
         imagePicker.mediaTypes = [mediaType]

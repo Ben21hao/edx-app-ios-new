@@ -9,6 +9,7 @@
 #import "TDEmailResetViewController.h"
 #import "TDBaseToolModel.h"
 #import "edX-Swift.h"
+#import "OEXAuthentication.h"
 
 @interface TDEmailResetViewController () <UIGestureRecognizerDelegate>
 
@@ -68,23 +69,66 @@
         return;
     }
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:self.acountStr forKey:@"email"];
+    [self resetPasswordByEmail];
     
-    NSString *url = [NSString stringWithFormat:@"%@/api/mobile/v0.5/account/resend_active_email/",ELITEU_URL];
-    [manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+}
+
+#pragma mark - 重置邮箱账号密码
+- (void)resetPasswordByEmail {
+    
+    [OEXAuthentication resetPasswordWithEmailId:self.acountStr completionHandler:^(NSData* data, NSURLResponse* response, NSError* error) {
         
-        [self.activityView stopAnimating];
-        NSDictionary *dict = (NSDictionary *)responseObject;
-        
-        [self.view makeToast:dict[@"msg"] duration:1.08 position:CSToastPositionCenter];
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [self.view makeToast:NSLocalizedString(@"NETWORK_CONNET_FAIL", nil) duration:1.08 position:CSToastPositionCenter];
-        [self.activityView stopAnimating];
-        NSLog(@"重发邮件 -- %ld",(long)error.code);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.activityView stopAnimating];
+            
+            [[OEXFlowErrorViewController sharedInstance] animationUp];
+            
+            if(!error) {
+                NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+                if(httpResp.statusCode == 200) {
+                    
+                    NSDictionary *dataDic = [NSJSONSerialization oex_JSONObjectWithData:data error:nil];
+                    NSLog(@"重置密码 ++++++++ %@",dataDic);
+                    
+                    if ([dataDic[@"success"] intValue] == 0) {
+                        [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"FLOATING_ERROR_TITLE", nil)
+                                                                                message:dataDic[@"value"]
+                                                                       onViewController:self.navigationController.view
+                                                                             shouldHide:YES];
+                    } else {
+                        
+                        [self.view makeToast:NSLocalizedString(@"CLICK_RESEND_SUCCESS", nil) duration:1.08 position:CSToastPositionCenter];
+                    }
+                    
+                    
+                } else if(httpResp.statusCode >= 400 && httpResp.statusCode < 500) {
+                    
+                    NSDictionary *dictionary = [NSJSONSerialization oex_JSONObjectWithData:data error:nil];
+                    NSString *responseStr = [[dictionary objectForKey:@"email"] firstObject];
+                    [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"FLOATING_ERROR_TITLE", nil)
+                                                                            message:responseStr
+                                                                   onViewController:self.navigationController.view
+                                                                         shouldHide:YES];
+                    
+                } else if(httpResp.statusCode > 500) {
+                    
+                    NSString* responseStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"FLOATING_ERROR_TITLE", nil)
+                                                                            message:responseStr
+                                                                   onViewController:self.navigationController.view
+                                                                         shouldHide:YES];
+                }
+                
+            } else {
+                
+                [[OEXFlowErrorViewController sharedInstance] showErrorWithTitle:NSLocalizedString(@"FLOATING_ERROR_TITLE", nil)
+                                                                        message:[error localizedDescription]
+                                                               onViewController:self.navigationController.view
+                                                                     shouldHide:YES];
+            }
+            
+        });
     }];
 }
 
@@ -97,7 +141,7 @@
     
     self.messageLabel = [[UILabel alloc] init];
     self.messageLabel.font = [UIFont fontWithName:@"OpenSans" size:14];
-    self.messageLabel.text = [Strings hadSendEmailWithCount:self.acountStr];
+    self.messageLabel.text = [Strings hadSendResetEmailWithCount:self.acountStr];
     self.messageLabel.textColor = [UIColor colorWithHexString:colorHexStr10];
     self.messageLabel.textAlignment = NSTextAlignmentCenter;
     self.messageLabel.numberOfLines = 0;
@@ -107,7 +151,7 @@
     self.loginButton.backgroundColor = [UIColor colorWithHexString:colorHexStr1];
     self.loginButton.layer.masksToBounds = YES;
     self.loginButton.layer.cornerRadius = 4.0;
-    [self.loginButton setTitle:NSLocalizedString(@"ACTIVITY_LOGIN", nil) forState:UIControlStateNormal];
+    [self.loginButton setTitle:NSLocalizedString(@"RESETED_LOGIN", nil) forState:UIControlStateNormal];
     self.loginButton.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:16];
     [self.loginButton addTarget:self action:@selector(loginButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.loginButton];

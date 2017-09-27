@@ -131,11 +131,11 @@
     if (model) {
         self.selectButton.selected = model.isSelected;
         
+        TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
         NSString *string1 = [NSString stringWithFormat:@"%@%@",ELITEU_URL,model.course_pic];
-        NSString* string2 = [string1 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString* string2 = [baseTool dealwithImageStr:string1];
         [self.courseImage sd_setImageWithURL:[NSURL URLWithString:string2] placeholderImage:[UIImage imageNamed:@"course_backGroud"]];
         
-        TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
         
         self.titleLabel.text = model.course_display_name;
         self.userNameLabel.text = model.professor_name;

@@ -85,7 +85,7 @@ class TDUserCenterView: UIView,UITableViewDataSource {
                 return 1
             }
         } else {
-//           return 2
+//           return 2 //隐藏讲座和助教
             return 0
         }
     }
@@ -109,7 +109,7 @@ class TDUserCenterView: UIView,UITableViewDataSource {
                 if self.userProfile!.nickname != nil && self.userProfile!.nickname?.characters.count != 0 {
                     cell.nameLabel.text = self.userProfile!.nickname
                 } else {
-                    if self.userProfile!.name != self.userProfile!.username {
+                    if self.userProfile!.name != self.userProfile!.username && self.userProfile?.name?.characters.count != 0 {
                         cell.nameLabel.text = self.userProfile!.name
                     } else {
                         cell.nameLabel.text = Strings.noName

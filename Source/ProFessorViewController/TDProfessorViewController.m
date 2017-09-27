@@ -8,7 +8,6 @@
 
 #import "TDProfessorViewController.h"
 #import <UIImageView+WebCache.h>
-#import "TDBaseToolModel.h"
 
 @interface TDProfessorViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -29,6 +28,8 @@
 @property (nonatomic,strong) NSString *degrees;//学位
 @property (nonatomic,strong) NSString *motto;//铭言
 
+@property (nonatomic,strong) TDBaseToolModel *baseTool;
+
 @end
 
 @implementation TDProfessorViewController
@@ -37,6 +38,7 @@
     [super viewDidLoad];
     
     self.titleViewLabel.text = NSLocalizedString(@"PROFESSOR_DETAIL", nil);
+    self.baseTool = [[TDBaseToolModel alloc] init];
     
     [self setLoadDataView];
     
@@ -66,8 +68,7 @@
 #pragma mark - 数据
 - (void)requrestData {
     
-    TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
-    if (![baseTool networkingState]) {
+    if (![self.baseTool networkingState]) {
         [self.navigationController popViewControllerAnimated:YES];
         return;
     }
@@ -280,7 +281,7 @@
 
 - (NSMutableParagraphStyle *)setDetailTextPagraph:(float)lineSpace {//段落设置
     
-    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc]init] ;
+    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init] ;
     paragraph.alignment = NSTextAlignmentLeft;
     paragraph.lineSpacing = lineSpace;
     paragraph.lineBreakMode = NSLineBreakByWordWrapping;
@@ -340,8 +341,8 @@
     }];
     
     //设置头像
-    NSURL *headerUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",ELITEU_URL,self.imageUrl]];
-    [headerImage sd_setImageWithURL:headerUrl placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    NSString *imageStr = [self.baseTool dealwithImageStr:[NSString stringWithFormat:@"%@%@",ELITEU_URL,self.imageUrl]];
+    [headerImage sd_setImageWithURL:[NSURL URLWithString:imageStr] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
     
     nameLabel.text = [NSString stringWithFormat:@"%@\n%@ %@ %@",self.name,self.college,self.major,self.degrees];

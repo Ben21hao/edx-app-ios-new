@@ -10,9 +10,10 @@ import UIKit
 
 //let ELITEU_URL = OEXConfig.sharedConfig().apiHostURL //swift不能从文件中读取域名
 
-//let ELITEU_URL = "https://beta.eliteu.cn"
-let ELITEU_URL = "http://beta.eliteu.cn"
-//let ELITEU_URL = "http://www.eliteu.cn"
+//let ELITEU_URL = "https://beta.eliteu.cn" //https 测试
+//let ELITEU_URL = "http://beta.eliteu.cn" // beta
+//let ELITEU_URL = "http://www.eliteu.cn" // 生产服务器
+let ELITEU_URL = "https://www.eliteu.cn" // https 生产服务器
 
 
 let TDScreenWidth = UIScreen.mainScreen().bounds.size.width

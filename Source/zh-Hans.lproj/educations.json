@@ -2,7 +2,7 @@
  { "value" : "p", "name" : "博士" },
  { "value" : "m", "name" : "硕士" },
  { "value" : "b", "name" : "学士" },
- { "value" : "a", "name" : "肆业证书" },
+ { "value" : "a", "name" : "大专" },
  { "value" : "hs", "name" : "高中" },
  { "value" : "jhs", "name" : "初中" },
  { "value" : "el", "name" : "小学" },

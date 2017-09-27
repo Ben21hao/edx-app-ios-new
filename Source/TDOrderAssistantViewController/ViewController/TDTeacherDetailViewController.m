@@ -361,9 +361,10 @@
         make.right.mas_equalTo(headerView.mas_right).offset(-13);
     }];
     
-    headerImage.image = [UIImage imageNamed:@"tdIdentify"];
     //设置头像
-    [headerImage sd_setImageWithURL:[NSURL URLWithString:self.model.avatar_url[@"large"]] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    TDBaseToolModel *model = [[TDBaseToolModel alloc] init];
+    NSString *url = [model dealwithImageStr:self.model.avatar_url[@"large"]];
+    [headerImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
     
     nameLabel.text = self.model.name;

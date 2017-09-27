@@ -111,12 +111,12 @@
 
 - (void)showData {
     
-    NSString *string1 = [NSString stringWithFormat:@"%@%@",ELITEU_URL,self.model.course_pic];
-    NSString* string2 = [string1 stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self.courseImage sd_setImageWithURL:[NSURL URLWithString:string2] placeholderImage:[UIImage imageNamed:@"course_backGroud"]];
-    
     TDBaseToolModel *baseTool = [[TDBaseToolModel alloc] init];
     
+    NSString *string1 = [NSString stringWithFormat:@"%@%@",ELITEU_URL,self.model.course_pic];
+    NSString* string2 = [baseTool dealwithImageStr:string1];
+    [self.courseImage sd_setImageWithURL:[NSURL URLWithString:string2] placeholderImage:[UIImage imageNamed:@"course_backGroud"]];
+
     self.titleLabel.text = self.model.course_display_name;
     self.userNameLabel.text = self.model.professor_name;
     self.moneyLabel.attributedText = [baseTool setString:[NSString stringWithFormat:@"￥%.2f",[self.model.min_price floatValue]] withFont:16  type:1];
@@ -124,15 +124,5 @@
 }
 
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 
 @end

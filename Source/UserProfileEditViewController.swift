@@ -118,7 +118,7 @@ extension UserProfile : FormData {
     }
 }
 
-class UserProfileEditViewController: UITableViewController,UIGestureRecognizerDelegate {
+class UserProfileEditViewController: UITableViewController,UIGestureRecognizerDelegate,UIAlertViewDelegate {
     
     typealias Environment = protocol<OEXAnalyticsProvider, DataManagerProvider, NetworkManagerProvider>
     
@@ -478,7 +478,30 @@ class UserProfileEditViewController: UITableViewController,UIGestureRecognizerDe
         
         self.tableView.tableHeaderView = self.tableView.tableHeaderView
     }
+    
+    func showAlertView(type: NSInteger) {
+        
+        let infoDic : NSDictionary = NSBundle.mainBundle().infoDictionary!
+        CFShow(infoDic)
+        let appName : String = "\(infoDic["CFBundleDisplayName"]!)"
+        
+        let typeStr : String = type == 0 ? Strings.allowUseAlbumText(name: appName) : Strings.allowUseCameraText(name: appName)
+        
+        let alertView = UIAlertView.init(title: Strings.systemWaring, message: typeStr, delegate: self, cancelButtonTitle: Strings.cancel, otherButtonTitles: Strings.ok)
+        alertView.show()
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex == 1 {
+            gotoPhoneSystemSetting()
+        }
+    }
+    
+    func gotoPhoneSystemSetting() {
+        UIApplication.sharedApplication().openURL(NSURL.init(string: UIApplicationOpenSettingsURLString)!)
+    }
 }
+
 
 /** Error Toast */
 private class ErrorToastView : UIView {
@@ -527,6 +550,10 @@ private class ErrorToastView : UIView {
 
 //MARK: imagePicker Delegate
 extension UserProfileEditViewController : ProfilePictureTakerDelegate {
+    
+    func gotoSystemSettins(type: NSInteger) {
+        self.showAlertView(type)
+    }
     
     func showChooserAlert(alert: UIAlertController) {
         self.presentViewController(alert, animated: true, completion: nil)

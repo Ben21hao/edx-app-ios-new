@@ -48,7 +48,9 @@
 - (void)setDetailItem:(TDTeacherCommentModel *)detailItem {
     _detailItem = detailItem;
     
-    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",ELITEU_URL,_detailItem.avatar_url]] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    TDBaseToolModel *toolModel = [[TDBaseToolModel alloc] init];
+    NSString *url = [toolModel dealwithImageStr:[NSString stringWithFormat:@"%@%@",ELITEU_URL,_detailItem.avatar_url]];
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"default_big"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
     
     [self starviewSetData:_detailItem.score];
